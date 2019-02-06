@@ -40,6 +40,7 @@ public class TaskManagerController extends Observable {
 
     }
     public void addTask(Task task){
+        log.info("New task was added("+task.getTitle()+")");
         tasks.add(task);
         this.notifyObservers(tasks);
         view.update(this, tasks);

@@ -1,4 +1,6 @@
 package Model;
+import org.apache.log4j.Logger;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -10,6 +12,8 @@ public class LinkedTaskList extends TaskList {
     private Node first;
     private Node last;
     private int numOfElements=0;
+    private static final Logger log = Logger.getLogger(LinkedTaskList.class);
+
 
     public LinkedTaskList() {
         first = null;
@@ -20,17 +24,21 @@ public class LinkedTaskList extends TaskList {
     public boolean remove(Task task) {
         boolean result = false;
         if (isEmpty()) {
-            throw new IllegalStateException("Cannot remove() from and empty list.");
+            log.error("Cannot remove a Task from an empty list.");
+            throw new IllegalStateException("Cannot remove a Task from an empty list.");
         }
         if (task==null) {
-            throw new NullPointerException("Cannot remove() empty task.");
+            log.error("Cannot remove an empty task.");
+            throw new NullPointerException("Cannot remove an empty task.");
         }
         Node prev = this.first;
         Node curr = this.first;
         if (curr == null) {
+            log.error("The first argument for addLast() is null.");
             throw new NullPointerException("The first argument for addLast() is null.");
         }
         if (curr.data == null) {
+            log.error("The first argument for addLast() is null.");
             throw new NullPointerException("The first argument for addLast() is null.");
         }
         int i=0;
@@ -70,7 +78,8 @@ public class LinkedTaskList extends TaskList {
     @Override
     public void add(Task item) {
         if (item == null) {
-            throw new NullPointerException("The first argument for addLast() is null.");
+            log.error("The Task is null.");
+            throw new NullPointerException("The Task is null.");
         }
         if (!isEmpty()) {
             Node prev = last;
@@ -117,10 +126,7 @@ public class LinkedTaskList extends TaskList {
             return a.data;
 
         } catch (Exception e){
-            System.out.println("Dear User, your tasklist sontains "+ numOfElements + " tasks. Pleare, enter number from 0 to " + numOfElements);
-            Scanner scanner = new Scanner(System.in);
-            int a = scanner.nextInt();
-            this.getTask(a);
+            log.error("User entered index not between 0 and "+numOfElements+" (number of tasks)");
         }
         return null;
     }
@@ -184,6 +190,7 @@ public class LinkedTaskList extends TaskList {
 
         public void remove() {
             if (current == null || i==false ){
+                log.error("Attempt to delete a null task");
                 throw new IllegalStateException();
             }
             LinkedTaskList.this.remove(prev.data);

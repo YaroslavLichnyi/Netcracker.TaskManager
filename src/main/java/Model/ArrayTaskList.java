@@ -23,8 +23,7 @@ public class ArrayTaskList extends TaskList{
             assert(task != null);
             taskList[numOfElements] = task;
         } catch (Exception e){
-            System.out.println("ERROR");
-
+            log.error("User tried to add a task with reference to null",e);
         }
         taskList[numOfElements] = task;
         numOfElements++;
@@ -46,7 +45,7 @@ public class ArrayTaskList extends TaskList{
             }
 
         } catch (Exception e){
-            System.out.println("ERROR. You entered incorrect number");
+            log.error("User entered incorrect number" ,e);
         }
         return false;
     }
@@ -64,10 +63,7 @@ public class ArrayTaskList extends TaskList{
             return taskList[index];
 
         } catch (Exception e){
-            System.out.println("Dear User, your tasklist sontains "+ numOfElements + " tasks. Pleare, enter number from 0 to " + numOfElements);
-            Scanner scanner = new Scanner(System.in);
-            int a = scanner.nextInt();
-            this.getTask(a);
+            log.error("User entered index not between 0 and "+numOfElements+" (number of tasks)");
         }
         return null;
     }
@@ -147,11 +143,10 @@ public Iterator iterator() { return new ArrayTaskList.ArrayTaskListIterator(); }
                 current = lastIt;
                 lastIt =- 1;
             } catch (IndexOutOfBoundsException ex){
+                log.error("Cannot to delete remove a task");
                 throw new ConcurrentModificationException();
             }
         }
-		
-		
     }
 
 }
