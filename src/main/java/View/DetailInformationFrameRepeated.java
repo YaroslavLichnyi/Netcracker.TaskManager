@@ -132,6 +132,14 @@ public class DetailInformationFrameRepeated extends JFrame {
         gbcPanel0.anchor = GridBagConstraints.NORTH;
         gridBagLayout.setConstraints( btDelete, gbcPanel0 );
         panel.add( btDelete );
+        btDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.deleteTask(mytask);
+                dispose();
+            }
+        });
+
 
         btEdit = new JButton( "Edit"  );
         btEdit.setBackground( new Color( 238,247,255 ) );

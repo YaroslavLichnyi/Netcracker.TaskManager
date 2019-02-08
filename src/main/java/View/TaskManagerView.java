@@ -20,19 +20,8 @@ import java.util.Observer;
 public class TaskManagerView  extends JFrame implements Observer {
     private TaskManagerController taskManagerController;
     private ArrayTaskList tasks;
-    private JButton addButton ;
-    private JButton findButton;
-    private JButton callenderButton;
-    private JTextField fromField;
-    private JTextField toField;
-    private JLabel lbFrom;
-    private JLabel lbTo;
     private JTable taskTable;
     private DefaultTableModel model;
-    private JPanel panel;
-    GridBagLayout gridBagLayout;
-    GridBagConstraints gridBag;
-    private Object[] headers = { "Name", "Next time" };
 
     public TaskManagerView(ArrayTaskList arr, final TaskManagerController controller) throws HeadlessException {
         super("Task Manager");
@@ -48,119 +37,40 @@ public class TaskManagerView  extends JFrame implements Observer {
             ex.printStackTrace();
         }
 
-        panel = new JPanel();
+        JPanel panel = new JPanel();
 
         GridBagLayout gridBagLayout = new GridBagLayout();
         GridBagConstraints gridBag = new GridBagConstraints();
         panel.setLayout( gridBagLayout );
 
         //ADD
-        addButton = new JButton( "Add"  );
-        gridBag.gridx = 5;
-        gridBag.gridy = 2;
+        JButton addButton = new JButton("Add");
+        gridBag.gridx = 1;
+        gridBag.gridy = 1;
         gridBag.gridwidth = 1;
         gridBag.gridheight = 1;
         gridBag.fill = GridBagConstraints.BOTH;
         gridBag.weightx = 1;
         gridBag.weighty = 0;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( addButton, gridBag );
-        panel.add( addButton );
+        gridBagLayout.setConstraints(addButton, gridBag );
+        panel.add(addButton);
 
         //FIND
-        findButton = new JButton( "Find"  );
-        gridBag.gridx = 5;
-        gridBag.gridy = 0;
-        gridBag.gridwidth = 1;
-        gridBag.gridheight = 1;
-        gridBag.fill = GridBagConstraints.BOTH;
-        gridBag.weightx = 1;
-        gridBag.weighty = 0;
-        gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( findButton, gridBag );
-        panel.add( findButton );
-
-        //FROM (textField)
-        fromField = new JTextField( );
-        gridBag.gridx = 1;
-        gridBag.gridy = 0;
-        gridBag.gridwidth = 1;
-        gridBag.gridheight = 1;
-        gridBag.fill = GridBagConstraints.BOTH;
-        gridBag.weightx = 1;
-        gridBag.weighty = 0;
-        gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( fromField, gridBag );
-        panel.add( fromField );
-
-        //TO (textField)
-        toField = new JTextField( );
-        gridBag.gridx = 4;
-        gridBag.gridy = 0;
-        gridBag.gridwidth = 1;
-        gridBag.gridheight = 1;
-        gridBag.fill = GridBagConstraints.BOTH;
-        gridBag.weightx = 1;
-        gridBag.weighty = 0;
-        gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( toField, gridBag );
-        panel.add( toField );
-
-        //FROM (label)
-        lbFrom = new JLabel( "From"  );
-        gridBag.gridx = 0;
-        gridBag.gridy = 0;
-        gridBag.gridwidth = 1;
-        gridBag.gridheight = 1;
-        gridBag.fill = GridBagConstraints.BOTH;
-        gridBag.weightx = 1;
-        gridBag.weighty = 1;
-        gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbFrom, gridBag );
-        panel.add( lbFrom );
-
-        //TO (label)
-        lbTo = new JLabel( "To"  );
+        JButton findButton = new JButton("Find");
         gridBag.gridx = 2;
-        gridBag.gridy = 0;
-        gridBag.gridwidth = 2;
+        gridBag.gridy = 1;
+        gridBag.gridwidth = 1;
         gridBag.gridheight = 1;
         gridBag.fill = GridBagConstraints.BOTH;
         gridBag.weightx = 1;
-        gridBag.weighty = 1;
+        gridBag.weighty = 0;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbTo, gridBag );
-        panel.add( lbTo );
+        gridBagLayout.setConstraints(findButton, gridBag );
+        panel.add(findButton);
 
 
-/*
-        //TABLE
-        Object[][] data = new Object[10][2];
-        Iterator<Task> taskIterator = arr.iterator();
-        Task task;
-        if (arr.size() > 0){
-            int i = 0;
-            while (taskIterator.hasNext()){
-                Date currentDate = new Date();
-                task = taskIterator.next();
-                //выводим название и время следующего выполнения этой задачи
-                data[i][0] = task.getTitle();
-               /* if(!task.isRepeated()){
-                    if(task.getTime().after(currentDate)){
-                        data[i][0] = task.getTitle();
-                        data[i][1] = task.nextTimeAfter(currentDate).toString();
-                    }
-                } else if (task.isRepeated()){
-                    if (! (task.nextTimeAfter(currentDate) == null)){
-                        data[i][0] = task.getTitle();
-                        data[i][1] = task.nextTimeAfter(currentDate).toString();
-                    }
-                }
-                i++;
-            }
-        }
-
-        */
+        Object[] headers = {"Name", "Next time"};
         model = new DefaultTableModel(null, headers);
         taskTable = new JTable(model){
             @Override
@@ -171,7 +81,7 @@ public class TaskManagerView  extends JFrame implements Observer {
         //taskTable = new JTable(data, headers);
         JScrollPane scrollPane = new JScrollPane( taskTable );
         gridBag.gridx = 0;
-        gridBag.gridy = 1;
+        gridBag.gridy = 2;
         gridBag.gridwidth = 6;
         gridBag.gridheight = 1;
         gridBag.fill = GridBagConstraints.BOTH;
@@ -182,37 +92,19 @@ public class TaskManagerView  extends JFrame implements Observer {
         panel.add( scrollPane );
 
         //CALLENDER (buttom)
-        callenderButton = new JButton( "Callendar"  );
+        JButton callenderButton = new JButton("Callendar");
         gridBag.gridx = 3;
-        gridBag.gridy = 2;
+        gridBag.gridy = 1;
         gridBag.gridwidth = 2;
         gridBag.gridheight = 1;
         gridBag.fill = GridBagConstraints.BOTH;
         gridBag.weightx = 1;
         gridBag.weighty = 0;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( callenderButton, gridBag );
-        panel.add( callenderButton );
+        gridBagLayout.setConstraints(callenderButton, gridBag );
+        panel.add(callenderButton);
 
         //нажатие на ячейку таблицы -> открывается детальная информакция об задаче
-
-
- /*
-        taskTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-            public void valueChanged(ListSelectionEvent event) {
-                // do some actions here, for example
-                // print first column value from selected row
-                System.out.println(taskTable.getValueAt(taskTable.getSelectedRow(), 0).toString());
-            }
-        });
-                taskTable.getSelectionModel().addListSelectionListener(new ListSelectionListener()
-        {
-            public void valueChanged(ListSelectionEvent e)
-            {
-                System.out.println("hello");
-            }
-        });
-         */
         taskTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -227,17 +119,6 @@ public class TaskManagerView  extends JFrame implements Observer {
 
             }
         });
-/*
-
-        taskTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent event) {
-                // do some actions here, for example
-                // print first column value from selected row
-              //  System.out.println(taskTable.getValueAt(taskTable.getSelectedRow(), 0).toString());
-                System.out.println("2");
-            }
-        });
-        */
 
         //ACTIONS
 
@@ -269,7 +150,7 @@ public class TaskManagerView  extends JFrame implements Observer {
         findButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FindFrame findFrame = new FindFrame(tasks, fromField.getText(), toField.getText());
+                //FindFrame findFrame = new FindFrame(tasks, fromField.getText(), toField.getText());
             }
         });
 
@@ -279,15 +160,16 @@ public class TaskManagerView  extends JFrame implements Observer {
         updateTable();
     }
 
+
     /*
      * Updates data and window
      */
     public void update(Observable o, Object arg) {
-        // ArrayTaskList arrayTaskList = (ArrayTaskList) arg;
-        // this.tasks = arrayTaskList;
+        ArrayTaskList arrayTaskList = (ArrayTaskList) arg;
+        this.tasks = arrayTaskList;
         updateTable();
-        System.out.println("OBSERVER WORKS");
-}
+    }
+
 
     /*
      * Actions with table
@@ -300,14 +182,21 @@ public class TaskManagerView  extends JFrame implements Observer {
     }
 
     private void updateTable(){
-        model.setRowCount(10);
+        final int tableRowSize = 10;
+        //tasks.size();
+        model.setRowCount(tableRowSize);
         Iterator<Task> taskIterator = tasks.iterator();
         Task task;
         int i = 0;
         while (taskIterator.hasNext()){
             task = taskIterator.next();
-            model.setValueAt(task.getTitle(), i , 0); // в любом случае пишем число
-            model.setValueAt("-", i , 1); // в любом случае пишем число
+            model.setValueAt(task.getTitle(), i , 0);
+            model.setValueAt("-", i , 1);
+            i++;
+        }
+        while(i<tableRowSize){
+            model.setValueAt(null, i , 0);
+            model.setValueAt(null, i , 1);
             i++;
         }
         taskTable.repaint();

@@ -165,7 +165,6 @@ public class CalendarFrame extends JFrame {
         model.setRowCount(6);
         int i = startDay - 1;
 
-
         monthNumber = cal.get(Calendar.MONTH)+1;
         String dayStr = "";
         String monthStr = "";

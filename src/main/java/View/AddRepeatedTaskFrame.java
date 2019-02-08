@@ -1,7 +1,6 @@
 package View;
 
 import Controller.TaskManagerController;
-import Model.ArrayTaskList;
 import Model.Task;
 
 import javax.swing.*;
@@ -40,6 +39,7 @@ public class AddRepeatedTaskFrame extends JFrame {
     private JComboBox cmbSecondsInreval;
     private JComboBox cmbMinutesInreval;
     private JComboBox cmbHoursInreval;
+    private  JCheckBox cbActiveBox;
     private TaskManagerController taskManagerController;
 
     public AddRepeatedTaskFrame(final String title, TaskManagerController controller ) {
@@ -57,7 +57,7 @@ public class AddRepeatedTaskFrame extends JFrame {
         }
 
         JButton btAdd;
-        JCheckBox cbActiveBox;
+
 
         panel = new JPanel();
 
@@ -233,7 +233,7 @@ public class AddRepeatedTaskFrame extends JFrame {
         gbPanel0.setConstraints( cmbSecondsFrom, gbcPanel0 );
         panel.add( cmbSecondsFrom );
 
-        String []dataMinutes = { "0", "01", "02", "03", "04", "05", "06", "07", "08", "09",
+        String []dataMinutes = { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09",
                 "10", "11", "12", "13", "14", "15", "16", "17", "18",
                 "19", "20", "21", "22", "23", "24", "25", "26", "27",
                 "28", "29", "30", "31", "32", "33", "34", "35", "36",
@@ -488,7 +488,7 @@ public class AddRepeatedTaskFrame extends JFrame {
         gbPanel0.setConstraints( cmbDaysInreval, gbcPanel0 );
         panel.add( cmbDaysInreval );
 
-        String []dataMonthesInterval = {"0", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
+        String []dataMonthesInterval = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
                 "11", "12" };
 
         cmbMonthesInreval = new JComboBox( dataMonthesInterval );
@@ -503,7 +503,7 @@ public class AddRepeatedTaskFrame extends JFrame {
         gbPanel0.setConstraints( cmbMonthesInreval, gbcPanel0 );
         panel.add( cmbMonthesInreval );
 
-        String []dataYearsInterval = {"0", "01", "02", "03", "04", "05" };
+        String []dataYearsInterval = {"00", "01", "02", "03", "04", "05" };
 
         cmbYearsInreval = new JComboBox( dataYearsInterval );
         gbcPanel0.gridx = 3;
@@ -611,8 +611,8 @@ public class AddRepeatedTaskFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 0;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( cbActiveBox, gbcPanel0 );
-        panel.add( cbActiveBox );
+        gbPanel0.setConstraints(cbActiveBox, gbcPanel0 );
+        panel.add(cbActiveBox);
 
         this.add(panel);
         this.setVisible(true);
@@ -654,6 +654,7 @@ public class AddRepeatedTaskFrame extends JFrame {
                     e1.printStackTrace();
                 }
                 Task task = new Task(title, dateFrom, dateTo,intervalValue );
+                task.setActive(cbActiveBox.isSelected());
                 taskManagerController.addTask(task);
                 dispose();
             }

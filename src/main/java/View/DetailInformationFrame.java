@@ -99,6 +99,7 @@ public class DetailInformationFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                   controller.deleteTask(mytask);
+                  dispose();
             }
         });
 

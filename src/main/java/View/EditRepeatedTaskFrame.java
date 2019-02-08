@@ -252,7 +252,7 @@ public class EditRepeatedTaskFrame extends JFrame{
         gridBagLayout.setConstraints( cmbSecondsFrom, gridBagConstr);
         panel.add( cmbSecondsFrom );
 
-        String []dataMinutes = { "0", "01", "02", "03", "04", "05", "06", "07", "08", "09",
+        String []dataMinutes = { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09",
                 "10", "11", "12", "13", "14", "15", "16", "17", "18",
                 "19", "20", "21", "22", "23", "24", "25", "26", "27",
                 "28", "29", "30", "31", "32", "33", "34", "35", "36",
@@ -535,7 +535,7 @@ public class EditRepeatedTaskFrame extends JFrame{
         gridBagLayout.setConstraints( cmbDaysInreval, gridBagConstr);
         panel.add( cmbDaysInreval );
 
-        String []dataMonthesInterval = {"0", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
+        String []dataMonthesInterval = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
                 "11", "12" };
 
         cmbMonthesInreval = new JComboBox( dataMonthesInterval );
@@ -551,7 +551,7 @@ public class EditRepeatedTaskFrame extends JFrame{
         gridBagLayout.setConstraints( cmbMonthesInreval, gridBagConstr);
         panel.add( cmbMonthesInreval );
 
-        String []dataYearsInterval = {"0", "01", "02", "03", "04", "05" };
+        String []dataYearsInterval = {"00", "01", "02", "03", "04", "05" };
 
         cmbYearsInreval = new JComboBox( dataYearsInterval );
         gridBagConstr.gridx = 3;
@@ -690,6 +690,7 @@ public class EditRepeatedTaskFrame extends JFrame{
                 } catch (ParseException e1) {
                     e1.printStackTrace();
                 }
+                title = txfTitle.getText();
                 Task newTask = new Task(title, dateFrom, dateTo,intervalValue );
                 controller.editTask( oldTask, newTask);
                 dispose();

@@ -42,7 +42,7 @@ public class TaskManagerController extends Observable {
         */
         view = new TaskManagerView(tasks, this);
         this.addObserver(view);
-        TaskTableFrame taskTableFrame = new TaskTableFrame(tasks, this);
+       // TaskTableFrame taskTableFrame = new TaskTableFrame(tasks, this);
 
 
     }
@@ -51,17 +51,36 @@ public class TaskManagerController extends Observable {
         tasks.add(task);
         this.notifyObservers(tasks);
         view.update(this, tasks);
-
+        writeTasks();
     }
 
     public void deleteTask(Task task){
+        log.info("Task was deleted("+task.getTitle()+")");
         tasks.remove(task);
         this.notifyObservers(tasks);
         view.update(this, tasks);
+        writeTasks();
+
     }
     public void editTask(Task oldTask, Task newTask ){
-        this.deleteTask(oldTask);
-        this.addTask(newTask);
+        if(oldTask.getTitle()!=null && newTask.getTitle()!=null && !oldTask.getTitle().equals(newTask.getTitle())){
+            log.info("Task was edited("+oldTask.getTitle()+" -> "+newTask.getTitle()+")");
+        } else if(oldTask.getTitle()!=null && newTask.getTitle()!=null && oldTask.getTitle().equals(newTask.getTitle())) {
+            log.info("Task was edited("+oldTask.getTitle()+")");
+        }
+        oldTask.setTitle(newTask.getTitle());
+        oldTask.setActive(newTask.isActive());
+        if (oldTask.isRepeated()){
+            oldTask.setTime(newTask.getStartTime(), newTask.getEndTime(),newTask.getRepeatInterval());
+        } else {
+            oldTask.setTime(newTask.getTime());
+        }
+
+     /*   this.deleteTask(oldTask);
+        this.addTask(newTask);*/
+        this.notifyObservers(tasks);
+        view.update(this, tasks);
+        writeTasks();
     }
     public void writeTasks(){
         try {

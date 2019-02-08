@@ -167,6 +167,7 @@ public class AddNotRepeatedTaskFrame extends Frame{
         gbPanel0.setConstraints( cmbMonthes, gbcPanel0 );
         panel.add( cmbMonthes );
 
+
         String []dataCombo3 = {  "2019", "2020", "2021", "2022",
                 "2023", "2024", "2025", "2026", "2027",  "2028",
                 "2029", "2030", "2031", "2032", "2033", "2034",
@@ -204,7 +205,7 @@ public class AddNotRepeatedTaskFrame extends Frame{
         gbPanel0.setConstraints( cmbSeconds, gbcPanel0 );
         panel.add( cmbSeconds );
 
-        String []dataMinutes = { "0", "01", "02", "03", "04", "05", "06", "07", "08", "09",
+        String []dataMinutes = { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09",
                 "10", "11", "12", "13", "14", "15", "16", "17", "18",
                 "19", "20", "21", "22", "23", "24", "25", "26", "27",
                 "28", "29", "30", "31", "32", "33", "34", "35", "36",
@@ -269,22 +270,35 @@ public class AddNotRepeatedTaskFrame extends Frame{
         btAdd.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 SimpleDateFormat taskFormat = new SimpleDateFormat("ddMMyyyy HH:mm:ss");
-                String seconds =(String) cmbSeconds.getSelectedItem();
-                String minutes =(String) cmbMinutes.getSelectedItem();
-                String hours =(String) cmbHours.getSelectedItem();
                 String days =(String) cmbDays.getSelectedItem();
                 String monthes =(String) cmbMonthes.getSelectedItem();
                 String years =(String) cmbYear.getSelectedItem();
-                String myDate =days+monthes+years+" "+hours+":"+minutes+":"+seconds;
-                Date date = null;
-                try {
-                    date = (Date)taskFormat.parse(myDate);
-                } catch (ParseException e1) {
-                    e1.printStackTrace();
+
+                if (
+                    (Integer.parseInt(days) == 31 && ( monthes == "04" || monthes == "06" || monthes == "09" || monthes == "11")
+                  )
+                    || (Integer.parseInt(days) >= 30 && monthes == "02" &&  ((Integer.parseInt(years) % 4 == 0) && Integer.parseInt(years) % 100 != 0) )
+                    ||(Integer.parseInt(days) >= 29 && monthes == "02" &&  !((Integer.parseInt(years) % 4 == 0) && Integer.parseInt(years) % 100 != 0))){
+
+                    JFrame frame = new JFrame("Error");
+                    JOptionPane.showMessageDialog(frame, "Too many days for this month");
+                } else{
+                    String seconds =(String) cmbSeconds.getSelectedItem();
+                    String minutes =(String) cmbMinutes.getSelectedItem();
+                    String hours =(String) cmbHours.getSelectedItem();
+
+                    String myDate =days+monthes+years+" "+hours+":"+minutes+":"+seconds;
+                    Date date = null;
+                    try {
+                        date = (Date)taskFormat.parse(myDate);
+                    } catch (ParseException e1) {
+                        e1.printStackTrace();
+                    }
+                    Task task = new Task(taskTitle ,date);
+                    task.setActive(cbActiveBox.isSelected());
+                    taskManagerController.addTask(task);
+                    dispose();
                 }
-                Task task = new Task(taskTitle ,date);
-                taskManagerController.addTask(task);
-                dispose();
             }
         });
     }
