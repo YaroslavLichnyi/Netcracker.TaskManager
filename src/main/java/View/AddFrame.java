@@ -98,12 +98,17 @@ public class AddFrame extends JFrame{
 
         btNext.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (boxRepeated.isSelected()) {
-                    AddRepeatedTaskFrame addFrame = new AddRepeatedTaskFrame(txfTitle.getText(), taskManagerController);
+                if (txfTitle.getText().length()<2){
+                    JFrame frame = new JFrame("Error");
+                    JOptionPane.showMessageDialog(frame, "Incorrect title");
                 } else {
-                    AddNotRepeatedTaskFrame addFrame = new AddNotRepeatedTaskFrame(txfTitle.getText(), taskManagerController);
+                    if (boxRepeated.isSelected()) {
+                        AddRepeatedTaskFrame addFrame = new AddRepeatedTaskFrame(txfTitle.getText(), taskManagerController);
+                    } else {
+                        AddNotRepeatedTaskFrame addFrame = new AddNotRepeatedTaskFrame(txfTitle.getText(), taskManagerController);
+                    }
+                    dispose();
                 }
-                dispose();
             }
         });
         this.setVisible(true);

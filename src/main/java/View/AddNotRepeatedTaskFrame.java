@@ -282,7 +282,7 @@ public class AddNotRepeatedTaskFrame extends Frame{
 
                     JFrame frame = new JFrame("Error");
                     JOptionPane.showMessageDialog(frame, "Too many days for this month");
-                } else{
+                } else {
                     String seconds =(String) cmbSeconds.getSelectedItem();
                     String minutes =(String) cmbMinutes.getSelectedItem();
                     String hours =(String) cmbHours.getSelectedItem();

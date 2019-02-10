@@ -48,7 +48,7 @@ public class AddRepeatedTaskFrame extends JFrame {
         taskManagerController = controller;
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension dimension = toolkit.getScreenSize();
-        this.setBounds(dimension.width / 2 - 150, dimension.height / 2 - 150, 300, 300);
+        this.setBounds(dimension.width / 2 - 200, dimension.height / 2 - 250, 400, 500);
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
@@ -58,15 +58,15 @@ public class AddRepeatedTaskFrame extends JFrame {
 
         JButton btAdd;
 
-
         panel = new JPanel();
 
         GridBagLayout gbPanel0 = new GridBagLayout();
         GridBagConstraints gbcPanel0 = new GridBagConstraints();
         panel.setLayout( gbPanel0 );
+        panel.setBackground(Color.WHITE);
 
         lbLabel0 = new JLabel( "Time"  );
-        lbLabel0.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
+        lbLabel0.setFont(new Font("Serif", Font.BOLD, 22));
         gbcPanel0.gridx = 2;
         gbcPanel0.gridy = 0;
         gbcPanel0.gridwidth = 1;
@@ -79,7 +79,9 @@ public class AddRepeatedTaskFrame extends JFrame {
         panel.add( lbLabel0 );
 
         lbLabel0 = new JLabel( "From"  );
-        gbcPanel0.gridx = 1;
+        lbLabel0.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
+        lbLabel0.setForeground(new Color(0, 128, 242));
+        gbcPanel0.gridx = 2;
         gbcPanel0.gridy = 2;
         gbcPanel0.gridwidth = 1;
         gbcPanel0.gridheight = 1;
@@ -165,7 +167,7 @@ public class AddRepeatedTaskFrame extends JFrame {
         panel.add( lbSeconds );
 
 
-        String []dataDays = { "00", "01", "02", "03", "04", "05", "06", "07",
+        String []dataDays = { "01", "02", "03", "04", "05", "06", "07",
                               "08", "09", "10", "11", "12", "13", "14", "15",
                               "16", "17", "18", "19", "20", "21", "22", "23",
                               "24", "25", "26", "27", "28", "29", "30", "31" };
@@ -181,9 +183,8 @@ public class AddRepeatedTaskFrame extends JFrame {
         gbPanel0.setConstraints( cmbDaysFrom, gbcPanel0 );
         panel.add( cmbDaysFrom );
 
-        String []dataMonthes = { "January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November",
-                "December" };
+        String []dataMonthes = { "01", "02", "03", "04", "05", "06", "07", "08", "09",
+                "10", "11", "12" };
         cmbMonthesFrom = new JComboBox( dataMonthes );
         gbcPanel0.gridx = 2;
         gbcPanel0.gridy = 4;
@@ -268,7 +269,9 @@ public class AddRepeatedTaskFrame extends JFrame {
         panel.add( cmbHoursFrom );
 
         lbLabel0 = new JLabel( "To"  );
-        gbcPanel0.gridx = 1;
+        lbLabel0.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
+        lbLabel0.setForeground(new Color(0, 128, 242));
+        gbcPanel0.gridx = 2;
         gbcPanel0.gridy = 7;
         gbcPanel0.gridwidth = 1;
         gbcPanel0.gridheight = 1;
@@ -429,7 +432,10 @@ public class AddRepeatedTaskFrame extends JFrame {
         panel.add( cmbHoursTo );
 
         lbLabel0 = new JLabel( "Interval"  );
-        gbcPanel0.gridx = 1;
+        lbLabel0.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
+        lbLabel0.setForeground(new Color(0, 128, 242));
+
+        gbcPanel0.gridx = 2;
         gbcPanel0.gridy = 12;
         gbcPanel0.gridwidth = 1;
         gbcPanel0.gridheight = 1;
@@ -476,7 +482,12 @@ public class AddRepeatedTaskFrame extends JFrame {
         gbPanel0.setConstraints( lbYear, gbcPanel0 );
         panel.add( lbYear );
 
-        cmbDaysInreval = new JComboBox( dataDays );
+        String []dataDaysInterval = { "00", "01", "02", "03", "04", "05", "06", "07",
+                "08", "09", "10", "11", "12", "13", "14", "15",
+                "16", "17", "18", "19", "20", "21", "22", "23",
+                "24", "25", "26", "27", "28", "29", "30", "31" };
+
+        cmbDaysInreval = new JComboBox( dataDaysInterval );
         gbcPanel0.gridx = 1;
         gbcPanel0.gridy = 14;
         gbcPanel0.gridwidth = 1;
@@ -619,43 +630,64 @@ public class AddRepeatedTaskFrame extends JFrame {
         btAdd.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 SimpleDateFormat taskFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
-                String seconds =(String) cmbSecondsFrom.getSelectedItem();
-                String minutes =(String) cmbMinutesFrom.getSelectedItem();
-                String hours =(String) cmbHoursFrom.getSelectedItem();
-                String days =(String) cmbDaysFrom.getSelectedItem();
-                String monthes =(String) cmbMonthesFrom.getSelectedItem();
-                String years =(String) cmbYearsFrom.getSelectedItem();
 
-                String strDateFrom = days + monthes + years + hours + minutes + seconds;
+                String daysFrom =(String) cmbDaysFrom.getSelectedItem();
+                String monthesFrom =(String) cmbMonthesFrom.getSelectedItem();
+                String yearsFrom =(String) cmbYearsFrom.getSelectedItem();
 
-                seconds =(String) cmbSecondsTo.getSelectedItem();
-                minutes =(String) cmbMinutesTo.getSelectedItem();
-                hours =(String) cmbHoursTo.getSelectedItem();
-                days =(String) cmbDaysTo.getSelectedItem();
-                monthes =(String) cmbMonthesTo.getSelectedItem();
-                years =(String) cmbYearsTo.getSelectedItem();
+                String daysTo =(String) cmbDaysTo.getSelectedItem();
+                String monthesTo =(String) cmbMonthesTo.getSelectedItem();
+                String yearsTo =(String) cmbYearsTo.getSelectedItem();
+                if (
+                           (Integer.parseInt(daysFrom) == 31 && ( monthesFrom == "04" || monthesFrom == "06" || monthesFrom == "09" || monthesFrom == "11"))
+                        || (Integer.parseInt(daysFrom) >= 30 && monthesFrom == "02" &&  ((Integer.parseInt(yearsFrom) % 4 == 0) && Integer.parseInt(yearsFrom) % 100 != 0) )
+                        || (Integer.parseInt(daysFrom) >= 29 && monthesFrom == "02" &&  !((Integer.parseInt(yearsFrom) % 4 == 0) && Integer.parseInt(yearsFrom) % 100 != 0))
+                        || (Integer.parseInt(daysTo) == 31 && ( monthesTo == "04" || monthesTo == "06" || monthesTo == "09" || monthesTo == "11"))
+                        || (Integer.parseInt(daysTo) >= 30 && monthesTo == "02" &&  ((Integer.parseInt(yearsTo) % 4 == 0) && Integer.parseInt(yearsTo) % 100 != 0) )
+                        || (Integer.parseInt(daysTo) >= 29 && monthesTo == "02" &&  !((Integer.parseInt(yearsTo) % 4 == 0) && Integer.parseInt(yearsTo) % 100 != 0))
+                ){
 
-                String strDateTo = days + monthes + years + hours + minutes + seconds;
+                    JFrame frame = new JFrame("Error");
+                    JOptionPane.showMessageDialog(frame, "Too many days for this month");
+                } else {
+                    String seconds =(String) cmbSecondsFrom.getSelectedItem();
+                    String minutes =(String) cmbMinutesFrom.getSelectedItem();
+                    String hours =(String) cmbHoursFrom.getSelectedItem();
+                    String days =(String) cmbDaysFrom.getSelectedItem();
+                    String monthes =(String) cmbMonthesFrom.getSelectedItem();
+                    String years =(String) cmbYearsFrom.getSelectedItem();
 
-                int intervalValue = (Integer) cmbSecondsInreval.getSelectedItem();
-                intervalValue += (Integer) cmbSecondsInreval.getSelectedItem();
-                intervalValue += (Integer) cmbMinutesInreval.getSelectedItem() * 60;
-                intervalValue += (Integer) cmbHoursInreval.getSelectedItem() * 60 * 60 ;
-                intervalValue += (Integer) cmbDaysInreval.getSelectedItem() * 60 * 60 * 24 ;
-                intervalValue += (Integer) cmbHoursInreval.getSelectedItem() * 60 * 60 * 30;
-                intervalValue += (Integer) cmbHoursInreval.getSelectedItem() * 60 * 60  * 365;
+                    String strDateFrom = days + monthes + years + hours + minutes + seconds;
 
-                Date dateFrom = null;
-                Date dateTo = null;
-                try {
-                    dateFrom = (Date)taskFormat.parse(strDateFrom);
-                    dateTo = (Date)taskFormat.parse(strDateTo);
-                } catch (ParseException e1) {
-                    e1.printStackTrace();
+                    seconds =(String) cmbSecondsTo.getSelectedItem();
+                    minutes =(String) cmbMinutesTo.getSelectedItem();
+                    hours =(String) cmbHoursTo.getSelectedItem();
+                    days =(String) cmbDaysTo.getSelectedItem();
+                    monthes =(String) cmbMonthesTo.getSelectedItem();
+                    years =(String) cmbYearsTo.getSelectedItem();
+
+                    String strDateTo = days + monthes + years + hours + minutes + seconds;
+
+                    int intervalValue = Integer.parseInt( (String) cmbSecondsInreval.getSelectedItem());
+                    intervalValue += Integer.parseInt( (String) cmbSecondsInreval.getSelectedItem());
+                    intervalValue += Integer.parseInt( (String) cmbMinutesInreval.getSelectedItem()) * 60;
+                    intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60 ;
+                    intervalValue += Integer.parseInt( (String) cmbDaysInreval.getSelectedItem()) * 60 * 60 * 24 ;
+                    intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60 * 30;
+                    intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60  * 365;
+
+                    Date dateFrom = null;
+                    Date dateTo = null;
+                    try {
+                        dateFrom = (Date)taskFormat.parse(strDateFrom);
+                        dateTo = (Date)taskFormat.parse(strDateTo);
+                    } catch (ParseException e1) {
+                        e1.printStackTrace();
+                    }
+                    Task task = new Task(title, dateFrom, dateTo,intervalValue );
+                    task.setActive(cbActiveBox.isSelected());
+                    taskManagerController.addTask(task);
                 }
-                Task task = new Task(title, dateFrom, dateTo,intervalValue );
-                task.setActive(cbActiveBox.isSelected());
-                taskManagerController.addTask(task);
                 dispose();
             }
         });

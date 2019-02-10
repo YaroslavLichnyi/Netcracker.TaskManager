@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 
-public class FindFrame {
+public class FindFrame extends JFrame {
     JTextField titleField;  //текстовое поле с названием задачи
     JTextField timeField;   //текстовое поле со временем
     ArrayTaskList arr;
@@ -26,7 +26,6 @@ public class FindFrame {
             from = format.parse(timeFrom);
             to = format.parse(timeTo);
         } catch (Exception ex){
-
         }
 
 
