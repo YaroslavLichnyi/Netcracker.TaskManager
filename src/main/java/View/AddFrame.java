@@ -100,7 +100,7 @@ public class AddFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 if (txfTitle.getText().length()<2){
                     JFrame frame = new JFrame("Error");
-                    JOptionPane.showMessageDialog(frame, "Incorrect title");
+                    JOptionPane.showMessageDialog(frame, "Too short title");
                 } else {
                     if (boxRepeated.isSelected()) {
                         AddRepeatedTaskFrame addFrame = new AddRepeatedTaskFrame(txfTitle.getText(), taskManagerController);

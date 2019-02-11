@@ -634,10 +634,17 @@ public class AddRepeatedTaskFrame extends JFrame {
                 String daysFrom =(String) cmbDaysFrom.getSelectedItem();
                 String monthesFrom =(String) cmbMonthesFrom.getSelectedItem();
                 String yearsFrom =(String) cmbYearsFrom.getSelectedItem();
-
                 String daysTo =(String) cmbDaysTo.getSelectedItem();
                 String monthesTo =(String) cmbMonthesTo.getSelectedItem();
                 String yearsTo =(String) cmbYearsTo.getSelectedItem();
+
+                int intervalValue = Integer.parseInt( (String) cmbSecondsInreval.getSelectedItem());
+                intervalValue += Integer.parseInt( (String) cmbSecondsInreval.getSelectedItem());
+                intervalValue += Integer.parseInt( (String) cmbMinutesInreval.getSelectedItem()) * 60;
+                intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60 ;
+                intervalValue += Integer.parseInt( (String) cmbDaysInreval.getSelectedItem()) * 60 * 60 * 24 ;
+                intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60 * 30;
+                intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60  * 365;
                 if (
                            (Integer.parseInt(daysFrom) == 31 && ( monthesFrom == "04" || monthesFrom == "06" || monthesFrom == "09" || monthesFrom == "11"))
                         || (Integer.parseInt(daysFrom) >= 30 && monthesFrom == "02" &&  ((Integer.parseInt(yearsFrom) % 4 == 0) && Integer.parseInt(yearsFrom) % 100 != 0) )
@@ -649,6 +656,9 @@ public class AddRepeatedTaskFrame extends JFrame {
 
                     JFrame frame = new JFrame("Error");
                     JOptionPane.showMessageDialog(frame, "Too many days for this month");
+                } else if (intervalValue==0){
+                    JFrame frame = new JFrame("Error");
+                    JOptionPane.showMessageDialog(frame, "Your interval must be at least 1 second (not 0)");
                 } else {
                     String seconds =(String) cmbSecondsFrom.getSelectedItem();
                     String minutes =(String) cmbMinutesFrom.getSelectedItem();
@@ -668,13 +678,7 @@ public class AddRepeatedTaskFrame extends JFrame {
 
                     String strDateTo = days + monthes + years + hours + minutes + seconds;
 
-                    int intervalValue = Integer.parseInt( (String) cmbSecondsInreval.getSelectedItem());
-                    intervalValue += Integer.parseInt( (String) cmbSecondsInreval.getSelectedItem());
-                    intervalValue += Integer.parseInt( (String) cmbMinutesInreval.getSelectedItem()) * 60;
-                    intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60 ;
-                    intervalValue += Integer.parseInt( (String) cmbDaysInreval.getSelectedItem()) * 60 * 60 * 24 ;
-                    intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60 * 30;
-                    intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60  * 365;
+
 
                     Date dateFrom = null;
                     Date dateTo = null;

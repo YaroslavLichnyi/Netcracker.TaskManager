@@ -39,9 +39,10 @@ public class EditRepeatedTaskFrame extends JFrame{
     private JComboBox cmbSecondsInreval;
     private JComboBox cmbMinutesInreval;
     private JComboBox cmbHoursInreval;
-    private  JTextField txfTitle;
+    private JTextField txfTitle;
     private TaskManagerController controller;
     private Task oldTask;
+    private JCheckBox cbActiveBox;
 
     public EditRepeatedTaskFrame(Task task, TaskManagerController taskManagerController ) {
         controller = taskManagerController;
@@ -56,7 +57,6 @@ public class EditRepeatedTaskFrame extends JFrame{
             ex.printStackTrace();
         }
         JButton btAdd;
-        JCheckBox cbActiveBox;
         panel = new JPanel();
         GridBagLayout gridBagLayout = new GridBagLayout();
         GridBagConstraints gridBagConstr = new GridBagConstraints();
@@ -449,13 +449,6 @@ public class EditRepeatedTaskFrame extends JFrame{
         gridBagLayout.setConstraints( cmbHoursTo, gridBagConstr);
         panel.add( cmbHoursTo );
 
-
-
-
-
-
-
-
         lbLabel0 = new JLabel( "Interval"  );
         gridBagConstr.gridx = 1;
         gridBagConstr.gridy = 12;
@@ -504,10 +497,6 @@ public class EditRepeatedTaskFrame extends JFrame{
         gridBagLayout.setConstraints( lbYear, gridBagConstr);
         panel.add( lbYear );
 
-
-
-
-
         int interval = task.getRepeatInterval();
         final int day = 86400;
         int intervalDays = (interval - interval%day)/day;
@@ -538,7 +527,6 @@ public class EditRepeatedTaskFrame extends JFrame{
                 "11", "12" };
 
         cmbMonthesInreval = new JComboBox( dataMonthesInterval );
-
         gridBagConstr.gridx = 2;
         gridBagConstr.gridy = 14;
         gridBagConstr.gridwidth = 1;
@@ -657,10 +645,18 @@ public class EditRepeatedTaskFrame extends JFrame{
                 String daysFrom =(String) cmbDaysFrom.getSelectedItem();
                 String monthesFrom =(String) cmbMonthesFrom.getSelectedItem();
                 String yearsFrom =(String) cmbYearsFrom.getSelectedItem();
-
                 String daysTo =(String) cmbDaysTo.getSelectedItem();
                 String monthesTo =(String) cmbMonthesTo.getSelectedItem();
                 String yearsTo =(String) cmbYearsTo.getSelectedItem();
+
+                int intervalValue = Integer.parseInt( (String) cmbSecondsInreval.getSelectedItem());
+                intervalValue += Integer.parseInt( (String) cmbSecondsInreval.getSelectedItem());
+                intervalValue += Integer.parseInt( (String) cmbMinutesInreval.getSelectedItem()) * 60;
+                intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60 ;
+                intervalValue += Integer.parseInt( (String) cmbDaysInreval.getSelectedItem()) * 60 * 60 * 24 ;
+                intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60 * 30;
+                intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60  * 365;
+
                 if (
                         (Integer.parseInt(daysFrom) == 31 && ( monthesFrom == "04" || monthesFrom == "06" || monthesFrom == "09" || monthesFrom == "11"))
                                 || (Integer.parseInt(daysFrom) >= 30 && monthesFrom == "02" &&  ((Integer.parseInt(yearsFrom) % 4 == 0) && Integer.parseInt(yearsFrom) % 100 != 0) )
@@ -674,7 +670,10 @@ public class EditRepeatedTaskFrame extends JFrame{
                     JOptionPane.showMessageDialog(frame, "Too many days for this month");
                 } else if (txfTitle.getText().length()<2){
                     JFrame frame = new JFrame("Error");
-                    JOptionPane.showMessageDialog(frame, "Incorrect title");
+                    JOptionPane.showMessageDialog(frame, "Too short title");
+                } else if (intervalValue==0){
+                    JFrame frame = new JFrame("Error");
+                    JOptionPane.showMessageDialog(frame, "Your interval must be at least 1 second (not 0)");
                 } else {
                     SimpleDateFormat taskFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
                     String seconds =(String) cmbSecondsFrom.getSelectedItem();
@@ -695,14 +694,6 @@ public class EditRepeatedTaskFrame extends JFrame{
 
                     String strDateTo = days + monthes + years + hours + minutes + seconds;
 
-                    int intervalValue = Integer.parseInt( (String) cmbSecondsInreval.getSelectedItem());
-                    intervalValue += Integer.parseInt( (String) cmbSecondsInreval.getSelectedItem());
-                    intervalValue += Integer.parseInt( (String) cmbMinutesInreval.getSelectedItem()) * 60;
-                    intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60 ;
-                    intervalValue += Integer.parseInt( (String) cmbDaysInreval.getSelectedItem()) * 60 * 60 * 24 ;
-                    intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60 * 30;
-                    intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60  * 365;
-
                     Date dateFrom = null;
                     Date dateTo = null;
                     try {
@@ -713,6 +704,7 @@ public class EditRepeatedTaskFrame extends JFrame{
                     }
                     title = txfTitle.getText();
                     Task newTask = new Task(title, dateFrom, dateTo,intervalValue );
+                    newTask.setActive(cbActiveBox.isSelected());
                     controller.editTask( oldTask, newTask);
                     dispose();
                 }

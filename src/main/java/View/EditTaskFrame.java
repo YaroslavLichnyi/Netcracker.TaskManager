@@ -281,6 +281,7 @@ public class EditTaskFrame extends JFrame {
                 if (
                         (Integer.parseInt(days) == 31 && ( monthes == "04" || monthes == "06" || monthes == "09" || monthes == "11")
                         )
+                                //исправить == на иквелс
                                 || (Integer.parseInt(days) >= 30 && monthes == "02" &&  ((Integer.parseInt(years) % 4 == 0) && Integer.parseInt(years) % 100 != 0) )
                                 ||(Integer.parseInt(days) >= 29 && monthes == "02" &&  !((Integer.parseInt(years) % 4 == 0) && Integer.parseInt(years) % 100 != 0))){
 
@@ -288,7 +289,7 @@ public class EditTaskFrame extends JFrame {
                     JOptionPane.showMessageDialog(frame, "Too many days for this month");
                 } else if (txfTitle.getText().length()<2){
                     JFrame frame = new JFrame("Error");
-                    JOptionPane.showMessageDialog(frame, "Incorrect title");
+                    JOptionPane.showMessageDialog(frame, "Too short title");
                 } else {
                     String seconds =(String) cmbSeconds.getSelectedItem();
                     String minutes =(String) cmbMinutes.getSelectedItem();
@@ -302,10 +303,10 @@ public class EditTaskFrame extends JFrame {
                     }
                     taskTitle = txfTitle.getText();
                     Task newTask = new Task(taskTitle ,date);
+                    newTask.setActive(cbActiveBox.isSelected());
                     controller.editTask(oldTask, newTask);
                     dispose();
                 }
-
             }
         });
 

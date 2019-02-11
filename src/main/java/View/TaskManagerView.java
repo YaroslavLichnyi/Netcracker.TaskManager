@@ -160,7 +160,6 @@ public class TaskManagerView  extends JFrame implements Observer {
         updateTable();
     }
 
-
     /*
      * Updates data and window
      */
@@ -169,7 +168,6 @@ public class TaskManagerView  extends JFrame implements Observer {
         this.tasks = arrayTaskList;
         updateTable();
     }
-
 
     /*
      * Actions with table
@@ -191,7 +189,11 @@ public class TaskManagerView  extends JFrame implements Observer {
         while (taskIterator.hasNext()){
             task = taskIterator.next();
             model.setValueAt(task.getTitle(), i , 0);
-            model.setValueAt("-", i , 1);
+            try {
+                model.setValueAt(task.nextTimeAfter(new Date()), i , 1);
+            } catch (Exception ex){
+                model.setValueAt("-", i , 1);
+            }
             i++;
         }
         while(i<tableRowSize){

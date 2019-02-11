@@ -141,12 +141,7 @@ public class CalendarFrame extends JFrame {
                         }
                     }
                     Date date = new Date();
-
-
-
                 }
-
-
             }
         });
         this.updateMonth();
