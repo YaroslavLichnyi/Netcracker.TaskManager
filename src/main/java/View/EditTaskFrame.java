@@ -274,23 +274,38 @@ public class EditTaskFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SimpleDateFormat taskFormat = new SimpleDateFormat("ddMMyyyy HH:mm:ss");
-                String seconds =(String) cmbSeconds.getSelectedItem();
-                String minutes =(String) cmbMinutes.getSelectedItem();
-                String hours =(String) cmbHours.getSelectedItem();
                 String days =(String) cmbDays.getSelectedItem();
                 String monthes =(String) cmbMonthes.getSelectedItem();
                 String years =(String) cmbYear.getSelectedItem();
-                String myDate =days+monthes+years+" "+hours+":"+minutes+":"+seconds;
-                Date date = null;
-                try {
-                    date = (Date)taskFormat.parse(myDate);
-                } catch (ParseException e1) {
-                    e1.printStackTrace();
+
+                if (
+                        (Integer.parseInt(days) == 31 && ( monthes == "04" || monthes == "06" || monthes == "09" || monthes == "11")
+                        )
+                                || (Integer.parseInt(days) >= 30 && monthes == "02" &&  ((Integer.parseInt(years) % 4 == 0) && Integer.parseInt(years) % 100 != 0) )
+                                ||(Integer.parseInt(days) >= 29 && monthes == "02" &&  !((Integer.parseInt(years) % 4 == 0) && Integer.parseInt(years) % 100 != 0))){
+
+                    JFrame frame = new JFrame("Error");
+                    JOptionPane.showMessageDialog(frame, "Too many days for this month");
+                } else if (txfTitle.getText().length()<2){
+                    JFrame frame = new JFrame("Error");
+                    JOptionPane.showMessageDialog(frame, "Incorrect title");
+                } else {
+                    String seconds =(String) cmbSeconds.getSelectedItem();
+                    String minutes =(String) cmbMinutes.getSelectedItem();
+                    String hours =(String) cmbHours.getSelectedItem();
+                    String myDate = days+monthes+years+" "+hours+":"+minutes+":"+seconds;
+                    Date date = null;
+                    try {
+                        date = (Date)taskFormat.parse(myDate);
+                    } catch (ParseException e1) {
+                        e1.printStackTrace();
+                    }
+                    taskTitle = txfTitle.getText();
+                    Task newTask = new Task(taskTitle ,date);
+                    controller.editTask(oldTask, newTask);
+                    dispose();
                 }
-                taskTitle = txfTitle.getText();
-                Task newTask = new Task(taskTitle ,date);
-                controller.editTask(oldTask, newTask);
-                dispose();
+
             }
         });
 
