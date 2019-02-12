@@ -29,7 +29,6 @@ class AddNotRepeatedTaskFrame extends Frame{
         this.setBounds(dimension.width / 2 - 150, dimension.height / 2 - 150, 300, 300);
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-
         }
         catch (Exception ex) {
             ex.printStackTrace();

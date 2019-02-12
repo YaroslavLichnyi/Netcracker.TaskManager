@@ -20,29 +20,10 @@ public class TaskManagerController extends Observable {
 
         tasks = new ArrayTaskList();
         readTasks();
-/*
-        SimpleDateFormat taskFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
-        String some = "03022019220000";
-        String some1 = "23022019220000";
-        String some2 = "25022019220000";
-
-        try{
-            Date date = (Date)taskFormat.parse(some);
-            Task task = new Task("Reading", date);
-            task.setActive(true);
-            Date date1 =(Date)taskFormat.parse(some1);
-            Date date2 =(Date)taskFormat.parse(some2);
-            Task task1 = new Task("SomeMore", date1, date2, 2335446);
-            tasks.add(task);
-            tasks.add(task1);
-        } catch (Exception e){
-        }
-        tasks.add(new Task("Football", new Date(1000000000), new Date(500000000), 100000));
-        tasks.add(new Task("Coding", new Date(1000000000),new Date(400000000), 500000) );
-        */
         view = new TaskManagerView(tasks, this);
         this.addObserver(view);
-       // TaskTableFrame taskTableFrame = new TaskTableFrame(tasks, this);
+        NotificationThread notificationThread = new NotificationThread(tasks);
+        notificationThread.start();
 
 
     }

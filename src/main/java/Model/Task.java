@@ -85,7 +85,6 @@ public class Task implements Cloneable{
         this.time = date;
     }
 
-
     public Date nextTimeAfter(Date currentTime){
         if (isActive()){
             if (isRepeated()){

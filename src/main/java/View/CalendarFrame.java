@@ -126,21 +126,18 @@ public class CalendarFrame extends JFrame {
                             arrayTaskList = (ArrayTaskList) Tasks.incoming(arrayTaskList,from, to);
                             if (arrayTaskList.size()==1){
                                 if(arrayTaskList.getTask(0).isRepeated()){
-                                   // DetailInformationFrameRepeated detInfFrRep = new DetailInformationFrameRepeated();
+                                    DetailInformationFrameRepeated detInfFrRep = new DetailInformationFrameRepeated(arrayTaskList.getTask(0),taskManagerController);
                                 } else {
-                                  //  DetailInformationFrame detInfFr = new DetailInformationFrame();
+                                    DetailInformationFrame detInfFr = new DetailInformationFrame(arrayTaskList.getTask(0),taskManagerController);
                                 }
-                                // DetailInformationFrame detailInformationFrame = new DetailInformationFrame(task,taskManagerController);
-
-                            } else{
-
+                            } else if (arrayTaskList.size()>1) {
+                                TaskTableFrame tableFrame = new TaskTableFrame(arrayTaskList,taskManagerController);
                             }
 
                         } catch (ParseException ex){
                             System.out.println(ex);
                         }
                     }
-                    Date date = new Date();
                 }
             }
         });

@@ -156,7 +156,7 @@ public class TaskManagerView  extends JFrame implements Observer {
 
         this.add(panel);
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         updateTable();
     }
 

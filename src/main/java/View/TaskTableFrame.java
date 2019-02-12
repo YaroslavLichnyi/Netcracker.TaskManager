@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
 import java.util.Iterator;
 
 public class TaskTableFrame extends JFrame {
@@ -28,7 +29,6 @@ public class TaskTableFrame extends JFrame {
         GridBagConstraints gridBag = new GridBagConstraints();
         panel.setLayout( gridBagLayout );
 
-
         Object[] headers = {"Name", "Next time"};
         model = new DefaultTableModel(null, headers);
         taskTable = new JTable(model){
@@ -47,8 +47,6 @@ public class TaskTableFrame extends JFrame {
                 } else {
                     DetailInformationFrame detInfFr = new DetailInformationFrame(mytasks.getTask(taskTable.getSelectedRow()),controller);
                 }
-
-
             }
         });
         gridBag.gridx = 1;
@@ -68,7 +66,11 @@ public class TaskTableFrame extends JFrame {
         while (taskIterator.hasNext()){
             task = taskIterator.next();
             model.setValueAt(task.getTitle(), i , 0);
-            model.setValueAt("-", i , 1);
+            try {
+                model.setValueAt(task.nextTimeAfter(new Date()), i , 1);
+            } catch (Exception ex){
+                model.setValueAt("-", i , 1);
+            }
             i++;
         }
         taskTable.repaint();

@@ -8,8 +8,6 @@ public class ArrayTaskList extends TaskList{
     private Task[] taskList = new Task[size];
     private int numOfElements = 0;
     private static final Logger log = Logger.getLogger(ArrayTaskList.class);
-	
-
 
     @Override
     public void add(Task task) {
@@ -49,8 +47,7 @@ public class ArrayTaskList extends TaskList{
         }
         return false;
     }
-	
-	
+
     @Override
     public int size() {
         return numOfElements;
@@ -67,8 +64,6 @@ public class ArrayTaskList extends TaskList{
         }
         return null;
     }
-
-
 
 
        @Override
@@ -117,7 +112,7 @@ public class ArrayTaskList extends TaskList{
     }
 
 
-public Iterator iterator() { return new ArrayTaskList.ArrayTaskListIterator(); }
+    public Iterator iterator() { return new ArrayTaskList.ArrayTaskListIterator(); }
 
 
     private class ArrayTaskListIterator implements Iterator {
