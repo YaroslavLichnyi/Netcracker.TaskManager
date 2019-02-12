@@ -12,22 +12,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class EditTaskFrame extends JFrame {
-    private JPanel panel;
     private String taskTitle;
-    private JLabel lbLabel0;
-    private JLabel lbDay;
-    private JLabel lbMonth;
-    private JLabel lbYear;
-    private JLabel lbHours;
-    private JLabel lbMinutes;
-    private JLabel lbSeconds;
     private JComboBox cmbDays;
     private JComboBox cmbMonthes;
     private JComboBox cmbYear;
     private JComboBox cmbSeconds;
     private JComboBox cmbMinutes;
     private JComboBox cmbHours;
-    private JButton btSave;
     private JCheckBox cbActiveBox;
     private JTextField txfTitle;
     private TaskManagerController controller;
@@ -48,10 +39,10 @@ public class EditTaskFrame extends JFrame {
         SimpleDateFormat hourFormat = new SimpleDateFormat("HH");
         SimpleDateFormat minuteFormat = new SimpleDateFormat("mm");
         SimpleDateFormat secondFormat = new SimpleDateFormat("ss");
-        panel = new JPanel();
+        JPanel panel = new JPanel();
         panel.setLayout( gridBagLayout );
 
-        lbLabel0 = new JLabel( "Title: " );
+        JLabel lbLabel0 = new JLabel("Title: ");
         gridBagConstr.gridx = 1;
         gridBagConstr.gridy = 1;
         gridBagConstr.gridwidth = 1;
@@ -60,8 +51,8 @@ public class EditTaskFrame extends JFrame {
         gridBagConstr.weightx = 1;
         gridBagConstr.weighty = 1;
         gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbLabel0, gridBagConstr );
-        panel.add( lbLabel0 );
+        gridBagLayout.setConstraints(lbLabel0, gridBagConstr );
+        panel.add(lbLabel0);
 
         txfTitle = new JTextField( );
         txfTitle.setText(task.getTitle());
@@ -78,7 +69,7 @@ public class EditTaskFrame extends JFrame {
         panel.add( txfTitle );
 
 
-        lbDay = new JLabel( "Day"  );
+        JLabel lbDay = new JLabel("Day");
         gridBagConstr.gridx = 1;
         gridBagConstr.gridy = 2;
         gridBagConstr.gridwidth = 1;
@@ -87,10 +78,10 @@ public class EditTaskFrame extends JFrame {
         gridBagConstr.weightx = 1;
         gridBagConstr.weighty = 1;
         gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbDay, gridBagConstr );
-        panel.add( lbDay );
+        gridBagLayout.setConstraints(lbDay, gridBagConstr );
+        panel.add(lbDay);
 
-        lbMonth = new JLabel( "Month"  );
+        JLabel lbMonth = new JLabel("Month");
         gridBagConstr.gridx = 2;
         gridBagConstr.gridy = 2;
         gridBagConstr.gridwidth = 1;
@@ -99,10 +90,10 @@ public class EditTaskFrame extends JFrame {
         gridBagConstr.weightx = 1;
         gridBagConstr.weighty = 1;
         gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbMonth, gridBagConstr );
-        panel.add( lbMonth );
+        gridBagLayout.setConstraints(lbMonth, gridBagConstr );
+        panel.add(lbMonth);
 
-        lbYear = new JLabel( "Year"  );
+        JLabel lbYear = new JLabel("Year");
         gridBagConstr.gridx = 3;
         gridBagConstr.gridy = 2;
         gridBagConstr.gridwidth = 1;
@@ -111,11 +102,11 @@ public class EditTaskFrame extends JFrame {
         gridBagConstr.weightx = 1;
         gridBagConstr.weighty = 1;
         gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbYear, gridBagConstr );
-        panel.add( lbYear );
+        gridBagLayout.setConstraints(lbYear, gridBagConstr );
+        panel.add(lbYear);
 
 
-        lbHours = new JLabel( "Hours"  );
+        JLabel lbHours = new JLabel("Hours");
         gridBagConstr.gridx = 1;
         gridBagConstr.gridy = 4;
         gridBagConstr.gridwidth = 1;
@@ -124,10 +115,10 @@ public class EditTaskFrame extends JFrame {
         gridBagConstr.weightx = 1;
         gridBagConstr.weighty = 1;
         gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbHours, gridBagConstr );
-        panel.add( lbHours );
+        gridBagLayout.setConstraints(lbHours, gridBagConstr );
+        panel.add(lbHours);
 
-        lbMinutes = new JLabel( "Minutes"  );
+        JLabel lbMinutes = new JLabel("Minutes");
         gridBagConstr.gridx = 2;
         gridBagConstr.gridy = 4;
         gridBagConstr.gridwidth = 1;
@@ -136,10 +127,10 @@ public class EditTaskFrame extends JFrame {
         gridBagConstr.weightx = 1;
         gridBagConstr.weighty = 1;
         gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbMinutes, gridBagConstr );
-        panel.add( lbMinutes );
+        gridBagLayout.setConstraints(lbMinutes, gridBagConstr );
+        panel.add(lbMinutes);
 
-        lbSeconds = new JLabel( "Seconds"  );
+        JLabel lbSeconds = new JLabel("Seconds");
         gridBagConstr.gridx = 3;
         gridBagConstr.gridy = 4;
         gridBagConstr.gridwidth = 1;
@@ -148,8 +139,8 @@ public class EditTaskFrame extends JFrame {
         gridBagConstr.weightx = 1;
         gridBagConstr.weighty = 1;
         gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbSeconds, gridBagConstr );
-        panel.add( lbSeconds );
+        gridBagLayout.setConstraints(lbSeconds, gridBagConstr );
+        panel.add(lbSeconds);
 
 
         String []dataDays = { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
@@ -259,7 +250,7 @@ public class EditTaskFrame extends JFrame {
         gridBagLayout.setConstraints( cmbHours, gridBagConstr );
         panel.add( cmbHours );
 
-        btSave = new JButton( "Save"  );
+        JButton btSave = new JButton("Save");
         gridBagConstr.gridx = 3;
         gridBagConstr.gridy = 6;
         gridBagConstr.gridwidth = 1;

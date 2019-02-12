@@ -14,8 +14,6 @@ import java.util.Iterator;
 public class TaskTableFrame extends JFrame {
     private JTable taskTable;
     private DefaultTableModel model;
-    private JPanel panel;
-    private Object[] headers = { "Name", "Next time" };
     private TaskList mytasks;
     private TaskManagerController controller;
     public TaskTableFrame(TaskList tasks, TaskManagerController taskManagerController){
@@ -25,12 +23,13 @@ public class TaskTableFrame extends JFrame {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension dimension = toolkit.getScreenSize();
         setBounds(dimension.width / 2 - 150, dimension.height / 2 - 100, 300, 200);
-        panel = new JPanel();
+        JPanel panel = new JPanel();
         GridBagLayout gridBagLayout = new GridBagLayout();
         GridBagConstraints gridBag = new GridBagConstraints();
         panel.setLayout( gridBagLayout );
 
 
+        Object[] headers = {"Name", "Next time"};
         model = new DefaultTableModel(null, headers);
         taskTable = new JTable(model){
             @Override

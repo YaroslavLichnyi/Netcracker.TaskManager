@@ -9,20 +9,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AddFrame extends JFrame{
-   // ArrayTaskList arr;
-   // Dimension dimension;
-    // ArrayTaskList arr, Dimension dimension
-   TaskManagerController taskManagerController;
-   JCheckBox boxRepeated;
+class AddFrame extends JFrame{
+    TaskManagerController taskManagerController;
+    private JCheckBox boxRepeated;
+    private JTextField txfTitle;
 
-    JTextField txfTitle;
-    JLabel lbTitle;
-
-    JLabel lbIsRepeated;
-    JButton btNext;
-
-    public AddFrame(final TaskManagerController controller) throws HeadlessException {
+    AddFrame(final TaskManagerController controller) throws HeadlessException {
 
         super("Task Manager");
         taskManagerController = controller;
@@ -56,7 +48,7 @@ public class AddFrame extends JFrame{
         gridBagLayout.setConstraints( txfTitle, gridBag );
         panel.add( txfTitle );
 
-        lbTitle = new JLabel( "Title"  );
+        JLabel lbTitle = new JLabel("Title");
         lbTitle.setFont(new Font("TimesRoman", Font.PLAIN, 18));
 
         gridBag.gridx = 0;
@@ -67,8 +59,8 @@ public class AddFrame extends JFrame{
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbTitle, gridBag );
-        panel.add( lbTitle );
+        gridBagLayout.setConstraints(lbTitle, gridBag );
+        panel.add(lbTitle);
 
         boxRepeated = new JCheckBox( "Task is repeated", false  );
         boxRepeated.setBackground(new Color(255, 255,255 ) );
@@ -83,7 +75,7 @@ public class AddFrame extends JFrame{
         gridBagLayout.setConstraints( boxRepeated, gridBag );
         panel.add( boxRepeated );
 
-        btNext = new JButton( "Next"  );
+        JButton btNext = new JButton("Next");
         gridBag.gridx = 2;
         gridBag.gridy = 2;
         gridBag.gridwidth = 1;
@@ -92,8 +84,8 @@ public class AddFrame extends JFrame{
         gridBag.weightx = 1;
         gridBag.weighty = 0;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( btNext, gridBag );
-        panel.add( btNext );
+        gridBagLayout.setConstraints(btNext, gridBag );
+        panel.add(btNext);
         this.add(panel);
 
         btNext.addActionListener(new ActionListener() {

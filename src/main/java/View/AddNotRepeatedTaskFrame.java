@@ -2,7 +2,6 @@ package View;
 
 import Controller.TaskManagerController;
 import Model.Task;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,26 +10,17 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class AddNotRepeatedTaskFrame extends Frame{
+class AddNotRepeatedTaskFrame extends Frame{
     private String taskTitle;
-    private JPanel panel;
-    private JLabel lbLabel0;
-    private JLabel lbDay;
-    private JLabel lbMonth;
-    private JLabel lbYear;
-    private JLabel lbHours;
-    private JLabel lbMinutes;
-    private JLabel lbSeconds;
     private JComboBox cmbDays;
     private JComboBox cmbMonthes;
     private JComboBox cmbYear;
     private JComboBox cmbSeconds;
     private JComboBox cmbMinutes;
     private JComboBox cmbHours;
-    private JButton btAdd;
     private JCheckBox cbActiveBox;
     private TaskManagerController taskManagerController;
-    public AddNotRepeatedTaskFrame(String title, TaskManagerController controller){
+    AddNotRepeatedTaskFrame(String title, TaskManagerController controller){
         super("Task Manager");
         taskManagerController = controller;
         this.taskTitle = title;
@@ -45,13 +35,13 @@ public class AddNotRepeatedTaskFrame extends Frame{
             ex.printStackTrace();
         }
 
-        panel = new JPanel();
+        JPanel panel = new JPanel();
        // panel.setBackground(new Color(255, 255, 255));
         GridBagLayout gbPanel0 = new GridBagLayout();
         GridBagConstraints gbcPanel0 = new GridBagConstraints();
         panel.setLayout( gbPanel0 );
 
-        lbLabel0 = new JLabel( "Time"  );
+        JLabel lbLabel0 = new JLabel("Time");
         gbcPanel0.gridx = 2;
         gbcPanel0.gridy = 1;
         gbcPanel0.gridwidth = 1;
@@ -60,10 +50,10 @@ public class AddNotRepeatedTaskFrame extends Frame{
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbLabel0, gbcPanel0 );
-        panel.add( lbLabel0 );
+        gbPanel0.setConstraints(lbLabel0, gbcPanel0 );
+        panel.add(lbLabel0);
 
-        lbDay = new JLabel( "Day"  );
+        JLabel lbDay = new JLabel("Day");
         gbcPanel0.gridx = 1;
         gbcPanel0.gridy = 2;
         gbcPanel0.gridwidth = 1;
@@ -72,10 +62,10 @@ public class AddNotRepeatedTaskFrame extends Frame{
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbDay, gbcPanel0 );
-        panel.add( lbDay );
+        gbPanel0.setConstraints(lbDay, gbcPanel0 );
+        panel.add(lbDay);
 
-        lbMonth = new JLabel( "Month"  );
+        JLabel lbMonth = new JLabel("Month");
         gbcPanel0.gridx = 2;
         gbcPanel0.gridy = 2;
         gbcPanel0.gridwidth = 1;
@@ -84,10 +74,10 @@ public class AddNotRepeatedTaskFrame extends Frame{
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbMonth, gbcPanel0 );
-        panel.add( lbMonth );
+        gbPanel0.setConstraints(lbMonth, gbcPanel0 );
+        panel.add(lbMonth);
 
-        lbYear = new JLabel( "Year"  );
+        JLabel lbYear = new JLabel("Year");
         gbcPanel0.gridx = 3;
         gbcPanel0.gridy = 2;
         gbcPanel0.gridwidth = 1;
@@ -96,11 +86,11 @@ public class AddNotRepeatedTaskFrame extends Frame{
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbYear, gbcPanel0 );
-        panel.add( lbYear );
+        gbPanel0.setConstraints(lbYear, gbcPanel0 );
+        panel.add(lbYear);
 
 
-        lbHours = new JLabel( "Hours"  );
+        JLabel lbHours = new JLabel("Hours");
         gbcPanel0.gridx = 1;
         gbcPanel0.gridy = 4;
         gbcPanel0.gridwidth = 1;
@@ -109,10 +99,10 @@ public class AddNotRepeatedTaskFrame extends Frame{
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbHours, gbcPanel0 );
-        panel.add( lbHours );
+        gbPanel0.setConstraints(lbHours, gbcPanel0 );
+        panel.add(lbHours);
 
-        lbMinutes = new JLabel( "Minutes"  );
+        JLabel lbMinutes = new JLabel("Minutes");
         gbcPanel0.gridx = 2;
         gbcPanel0.gridy = 4;
         gbcPanel0.gridwidth = 1;
@@ -121,10 +111,10 @@ public class AddNotRepeatedTaskFrame extends Frame{
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbMinutes, gbcPanel0 );
-        panel.add( lbMinutes );
+        gbPanel0.setConstraints(lbMinutes, gbcPanel0 );
+        panel.add(lbMinutes);
 
-        lbSeconds = new JLabel( "Seconds"  );
+        JLabel lbSeconds = new JLabel("Seconds");
         gbcPanel0.gridx = 3;
         gbcPanel0.gridy = 4;
         gbcPanel0.gridwidth = 1;
@@ -133,8 +123,8 @@ public class AddNotRepeatedTaskFrame extends Frame{
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbSeconds, gbcPanel0 );
-        panel.add( lbSeconds );
+        gbPanel0.setConstraints(lbSeconds, gbcPanel0 );
+        panel.add(lbSeconds);
 
 
         String []dataDays = { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
@@ -239,7 +229,7 @@ public class AddNotRepeatedTaskFrame extends Frame{
         gbPanel0.setConstraints( cmbHours, gbcPanel0 );
         panel.add( cmbHours );
 
-        btAdd = new JButton( "Add"  );
+        JButton btAdd = new JButton("Add");
         gbcPanel0.gridx = 3;
         gbcPanel0.gridy = 6;
         gbcPanel0.gridwidth = 1;
@@ -248,8 +238,8 @@ public class AddNotRepeatedTaskFrame extends Frame{
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 0;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( btAdd, gbcPanel0 );
-        panel.add( btAdd );
+        gbPanel0.setConstraints(btAdd, gbcPanel0 );
+        panel.add(btAdd);
 
         cbActiveBox = new JCheckBox( "Make an active"  );
         cbActiveBox.setSelected( true );
