@@ -17,7 +17,7 @@ public class NotificationThread extends Thread{
     public void run() {
         while (true){
             Date from = new Date();
-            Date to = new Date(from.getTime() +60000);
+            Date to = new Date(from.getTime() + 2000);
             ArrayTaskList arrayTaskList = tasks.clone();
             arrayTaskList = (ArrayTaskList) Tasks.incoming(arrayTaskList,from, to);
             Iterator <Task> taskIterator = arrayTaskList.iterator();
@@ -26,9 +26,8 @@ public class NotificationThread extends Thread{
                 TaskNotification td = new TaskNotification(task);
                 td.displayTray();
             }
-            System.out.println("Thread works");
             try {
-                sleep(60000);
+                sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

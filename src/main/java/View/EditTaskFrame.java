@@ -25,7 +25,6 @@ public class EditTaskFrame extends JFrame {
     private Task oldTask;
 
     public EditTaskFrame(Task task, TaskManagerController taskManagerController) throws HeadlessException {
-        //стоит л делать возможными интервалы в год или несколько месяцев
         controller = taskManagerController;
         oldTask = task;
         Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -270,11 +269,10 @@ public class EditTaskFrame extends JFrame {
                 String years =(String) cmbYear.getSelectedItem();
 
                 if (
-                        (Integer.parseInt(days) == 31 && ( monthes == "04" || monthes == "06" || monthes == "09" || monthes == "11")
+                        (Integer.parseInt(days) == 31 && (monthes.equals("04") || monthes.equals("06") || monthes.equals("09") || monthes.equals("11"))
                         )
-                                //исправить == на иквелс
-                                || (Integer.parseInt(days) >= 30 && monthes == "02" &&  ((Integer.parseInt(years) % 4 == 0) && Integer.parseInt(years) % 100 != 0) )
-                                ||(Integer.parseInt(days) >= 29 && monthes == "02" &&  !((Integer.parseInt(years) % 4 == 0) && Integer.parseInt(years) % 100 != 0))){
+                                || (Integer.parseInt(days) >= 30 && monthes.equals("02") &&  ((Integer.parseInt(years) % 4 == 0) && Integer.parseInt(years) % 100 != 0) )
+                                ||(Integer.parseInt(days) >= 29 && monthes.equals("02") &&  !((Integer.parseInt(years) % 4 == 0) && Integer.parseInt(years) % 100 != 0))){
 
                     JFrame frame = new JFrame("Error");
                     JOptionPane.showMessageDialog(frame, "Too many days for this month");

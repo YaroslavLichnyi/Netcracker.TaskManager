@@ -14,7 +14,7 @@ import java.util.Date;
 public class AddRepeatedTaskFrame extends JFrame {
     private String title;
     private JPanel panel;
-    private JLabel lbLabel0;
+    private JLabel lbNames;
     private JLabel lbDay;
     private JLabel lbMonth;
     private JLabel lbYear;
@@ -39,7 +39,7 @@ public class AddRepeatedTaskFrame extends JFrame {
     private JComboBox cmbSecondsInreval;
     private JComboBox cmbMinutesInreval;
     private JComboBox cmbHoursInreval;
-    private  JCheckBox cbActiveBox;
+    private JCheckBox cbActiveBox;
     private TaskManagerController taskManagerController;
 
     public AddRepeatedTaskFrame(final String title, TaskManagerController controller ) {
@@ -65,8 +65,8 @@ public class AddRepeatedTaskFrame extends JFrame {
         panel.setLayout( gbPanel0 );
         panel.setBackground(Color.WHITE);
 
-        lbLabel0 = new JLabel( "Time"  );
-        lbLabel0.setFont(new Font("Serif", Font.BOLD, 22));
+        lbNames = new JLabel( "Time"  );
+        lbNames.setFont(new Font("Serif", Font.BOLD, 22));
         gbcPanel0.gridx = 2;
         gbcPanel0.gridy = 0;
         gbcPanel0.gridwidth = 1;
@@ -75,12 +75,12 @@ public class AddRepeatedTaskFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbLabel0, gbcPanel0 );
-        panel.add( lbLabel0 );
+        gbPanel0.setConstraints(lbNames, gbcPanel0 );
+        panel.add(lbNames);
 
-        lbLabel0 = new JLabel( "From"  );
-        lbLabel0.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
-        lbLabel0.setForeground(new Color(0, 128, 242));
+        lbNames = new JLabel( "From"  );
+        lbNames.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
+        lbNames.setForeground(new Color(0, 128, 242));
         gbcPanel0.gridx = 2;
         gbcPanel0.gridy = 2;
         gbcPanel0.gridwidth = 1;
@@ -89,8 +89,8 @@ public class AddRepeatedTaskFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbLabel0, gbcPanel0 );
-        panel.add( lbLabel0 );
+        gbPanel0.setConstraints(lbNames, gbcPanel0 );
+        panel.add(lbNames);
 
 
         lbDay = new JLabel( "Day"  );
@@ -268,9 +268,9 @@ public class AddRepeatedTaskFrame extends JFrame {
         gbPanel0.setConstraints( cmbHoursFrom, gbcPanel0 );
         panel.add( cmbHoursFrom );
 
-        lbLabel0 = new JLabel( "To"  );
-        lbLabel0.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
-        lbLabel0.setForeground(new Color(0, 128, 242));
+        lbNames = new JLabel( "To"  );
+        lbNames.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
+        lbNames.setForeground(new Color(0, 128, 242));
         gbcPanel0.gridx = 2;
         gbcPanel0.gridy = 7;
         gbcPanel0.gridwidth = 1;
@@ -279,8 +279,8 @@ public class AddRepeatedTaskFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbLabel0, gbcPanel0 );
-        panel.add( lbLabel0 );
+        gbPanel0.setConstraints(lbNames, gbcPanel0 );
+        panel.add(lbNames);
 
         lbDay = new JLabel( "Day"  );
         gbcPanel0.gridx = 1;
@@ -431,9 +431,9 @@ public class AddRepeatedTaskFrame extends JFrame {
         gbPanel0.setConstraints( cmbHoursTo, gbcPanel0 );
         panel.add( cmbHoursTo );
 
-        lbLabel0 = new JLabel( "Interval"  );
-        lbLabel0.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
-        lbLabel0.setForeground(new Color(0, 128, 242));
+        lbNames = new JLabel( "Interval"  );
+        lbNames.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
+        lbNames.setForeground(new Color(0, 128, 242));
 
         gbcPanel0.gridx = 2;
         gbcPanel0.gridy = 12;
@@ -443,8 +443,8 @@ public class AddRepeatedTaskFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbLabel0, gbcPanel0 );
-        panel.add( lbLabel0 );
+        gbPanel0.setConstraints(lbNames, gbcPanel0 );
+        panel.add(lbNames);
 
         lbDay = new JLabel( "Day"  );
         gbcPanel0.gridx = 1;
@@ -643,8 +643,9 @@ public class AddRepeatedTaskFrame extends JFrame {
                 intervalValue += Integer.parseInt( (String) cmbMinutesInreval.getSelectedItem()) * 60;
                 intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60 ;
                 intervalValue += Integer.parseInt( (String) cmbDaysInreval.getSelectedItem()) * 60 * 60 * 24 ;
-                intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60 * 30;
-                intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60  * 365;
+
+               // intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60 * 30;
+             //   intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60  * 365;
                 if (
                            (Integer.parseInt(daysFrom) == 31 && ( monthesFrom == "04" || monthesFrom == "06" || monthesFrom == "09" || monthesFrom == "11"))
                         || (Integer.parseInt(daysFrom) >= 30 && monthesFrom == "02" &&  ((Integer.parseInt(yearsFrom) % 4 == 0) && Integer.parseInt(yearsFrom) % 100 != 0) )

@@ -150,7 +150,7 @@ public class TaskManagerView  extends JFrame implements Observer {
         findButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //FindFrame findFrame = new FindFrame(tasks, fromField.getText(), toField.getText());
+                FindFrame findFrame = new FindFrame(tasks, controller);
             }
         });
 

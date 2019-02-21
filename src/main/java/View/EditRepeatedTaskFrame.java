@@ -640,12 +640,11 @@ class EditRepeatedTaskFrame extends JFrame{
                 String yearsTo =(String) cmbYearsTo.getSelectedItem();
 
                 int intervalValue = Integer.parseInt( (String) cmbSecondsInreval.getSelectedItem());
-                intervalValue += Integer.parseInt( (String) cmbSecondsInreval.getSelectedItem());
                 intervalValue += Integer.parseInt( (String) cmbMinutesInreval.getSelectedItem()) * 60;
                 intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60 ;
                 intervalValue += Integer.parseInt( (String) cmbDaysInreval.getSelectedItem()) * 60 * 60 * 24 ;
-                intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60 * 30;
-                intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60  * 365;
+           //    intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60 * 30;
+             //   intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60  * 365;
 
                 if (
                         (Integer.parseInt(daysFrom) == 31 && ( monthesFrom == "04" || monthesFrom == "06" || monthesFrom == "09" || monthesFrom == "11"))

@@ -10,7 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-class AddNotRepeatedTaskFrame extends Frame{
+class AddNotRepeatedTaskFrame extends JFrame{
     private String taskTitle;
     private JComboBox cmbDays;
     private JComboBox cmbMonthes;
@@ -156,7 +156,6 @@ class AddNotRepeatedTaskFrame extends Frame{
         gbPanel0.setConstraints( cmbMonthes, gbcPanel0 );
         panel.add( cmbMonthes );
 
-
         String []dataCombo3 = {  "2019", "2020", "2021", "2022",
                 "2023", "2024", "2025", "2026", "2027",  "2028",
                 "2029", "2030", "2031", "2032", "2033", "2034",
@@ -253,6 +252,7 @@ class AddNotRepeatedTaskFrame extends Frame{
         gbPanel0.setConstraints( cbActiveBox, gbcPanel0 );
         panel.add( cbActiveBox );
 
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.add(panel);
         this.setVisible(true);
 

@@ -87,12 +87,12 @@ class AddFrame extends JFrame{
         gridBagLayout.setConstraints(btNext, gridBag );
         panel.add(btNext);
         this.add(panel);
-
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         btNext.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (txfTitle.getText().length()<2){
+                if (txfTitle.getText().length() == 0){
                     JFrame frame = new JFrame("Error");
-                    JOptionPane.showMessageDialog(frame, "Too short title");
+                    JOptionPane.showMessageDialog(frame, "Enter task's title");
                 } else {
                     if (boxRepeated.isSelected()) {
                         AddRepeatedTaskFrame addFrame = new AddRepeatedTaskFrame(txfTitle.getText(), taskManagerController);

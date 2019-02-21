@@ -16,6 +16,8 @@ public class TaskManagerController extends Observable {
     TaskManagerView view ;
     private static final Logger log = Logger.getLogger(TaskManagerController.class);
     File tasksTextFile = new File("tasksForTaskManager.txt");
+    File tasksFile = new File("TaskManagerTasks");
+
     public TaskManagerController() {
 
         tasks = new ArrayTaskList();
@@ -65,14 +67,16 @@ public class TaskManagerController extends Observable {
     }
     public void writeTasks(){
         try {
-            TaskIO.writeText(tasks, tasksTextFile);
+            //   TaskIO.writeText(tasks, tasksTextFile);
+            TaskIO.writeBinary(tasks, tasksFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     public void readTasks(){
         try {
-            TaskIO.readText(tasks, tasksTextFile);
+            //  TaskIO.readText(tasks, tasksTextFile);
+           TaskIO.readBinary(tasks, tasksFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
