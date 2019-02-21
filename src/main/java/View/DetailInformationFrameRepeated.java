@@ -1,15 +1,24 @@
 package View;
+
 import Controller.TaskManagerController;
 import Model.Task;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Shows detail information about repeated tasks.
+ */
 class DetailInformationFrameRepeated extends JFrame {
-    JPanel panel;
+    private JPanel panel;
+    /**
+     * Information about this task is showed in the window.
+     */
     private Task mytask;
+    /**
+     *
+     */
     private TaskManagerController controller;
 
     DetailInformationFrameRepeated(Task task, TaskManagerController taskManagerController) {
@@ -22,13 +31,12 @@ class DetailInformationFrameRepeated extends JFrame {
         panel = new JPanel();
         GridBagLayout gridBagLayout = new GridBagLayout();
         GridBagConstraints gbcPanel0 = new GridBagConstraints();
-        panel.setLayout( gridBagLayout );
+        panel.setLayout(gridBagLayout);
 
 
-        //SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         JLabel lbTaskStartTime = new JLabel(task.getStartTime().toString());
-        lbTaskStartTime.setBackground( new Color( 153,184,240 ) );
-        lbTaskStartTime.setForeground( new Color( 0,0,88 ) );
+        lbTaskStartTime.setBackground(new Color(153,184,240));
+        lbTaskStartTime.setForeground(new Color(0,0,88));
         gbcPanel0.gridx = 3;
         gbcPanel0.gridy = 1;
         gbcPanel0.gridwidth = 1;
@@ -37,14 +45,12 @@ class DetailInformationFrameRepeated extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbTaskStartTime, gbcPanel0 );
+        gridBagLayout.setConstraints(lbTaskStartTime, gbcPanel0);
         panel.add(lbTaskStartTime);
 
-
-
-        lbTaskStartTime = new JLabel( task.getEndTime().toString());
-        lbTaskStartTime.setBackground( new Color( 153,184,240 ) );
-        lbTaskStartTime.setForeground( new Color( 0,0,88 ) );
+        lbTaskStartTime = new JLabel(task.getEndTime().toString());
+        lbTaskStartTime.setBackground(new Color(153,184,240 ));
+        lbTaskStartTime.setForeground(new Color(0,0,88 ));
         gbcPanel0.gridx = 3;
         gbcPanel0.gridy = 2;
         gbcPanel0.gridwidth = 1;
@@ -56,21 +62,31 @@ class DetailInformationFrameRepeated extends JFrame {
         gridBagLayout.setConstraints(lbTaskStartTime, gbcPanel0 );
         panel.add(lbTaskStartTime);
 
-
-
         int interval = task.getRepeatInterval();
-
+        final int year = 31536000;
+        int intervalYears = (interval - interval % year)/year;
+        interval = interval - intervalYears * year;
+        final int month = 2592000;
+        int intervalMonthes = (interval - interval % month)/month;
+        interval = interval - intervalMonthes * month;
         final int day = 86400;
-        int intervalDays = (interval - interval%day)/day;
+        int intervalDays = (interval - interval % day)/day;
         interval = interval - intervalDays * day;
         final int hour = 3600;
-        int intervalHours = (interval - interval%hour)/hour;
+        int intervalHours = (interval - interval % hour)/hour;
         interval = interval - intervalHours * hour;
         final int minute = 60;
-        int intervalMinutes = (interval - interval%minute)/minute;
+        int intervalMinutes = (interval - interval % minute)/minute;
         interval = interval - intervalMinutes * minute;
+        String intervalInf = "";
+        if (intervalYears > 0)   intervalInf += intervalYears   + "y " ;
+        if (intervalMonthes > 0) intervalInf += intervalMonthes + "m " ;
+        if (intervalDays > 0)    intervalInf += intervalDays    + "d " ;
+        if (intervalHours > 0)   intervalInf += intervalHours   + "h " ;
+        if (intervalMinutes > 0) intervalInf += intervalMinutes + "min " ;
+        if (interval > 0)        intervalInf += interval        + "s " ;
 
-        lbTaskStartTime = new JLabel( intervalDays + "d " + intervalHours + "h "+ intervalMinutes+ "m "+interval +"s");
+        lbTaskStartTime = new JLabel(intervalInf);
         lbTaskStartTime.setBackground( new Color( 153,184,240 ) );
         lbTaskStartTime.setForeground( new Color( 0,0,88 ) );
         gbcPanel0.gridx = 3;
@@ -146,7 +162,8 @@ class DetailInformationFrameRepeated extends JFrame {
         btEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                EditRepeatedTaskFrame editFrame = new EditRepeatedTaskFrame(mytask, controller);
+                new EditRepeatedTaskFrame(mytask, controller);
+                dispose();
             }
         });
 
@@ -158,7 +175,7 @@ class DetailInformationFrameRepeated extends JFrame {
             lbLbTaskActive = new JLabel( "Task is not active "  );
             lbLbTaskActive.setForeground(new Color(255, 0, 0));
         }
-        lbLbTaskActive.setBackground( new Color( 238,247,255 ) );
+        lbLbTaskActive.setBackground(new Color(238,247,255 ));
         gbcPanel0.gridx = 2;
         gbcPanel0.gridy = 4;
         gbcPanel0.gridwidth = 2;
@@ -171,7 +188,7 @@ class DetailInformationFrameRepeated extends JFrame {
         panel.add(lbLbTaskActive);
 
         JLabel lbTitle = new JLabel("Title");
-        lbTitle.setBackground( new Color( 128,159,240 ) );
+        lbTitle.setBackground(new Color(128,159,240));
         gbcPanel0.gridx = 2;
         gbcPanel0.gridy = 0;
         gbcPanel0.gridwidth = 1;
@@ -184,7 +201,7 @@ class DetailInformationFrameRepeated extends JFrame {
         panel.add(lbTitle);
 
         JLabel lbTaskTitle = new JLabel(task.getTitle());
-        lbTaskTitle.setBackground( new Color( 128,159,240 ) );
+        lbTaskTitle.setBackground( new Color(128,159,240));
         gbcPanel0.gridx = 3;
         gbcPanel0.gridy = 0;
         gbcPanel0.gridwidth = 1;
@@ -197,7 +214,7 @@ class DetailInformationFrameRepeated extends JFrame {
         panel.add(lbTaskTitle);
 
         JLabel lbInterval = new JLabel("Interval");
-        lbInterval.setBackground( new Color( 206,230,240 ) );
+        lbInterval.setBackground(new Color( 206,230,240));
         gbcPanel0.gridx = 2;
         gbcPanel0.gridy = 3;
         gbcPanel0.gridwidth = 1;
@@ -206,7 +223,7 @@ class DetailInformationFrameRepeated extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbInterval, gbcPanel0 );
+        gridBagLayout.setConstraints(lbInterval, gbcPanel0);
         panel.add(lbInterval);
         this.add(panel);
         this.setVisible(true);

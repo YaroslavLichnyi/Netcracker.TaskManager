@@ -5,7 +5,6 @@ import java.util.*;
 
 public class TaskIO {
 
-
     public static void write(TaskList tasks, OutputStream out) throws IOException {
 
         OutputStream os = new DataOutputStream(out);
@@ -107,43 +106,33 @@ public class TaskIO {
                 final int hour = 3600;
                 final int minute = 60;
 
-                //DAY
-                int fullTimes = interval % day;
-                int numberOfIntervals = fullTimes *  day;
-                interval -= numberOfIntervals * day;
-                if (numberOfIntervals > 0) {
-                    myString += numberOfIntervals + " " + "day";
-                    if (numberOfIntervals >= 1) myString += 's';
 
+
+                int intervalDays = (interval - interval%day)/day;
+                interval = interval - intervalDays * day;
+                if (intervalDays > 0) {
+                    myString += " " + intervalDays + " " + "day";
+                    if (intervalDays >= 1) myString += 's';
                 }
 
-                //HOUR
-                fullTimes = interval % hour;
-                numberOfIntervals = fullTimes *  hour;
-                interval -= numberOfIntervals * hour;
-                if (numberOfIntervals > 0) {
-                    myString += numberOfIntervals + " " + "hour";
-                    if (numberOfIntervals >= 1) myString += 's';
-
+                int intervalHours = (interval - interval%hour)/hour;
+                interval = interval - intervalHours * hour;
+                if (intervalHours > 0) {
+                    myString += " " + intervalHours + " " + "hour";
+                    if (intervalHours >= 1) myString += 's';
                 }
 
-                //MINUTE
-                fullTimes = interval % minute;
-                numberOfIntervals = fullTimes *  minute;
-                interval -= numberOfIntervals * minute;
-                if (numberOfIntervals > 0) {
-                    myString += numberOfIntervals + " " + "minute";
-                    if (numberOfIntervals >= 1) myString += 's';
-
+                int intervalMinutes = (interval - interval%minute)/minute;
+                interval = interval - intervalMinutes * minute;
+                if (intervalMinutes > 0) {
+                    myString += " " + intervalMinutes + " " + "minute";
+                    if (intervalMinutes >= 1) myString += 's';
                 }
 
-                //SECONDE
-                if (numberOfIntervals > 0) {
-                    myString += numberOfIntervals + " " +"second";
-                    if (numberOfIntervals >= 1) myString += 's';
-
+                if (interval > 0) {
+                    myString += " " + interval + " " +"second";
+                    if (interval >= 1) myString += 's';
                 }
-
                 myString+="]";
             }else {
 
@@ -170,8 +159,7 @@ public class TaskIO {
 
     public static void read(TaskList tasks, Reader in) throws IOException {
         BufferedReader reader = new BufferedReader(in);
-        String myChecker ;
-
+        String myChecker;
         while (reader.ready()){
             final int day = 86400;
             final int hour = 3600;

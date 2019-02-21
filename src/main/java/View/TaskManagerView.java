@@ -4,8 +4,6 @@ import Model.ArrayTaskList;
 import Model.Task;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -78,7 +76,6 @@ public class TaskManagerView  extends JFrame implements Observer {
                 return false;
             }
         };
-        //taskTable = new JTable(data, headers);
         JScrollPane scrollPane = new JScrollPane( taskTable );
         gridBag.gridx = 0;
         gridBag.gridy = 2;
@@ -104,24 +101,18 @@ public class TaskManagerView  extends JFrame implements Observer {
         gridBagLayout.setConstraints(callenderButton, gridBag );
         panel.add(callenderButton);
 
-        //нажатие на ячейку таблицы -> открывается детальная информакция об задаче
         taskTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //String str = String.valueOf(table.getValueAt(table.getSelectedRow(), table.getSelectedColumn()));
-                System.out.println(String.valueOf(taskTable.getValueAt(taskTable.getSelectedRow(), taskTable.getSelectedColumn())));
                 if (tasks.getTask(taskTable.getSelectedRow()).isRepeated()){
                     DetailInformationFrameRepeated detInfFrRep = new DetailInformationFrameRepeated(tasks.getTask(taskTable.getSelectedRow()),taskManagerController);
                 } else {
                     DetailInformationFrame detInfFr = new DetailInformationFrame(tasks.getTask(taskTable.getSelectedRow()),taskManagerController);
                 }
-
-
             }
         });
 
         //ACTIONS
-
         /*
          *Action of button "Add". Creates a window/frame with callender
          */
@@ -176,12 +167,10 @@ public class TaskManagerView  extends JFrame implements Observer {
         DefaultTableModel def = (DefaultTableModel) taskTable.getModel();
         int selectedRow = taskTable.getSelectedRow();
         taskTable.clearSelection();
-        System.out.println(def.getValueAt(selectedRow,0).toString());
     }
 
     private void updateTable(){
         final int tableRowSize = 10;
-        //tasks.size();
         model.setRowCount(tableRowSize);
         Iterator<Task> taskIterator = tasks.iterator();
         Task task;
@@ -190,6 +179,7 @@ public class TaskManagerView  extends JFrame implements Observer {
             task = taskIterator.next();
             model.setValueAt(task.getTitle(), i , 0);
             try {
+                assert(task.nextTimeAfter(new Date())!= null);
                 model.setValueAt(task.nextTimeAfter(new Date()), i , 1);
             } catch (Exception ex){
                 model.setValueAt("-", i , 1);

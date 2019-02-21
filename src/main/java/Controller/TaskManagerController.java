@@ -67,16 +67,16 @@ public class TaskManagerController extends Observable {
     }
     public void writeTasks(){
         try {
-            //   TaskIO.writeText(tasks, tasksTextFile);
-            TaskIO.writeBinary(tasks, tasksFile);
+               TaskIO.writeText(tasks, tasksTextFile);
+            //  TaskIO.writeBinary(tasks, tasksFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     public void readTasks(){
         try {
-            //  TaskIO.readText(tasks, tasksTextFile);
-           TaskIO.readBinary(tasks, tasksFile);
+             TaskIO.readText(tasks, tasksTextFile);
+            // TaskIO.readBinary(tasks, tasksFile);
         } catch (IOException e) {
             e.printStackTrace();
         }

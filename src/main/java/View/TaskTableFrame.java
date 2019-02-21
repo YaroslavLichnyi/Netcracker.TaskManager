@@ -41,7 +41,7 @@ public class TaskTableFrame extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //String str = String.valueOf(table.getValueAt(table.getSelectedRow(), table.getSelectedColumn()));
-                System.out.println(String.valueOf(taskTable.getValueAt(taskTable.getSelectedRow(), taskTable.getSelectedColumn())));
+              //  System.out.println(String.valueOf(taskTable.getValueAt(taskTable.getSelectedRow(), taskTable.getSelectedColumn())));
                 if (mytasks.getTask(taskTable.getSelectedRow()).isRepeated()){
                     DetailInformationFrameRepeated detInfFrRep = new DetailInformationFrameRepeated(mytasks.getTask(taskTable.getSelectedRow()),controller);
                 } else {

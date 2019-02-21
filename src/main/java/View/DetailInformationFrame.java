@@ -109,7 +109,8 @@ class DetailInformationFrame extends JFrame {
         btEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                EditTaskFrame editFrame = new EditTaskFrame(mytask, controller);
+                new EditTaskFrame(mytask, controller);
+                dispose();
             }
         });
 

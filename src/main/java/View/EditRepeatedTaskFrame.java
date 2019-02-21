@@ -29,6 +29,8 @@ class EditRepeatedTaskFrame extends JFrame{
     private JComboBox cmbSecondsInreval;
     private JComboBox cmbMinutesInreval;
     private JComboBox cmbHoursInreval;
+    private JComboBox cmbYearsInreval;
+    private JComboBox cmbMonthesInreval;
     private JTextField txfTitle;
     private TaskManagerController controller;
     private Task oldTask;
@@ -488,17 +490,21 @@ class EditRepeatedTaskFrame extends JFrame{
         panel.add(lbYear);
 
         int interval = task.getRepeatInterval();
+        final int year = 31536000;
+        int intervalYears = (interval - interval % year)/year;
+        interval = interval - intervalYears * year;
+        final int month = 2592000;
+        int intervalMonthes = (interval - interval % month)/month;
+        interval = interval - intervalMonthes * month;
         final int day = 86400;
-        int intervalDays = (interval - interval%day)/day;
+        int intervalDays = (interval - interval % day)/day;
         interval = interval - intervalDays * day;
         final int hour = 3600;
-        int intervalHours = (interval - interval%hour)/hour;
+        int intervalHours = (interval - interval % hour)/hour;
         interval = interval - intervalHours * hour;
         final int minute = 60;
-        int intervalMinutes = (interval - interval%minute)/minute;
+        int intervalMinutes = (interval - interval % minute)/minute;
         interval = interval - intervalMinutes * minute;
-
-       // lbTaskStartTime = new JLabel( intervalDays + "d " + intervalHours + "h "+ intervalMinutes+ "m "+interval +"s");
 
         cmbDaysInreval = new JComboBox( dataDays );
         cmbDaysInreval.setSelectedItem(String.valueOf(intervalDays));
@@ -516,7 +522,8 @@ class EditRepeatedTaskFrame extends JFrame{
         String []dataMonthesInterval = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
                 "11", "12" };
 
-        JComboBox cmbMonthesInreval = new JComboBox(dataMonthesInterval);
+        cmbMonthesInreval = new JComboBox(dataMonthesInterval);
+        cmbMonthesInreval.setSelectedItem(String.valueOf(intervalMonthes));
         gridBagConstr.gridx = 2;
         gridBagConstr.gridy = 14;
         gridBagConstr.gridwidth = 1;
@@ -530,7 +537,8 @@ class EditRepeatedTaskFrame extends JFrame{
 
         String []dataYearsInterval = {"00", "01", "02", "03", "04", "05" };
 
-        JComboBox cmbYearsInreval = new JComboBox(dataYearsInterval);
+        cmbYearsInreval = new JComboBox(dataYearsInterval);
+        cmbYearsInreval.setSelectedItem(String.valueOf(intervalYears));
         gridBagConstr.gridx = 3;
         gridBagConstr.gridy = 14;
         gridBagConstr.gridwidth = 1;
@@ -643,8 +651,8 @@ class EditRepeatedTaskFrame extends JFrame{
                 intervalValue += Integer.parseInt( (String) cmbMinutesInreval.getSelectedItem()) * 60;
                 intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60 ;
                 intervalValue += Integer.parseInt( (String) cmbDaysInreval.getSelectedItem()) * 60 * 60 * 24 ;
-           //    intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60 * 30;
-             //   intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60  * 365;
+                intervalValue += Integer.parseInt( (String) cmbMonthesInreval.getSelectedItem()) * 60 * 60 * 30;
+                intervalValue += Integer.parseInt( (String) cmbYearsInreval.getSelectedItem()) * 60 * 60  * 365;
 
                 if (
                         (Integer.parseInt(daysFrom) == 31 && ( monthesFrom == "04" || monthesFrom == "06" || monthesFrom == "09" || monthesFrom == "11"))
@@ -657,7 +665,7 @@ class EditRepeatedTaskFrame extends JFrame{
 
                     JFrame frame = new JFrame("Error");
                     JOptionPane.showMessageDialog(frame, "Too many days for this month");
-                } else if (txfTitle.getText().length()<2){
+                } else if (txfTitle.getText()==null || "".equals(txfTitle.getText())){
                     JFrame frame = new JFrame("Error");
                     JOptionPane.showMessageDialog(frame, "Too short title");
                 } else if (intervalValue==0){
