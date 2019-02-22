@@ -2,7 +2,6 @@ package View;
 import Controller.TaskManagerController;
 import Model.ArrayTaskList;
 import Model.Task;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -15,6 +14,11 @@ import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Creates a main window which contains:
+ *  1.List of tasks;
+ *  2.Bottons
+ */
 public class TaskManagerView  extends JFrame implements Observer {
     private TaskManagerController taskManagerController;
     private ArrayTaskList tasks;
@@ -34,9 +38,7 @@ public class TaskManagerView  extends JFrame implements Observer {
         catch (Exception ex) {
             ex.printStackTrace();
         }
-
         JPanel panel = new JPanel();
-
         GridBagLayout gridBagLayout = new GridBagLayout();
         GridBagConstraints gridBag = new GridBagConstraints();
         panel.setLayout( gridBagLayout );
@@ -169,6 +171,9 @@ public class TaskManagerView  extends JFrame implements Observer {
         taskTable.clearSelection();
     }
 
+    /**
+     * Updates information in the table.
+     */
     private void updateTable(){
         final int tableRowSize = 15;
         model.setRowCount(tableRowSize);

@@ -2,6 +2,7 @@ package View;
 
 import Controller.TaskManagerController;
 import Model.ArrayTaskList;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -13,6 +14,8 @@ class AddFrame extends JFrame{
     TaskManagerController taskManagerController;
     private JCheckBox boxRepeated;
     private JTextField txfTitle;
+    private static final Logger log = Logger.getLogger(TaskManagerController.class);
+
 
     AddFrame(final TaskManagerController controller) throws HeadlessException {
 
@@ -93,6 +96,7 @@ class AddFrame extends JFrame{
                 if (txfTitle.getText().length() == 0){
                     JFrame frame = new JFrame("Error");
                     JOptionPane.showMessageDialog(frame, "Enter task's title");
+                    log.error("Title cannot be blank");
                 } else {
                     if (boxRepeated.isSelected()) {
                         AddRepeatedTaskFrame addFrame = new AddRepeatedTaskFrame(txfTitle.getText(), taskManagerController);
