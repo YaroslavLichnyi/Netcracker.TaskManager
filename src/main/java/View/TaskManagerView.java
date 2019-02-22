@@ -25,7 +25,7 @@ public class TaskManagerView  extends JFrame implements Observer {
         super("Task Manager");
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension dimension = toolkit.getScreenSize();
-        setBounds(dimension.width / 2 - 300, dimension.height / 2 - 200, 600, 400);
+        setBounds(dimension.width / 2 - 300, dimension.height / 2 - 150, 600, 300);
         this.tasks = arr;
         taskManagerController = controller;
         try {
@@ -76,6 +76,7 @@ public class TaskManagerView  extends JFrame implements Observer {
                 return false;
             }
         };
+        taskTable.setForeground(new Color(0, 128, 242));
         JScrollPane scrollPane = new JScrollPane( taskTable );
         gridBag.gridx = 0;
         gridBag.gridy = 2;
@@ -147,7 +148,6 @@ public class TaskManagerView  extends JFrame implements Observer {
 
         this.add(panel);
         setVisible(true);
-       // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         updateTable();
     }
 
@@ -170,7 +170,7 @@ public class TaskManagerView  extends JFrame implements Observer {
     }
 
     private void updateTable(){
-        final int tableRowSize = 10;
+        final int tableRowSize = 15;
         model.setRowCount(tableRowSize);
         Iterator<Task> taskIterator = tasks.iterator();
         Task task;

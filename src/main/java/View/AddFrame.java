@@ -27,7 +27,7 @@ class AddFrame extends JFrame{
         catch (Exception ex) {
             ex.printStackTrace();
         }
-        //creating panel
+
         JPanel panel = new JPanel();
         panel.setBackground( new Color(255, 255,255 ) );
 

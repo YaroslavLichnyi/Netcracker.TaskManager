@@ -15,21 +15,8 @@ import java.util.Date;
 import java.util.Iterator;
 
 public class FindFrame extends JFrame {
-    JTextField titleField;  //текстовое поле с названием задачи
-    JTextField timeField;   //текстовое поле со временем
-    ArrayTaskList tasks;
-    Date from;
-    Date to;
 
-    private String title;
-    private JPanel panel;
-    private JLabel lbNames;
-    private JLabel lbDay;
-    private JLabel lbMonth;
-    private JLabel lbYear;
-    private JLabel lbHours;
-    private JLabel lbMinutes;
-    private JLabel lbSeconds;
+    private ArrayTaskList tasks;
     private JComboBox cmbDaysFrom;
     private JComboBox cmbMonthesFrom;
     private JComboBox cmbYearsFrom;
@@ -48,7 +35,7 @@ public class FindFrame extends JFrame {
     private JRadioButton rbBoth;
     private TaskManagerController controller;
 
-    public FindFrame(ArrayTaskList arr,  TaskManagerController taskManagerController )  {
+    FindFrame(ArrayTaskList arr, TaskManagerController taskManagerController)  {
         tasks = arr;
         controller = taskManagerController;
         Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -108,7 +95,7 @@ public class FindFrame extends JFrame {
         panel.add( lbLabel0 );
 
 
-        lbDay = new JLabel( "Day"  );
+        JLabel lbDay = new JLabel("Day");
         gbcPanel0.gridx = 1;
         gbcPanel0.gridy = 3;
         gbcPanel0.gridwidth = 1;
@@ -117,10 +104,10 @@ public class FindFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbDay, gbcPanel0 );
-        panel.add( lbDay );
+        gbPanel0.setConstraints(lbDay, gbcPanel0 );
+        panel.add(lbDay);
 
-        lbMonth = new JLabel( "Month"  );
+        JLabel lbMonth = new JLabel("Month");
         gbcPanel0.gridx = 2;
         gbcPanel0.gridy = 3;
         gbcPanel0.gridwidth = 1;
@@ -129,10 +116,10 @@ public class FindFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbMonth, gbcPanel0 );
-        panel.add( lbMonth );
+        gbPanel0.setConstraints(lbMonth, gbcPanel0 );
+        panel.add(lbMonth);
 
-        lbYear = new JLabel( "Year"  );
+        JLabel lbYear = new JLabel("Year");
         gbcPanel0.gridx = 3;
         gbcPanel0.gridy = 3;
         gbcPanel0.gridwidth = 1;
@@ -141,11 +128,11 @@ public class FindFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbYear, gbcPanel0 );
-        panel.add( lbYear );
+        gbPanel0.setConstraints(lbYear, gbcPanel0 );
+        panel.add(lbYear);
 
 
-        lbHours = new JLabel( "Hours"  );
+        JLabel lbHours = new JLabel("Hours");
         gbcPanel0.gridx = 1;
         gbcPanel0.gridy = 5;
         gbcPanel0.gridwidth = 1;
@@ -154,10 +141,10 @@ public class FindFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbHours, gbcPanel0 );
-        panel.add( lbHours );
+        gbPanel0.setConstraints(lbHours, gbcPanel0 );
+        panel.add(lbHours);
 
-        lbMinutes = new JLabel( "Minutes"  );
+        JLabel lbMinutes = new JLabel("Minutes");
         gbcPanel0.gridx = 2;
         gbcPanel0.gridy = 5;
         gbcPanel0.gridwidth = 1;
@@ -166,10 +153,10 @@ public class FindFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbMinutes, gbcPanel0 );
-        panel.add( lbMinutes );
+        gbPanel0.setConstraints(lbMinutes, gbcPanel0 );
+        panel.add(lbMinutes);
 
-        lbSeconds = new JLabel( "Seconds"  );
+        JLabel lbSeconds = new JLabel("Seconds");
         gbcPanel0.gridx = 3;
         gbcPanel0.gridy = 5;
         gbcPanel0.gridwidth = 1;
@@ -178,8 +165,8 @@ public class FindFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbSeconds, gbcPanel0 );
-        panel.add( lbSeconds );
+        gbPanel0.setConstraints(lbSeconds, gbcPanel0 );
+        panel.add(lbSeconds);
 
 
         String []dataDays = { "01", "02", "03", "04", "05", "06", "07",
@@ -306,8 +293,8 @@ public class FindFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbDay, gbcPanel0 );
-        panel.add( lbDay );
+        gbPanel0.setConstraints(lbDay, gbcPanel0 );
+        panel.add(lbDay);
 
         lbMonth = new JLabel( "Month"  );
         gbcPanel0.gridx = 2;
@@ -318,8 +305,8 @@ public class FindFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbMonth, gbcPanel0 );
-        panel.add( lbMonth );
+        gbPanel0.setConstraints(lbMonth, gbcPanel0 );
+        panel.add(lbMonth);
 
         lbYear = new JLabel( "Year"  );
         gbcPanel0.gridx = 3;
@@ -330,8 +317,8 @@ public class FindFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbYear, gbcPanel0 );
-        panel.add( lbYear );
+        gbPanel0.setConstraints(lbYear, gbcPanel0 );
+        panel.add(lbYear);
 
         cmbDaysTo = new JComboBox( dataDays );
         gbcPanel0.gridx = 1;
@@ -378,8 +365,8 @@ public class FindFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbHours, gbcPanel0 );
-        panel.add( lbHours );
+        gbPanel0.setConstraints(lbHours, gbcPanel0 );
+        panel.add(lbHours);
 
         lbMinutes = new JLabel( "Minutes"  );
         gbcPanel0.gridx = 2;
@@ -390,8 +377,8 @@ public class FindFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbMinutes, gbcPanel0 );
-        panel.add( lbMinutes );
+        gbPanel0.setConstraints(lbMinutes, gbcPanel0 );
+        panel.add(lbMinutes);
 
         lbSeconds = new JLabel( "Seconds"  );
         gbcPanel0.gridx = 3;
@@ -402,8 +389,8 @@ public class FindFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbSeconds, gbcPanel0 );
-        panel.add( lbSeconds );
+        gbPanel0.setConstraints(lbSeconds, gbcPanel0 );
+        panel.add(lbSeconds);
 
         cmbSecondsTo = new JComboBox( dataSeconds );
         gbcPanel0.gridx = 3;
@@ -581,7 +568,7 @@ public class FindFrame extends JFrame {
                         } catch (ParseException e1) {
                             e1.printStackTrace();
                         }
-                        ArrayTaskList arr = (ArrayTaskList) Tasks.incoming(tasks, dateTo, dateFrom );
+                        ArrayTaskList arr = (ArrayTaskList) Tasks.incoming(tasks, dateFrom, dateTo);
                         if (arr.size()>0){
                             TaskTableFrame taskTableFrame = new TaskTableFrame(tasks,controller);
                         } else {
@@ -598,64 +585,66 @@ public class FindFrame extends JFrame {
                     String daysTo =(String) cmbDaysTo.getSelectedItem();
                     String monthesTo =(String) cmbMonthesTo.getSelectedItem();
                     String yearsTo =(String) cmbYearsTo.getSelectedItem();
-                    if (txfTitle.getText().length()<2){
+                    if (txfTitle.getText().length()==0){
                         JFrame frame = new JFrame("Error");
                         JOptionPane.showMessageDialog(frame, "Too short title");
-                    } else  if (
-                            (Integer.parseInt(daysFrom) == 31 && ( monthesFrom == "04" || monthesFrom == "06" || monthesFrom == "09" || monthesFrom == "11"))
-                                    || (Integer.parseInt(daysFrom) >= 30 && monthesFrom == "02" &&  ((Integer.parseInt(yearsFrom) % 4 == 0) && Integer.parseInt(yearsFrom) % 100 != 0) )
-                                    || (Integer.parseInt(daysFrom) >= 29 && monthesFrom == "02" &&  !((Integer.parseInt(yearsFrom) % 4 == 0) && Integer.parseInt(yearsFrom) % 100 != 0))
-                                    || (Integer.parseInt(daysTo) == 31 && ( monthesTo == "04" || monthesTo == "06" || monthesTo == "09" || monthesTo == "11"))
-                                    || (Integer.parseInt(daysTo) >= 30 && monthesTo == "02" &&  ((Integer.parseInt(yearsTo) % 4 == 0) && Integer.parseInt(yearsTo) % 100 != 0) )
-                                    || (Integer.parseInt(daysTo) >= 29 && monthesTo == "02" &&  !((Integer.parseInt(yearsTo) % 4 == 0) && Integer.parseInt(yearsTo) % 100 != 0))
-                    ){
+                    } else {
+                        if (
+                                (Integer.parseInt(daysFrom) == 31 && (monthesFrom.equals("04") || monthesFrom.equals("06") || monthesFrom.equals("09") || monthesFrom.equals("11")))
+                                        || (Integer.parseInt(daysFrom) >= 30 && monthesFrom.equals("02") &&  ((Integer.parseInt(yearsFrom) % 4 == 0) && Integer.parseInt(yearsFrom) % 100 != 0) )
+                                        || (Integer.parseInt(daysFrom) >= 29 && monthesFrom.equals("02") &&  !((Integer.parseInt(yearsFrom) % 4 == 0) && Integer.parseInt(yearsFrom) % 100 != 0))
+                                        || (Integer.parseInt(daysTo) == 31 && (monthesTo.equals("04") || monthesTo.equals("06") || monthesTo.equals("09") || monthesTo.equals("11")))
+                                        || (Integer.parseInt(daysTo) >= 30 && monthesTo.equals("02") &&  ((Integer.parseInt(yearsTo) % 4 == 0) && Integer.parseInt(yearsTo) % 100 != 0) )
+                                        || (Integer.parseInt(daysTo) >= 29 && monthesTo.equals("02") &&  !((Integer.parseInt(yearsTo) % 4 == 0) && Integer.parseInt(yearsTo) % 100 != 0))
+                        ){
 
-                        JFrame frame = new JFrame("Error");
-                        JOptionPane.showMessageDialog(frame, "Too many days for this month");
-                    } else{
-                        String seconds =(String) cmbSecondsFrom.getSelectedItem();
-                        String minutes =(String) cmbMinutesFrom.getSelectedItem();
-                        String hours =(String) cmbHoursFrom.getSelectedItem();
-                        String days =(String) cmbDaysFrom.getSelectedItem();
-                        String monthes =(String) cmbMonthesFrom.getSelectedItem();
-                        String years =(String) cmbYearsFrom.getSelectedItem();
-
-                        String strDateFrom = days + monthes + years + hours + minutes + seconds;
-
-                        seconds =(String) cmbSecondsTo.getSelectedItem();
-                        minutes =(String) cmbMinutesTo.getSelectedItem();
-                        hours =(String) cmbHoursTo.getSelectedItem();
-                        days =(String) cmbDaysTo.getSelectedItem();
-                        monthes =(String) cmbMonthesTo.getSelectedItem();
-                        years =(String) cmbYearsTo.getSelectedItem();
-
-                        String strDateTo = days + monthes + years + hours + minutes + seconds;
-
-                        Date dateFrom = null;
-                        Date dateTo = null;
-                        try {
-                            dateFrom = (Date)taskFormat.parse(strDateFrom);
-                            dateTo = (Date)taskFormat.parse(strDateTo);
-                        } catch (ParseException e1) {
-                            e1.printStackTrace();
-                        }
-                        ArrayTaskList arr = (ArrayTaskList) Tasks.incoming(tasks, dateTo, dateFrom );
-                        Iterator<Task> taskIterator = arr.iterator();
-                        ArrayTaskList arrayTaskList = new ArrayTaskList();
-                        Task task;
-                        int i = 0;
-                        while (taskIterator.hasNext()){
-                            task = taskIterator.next();
-                            if (task.getTitle().equals(txfTitle.getText())){
-                                arrayTaskList.add(task);
-                            }
-                            i++;
-                        }
-                        if (arr.size()>0){
-                            TaskTableFrame taskTableFrame = new TaskTableFrame(arr,controller);
-                        } else {
                             JFrame frame = new JFrame("Error");
-                            JOptionPane.showMessageDialog(frame, "No tasks were found");
+                            JOptionPane.showMessageDialog(frame, "Too many days for this month");
+                        } else{
+                            String seconds =(String) cmbSecondsFrom.getSelectedItem();
+                            String minutes =(String) cmbMinutesFrom.getSelectedItem();
+                            String hours =(String) cmbHoursFrom.getSelectedItem();
+                            String days =(String) cmbDaysFrom.getSelectedItem();
+                            String monthes =(String) cmbMonthesFrom.getSelectedItem();
+                            String years =(String) cmbYearsFrom.getSelectedItem();
+
+                            String strDateFrom = days + monthes + years + hours + minutes + seconds;
+
+                            seconds =(String) cmbSecondsTo.getSelectedItem();
+                            minutes =(String) cmbMinutesTo.getSelectedItem();
+                            hours =(String) cmbHoursTo.getSelectedItem();
+                            days =(String) cmbDaysTo.getSelectedItem();
+                            monthes =(String) cmbMonthesTo.getSelectedItem();
+                            years =(String) cmbYearsTo.getSelectedItem();
+
+                            String strDateTo = days + monthes + years + hours + minutes + seconds;
+
+                            Date dateFrom = null;
+                            Date dateTo = null;
+                            try {
+                                dateFrom = (Date)taskFormat.parse(strDateFrom);
+                                dateTo = (Date)taskFormat.parse(strDateTo);
+                            } catch (ParseException e1) {
+                                e1.printStackTrace();
+                            }
+                            ArrayTaskList arr = (ArrayTaskList) Tasks.incoming(tasks, dateFrom, dateTo);
+                            Iterator<Task> taskIterator = arr.iterator();
+                            ArrayTaskList arrayTaskList = new ArrayTaskList();
+                            Task task;
+                            int i = 0;
+                            while (taskIterator.hasNext()){
+                                task = taskIterator.next();
+                                if (task.getTitle().equals(txfTitle.getText())){
+                                    arrayTaskList.add(task);
+                                }
+                                i++;
+                            }
+                            if (arr.size()>0){
+                                TaskTableFrame taskTableFrame = new TaskTableFrame(arr,controller);
+                            } else {
+                                JFrame frame = new JFrame("Error");
+                                JOptionPane.showMessageDialog(frame, "No tasks were found");
+                            }
                         }
                     }
                 }

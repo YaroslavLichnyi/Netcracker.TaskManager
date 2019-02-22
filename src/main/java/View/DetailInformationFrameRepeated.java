@@ -146,7 +146,6 @@ class DetailInformationFrameRepeated extends JFrame {
             }
         });
 
-
         JButton btEdit = new JButton("Edit");
         btEdit.setBackground( new Color( 238,247,255 ) );
         gbcPanel0.gridx = 2;
