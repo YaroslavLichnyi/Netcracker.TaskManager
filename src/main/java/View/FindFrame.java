@@ -3,6 +3,7 @@ package View;
 import Controller.TaskManagerController;
 import Model.ArrayTaskList;
 import Model.Task;
+import Model.TaskInfo;
 import Model.Tasks;
 
 import javax.swing.*;
@@ -497,160 +498,60 @@ public class FindFrame extends JFrame {
         btFind.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 if(rbTitle.isSelected()){
-                    if (txfTitle.getText().length()<2){
-                        JFrame frame = new JFrame("Error");
-                        JOptionPane.showMessageDialog(frame, "Too short title");
-                    } else {
-                        Iterator<Task> taskIterator = tasks.iterator();
-                        ArrayTaskList arrayTaskList = new ArrayTaskList();
-                        Task task;
-                        int i = 0;
-                        while (taskIterator.hasNext()){
-                            task = taskIterator.next();
-                            if (task.getTitle().equals(txfTitle.getText())){
-                                arrayTaskList.add(task);
-                            }
-                            i++;
-                        }
-                        if (arrayTaskList.size()>0){
-                            TaskTableFrame taskTableFrame = new TaskTableFrame(arrayTaskList,controller);
-                        } else {
-                            JFrame frame = new JFrame("Error");
-                            JOptionPane.showMessageDialog(frame, "No tasks were found");
-                        }
+                    ArrayTaskList sortedByTitle = controller.findTasksByTitle(tasks, txfTitle.getText());
+                    if (sortedByTitle != null){
+                        TaskTableFrame taskTableFrame = new TaskTableFrame(sortedByTitle, controller);
                     }
-                } else if (rbTime.isSelected()){
-                    SimpleDateFormat taskFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
+                } else if (rbTime.isSelected() || rbBoth.isSelected()){
 
                     String daysFrom =(String) cmbDaysFrom.getSelectedItem();
                     String monthesFrom =(String) cmbMonthesFrom.getSelectedItem();
                     String yearsFrom =(String) cmbYearsFrom.getSelectedItem();
+                    String secondsFrom =(String) cmbSecondsFrom.getSelectedItem();
+                    String minutesFrom =(String) cmbMinutesFrom.getSelectedItem();
+                    String hoursFrom =(String) cmbHoursFrom.getSelectedItem();
+                    String strDateFrom = daysFrom + monthesFrom + yearsFrom + hoursFrom + minutesFrom + secondsFrom;
+
                     String daysTo =(String) cmbDaysTo.getSelectedItem();
                     String monthesTo =(String) cmbMonthesTo.getSelectedItem();
                     String yearsTo =(String) cmbYearsTo.getSelectedItem();
+                    String secondsTo =(String) cmbSecondsTo.getSelectedItem();
+                    String minutesTo =(String) cmbMinutesTo.getSelectedItem();
+                    String hoursTo =(String) cmbHoursTo.getSelectedItem();
+                    String strDateTo = daysTo + monthesTo + yearsTo + hoursTo + minutesTo + secondsTo;
 
-                    if (
-                            (Integer.parseInt(daysFrom) == 31 && ( monthesFrom == "04" || monthesFrom == "06" || monthesFrom == "09" || monthesFrom == "11"))
-                                    || (Integer.parseInt(daysFrom) >= 30 && monthesFrom == "02" &&  ((Integer.parseInt(yearsFrom) % 4 == 0) && Integer.parseInt(yearsFrom) % 100 != 0) )
-                                    || (Integer.parseInt(daysFrom) >= 29 && monthesFrom == "02" &&  !((Integer.parseInt(yearsFrom) % 4 == 0) && Integer.parseInt(yearsFrom) % 100 != 0))
-                                    || (Integer.parseInt(daysTo) == 31 && ( monthesTo == "04" || monthesTo == "06" || monthesTo == "09" || monthesTo == "11"))
-                                    || (Integer.parseInt(daysTo) >= 30 && monthesTo == "02" &&  ((Integer.parseInt(yearsTo) % 4 == 0) && Integer.parseInt(yearsTo) % 100 != 0) )
-                                    || (Integer.parseInt(daysTo) >= 29 && monthesTo == "02" &&  !((Integer.parseInt(yearsTo) % 4 == 0) && Integer.parseInt(yearsTo) % 100 != 0))
+                    if (TaskInfo.isDateIncorrect(Integer.parseInt(daysFrom),Integer.parseInt(monthesFrom) ,Integer.parseInt(yearsFrom))
+                            || TaskInfo.isDateIncorrect(Integer.parseInt(daysTo), Integer.parseInt(monthesTo), Integer.parseInt(yearsTo))
                     ){
-
                         JFrame frame = new JFrame("Error");
                         JOptionPane.showMessageDialog(frame, "Too many days for this month");
-                    } else{
-                        String seconds =(String) cmbSecondsFrom.getSelectedItem();
-                        String minutes =(String) cmbMinutesFrom.getSelectedItem();
-                        String hours =(String) cmbHoursFrom.getSelectedItem();
-                        String days =(String) cmbDaysFrom.getSelectedItem();
-                        String monthes =(String) cmbMonthesFrom.getSelectedItem();
-                        String years =(String) cmbYearsFrom.getSelectedItem();
-
-                        String strDateFrom = days + monthes + years + hours + minutes + seconds;
-
-                        seconds =(String) cmbSecondsTo.getSelectedItem();
-                        minutes =(String) cmbMinutesTo.getSelectedItem();
-                        hours =(String) cmbHoursTo.getSelectedItem();
-                        days =(String) cmbDaysTo.getSelectedItem();
-                        monthes =(String) cmbMonthesTo.getSelectedItem();
-                        years =(String) cmbYearsTo.getSelectedItem();
-
-                        String strDateTo = days + monthes + years + hours + minutes + seconds;
-
-                        Date dateFrom = null;
-                        Date dateTo = null;
-                        try {
-                            dateFrom = (Date)taskFormat.parse(strDateFrom);
-                            dateTo = (Date)taskFormat.parse(strDateTo);
-                        } catch (ParseException e1) {
-                            e1.printStackTrace();
-                        }
-                        ArrayTaskList arr = (ArrayTaskList) Tasks.incoming(tasks, dateFrom, dateTo);
-                        if (arr.size()>0){
-                            TaskTableFrame taskTableFrame = new TaskTableFrame(tasks,controller);
+                    } else {
+                        Date from = TaskInfo.createDate(strDateFrom);
+                        Date to = TaskInfo.createDate(strDateTo);
+                        ArrayTaskList sortedByTime = controller.findTasksByTime(tasks, from, to);
+                        if(sortedByTime != null){
+                            if (rbTime.isSelected()){
+                                TaskTableFrame taskTableFrame = new TaskTableFrame(sortedByTime, controller);
+                            } else {
+                                ArrayTaskList sortedByTimeAndTitle = controller.findTasksByTitle(sortedByTime , txfTitle.getText());
+                                if (sortedByTimeAndTitle != null){
+                                    TaskTableFrame taskTableFrame = new TaskTableFrame(sortedByTimeAndTitle, controller);
+                                } else {
+                                    JFrame frame = new JFrame("Error");
+                                    JOptionPane.showMessageDialog(frame, "No tasks were found");
+                                }
+                            }
                         } else {
                             JFrame frame = new JFrame("Error");
                             JOptionPane.showMessageDialog(frame, "No tasks were found");
                         }
-                    }
-                } else if (rbBoth.isSelected()){
-                    SimpleDateFormat taskFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
 
-                    String daysFrom =(String) cmbDaysFrom.getSelectedItem();
-                    String monthesFrom =(String) cmbMonthesFrom.getSelectedItem();
-                    String yearsFrom =(String) cmbYearsFrom.getSelectedItem();
-                    String daysTo =(String) cmbDaysTo.getSelectedItem();
-                    String monthesTo =(String) cmbMonthesTo.getSelectedItem();
-                    String yearsTo =(String) cmbYearsTo.getSelectedItem();
-                    if (txfTitle.getText().length()==0){
-                        JFrame frame = new JFrame("Error");
-                        JOptionPane.showMessageDialog(frame, "Too short title");
-                    } else {
-                        if (
-                                (Integer.parseInt(daysFrom) == 31 && (monthesFrom.equals("04") || monthesFrom.equals("06") || monthesFrom.equals("09") || monthesFrom.equals("11")))
-                                        || (Integer.parseInt(daysFrom) >= 30 && monthesFrom.equals("02") &&  ((Integer.parseInt(yearsFrom) % 4 == 0) && Integer.parseInt(yearsFrom) % 100 != 0) )
-                                        || (Integer.parseInt(daysFrom) >= 29 && monthesFrom.equals("02") &&  !((Integer.parseInt(yearsFrom) % 4 == 0) && Integer.parseInt(yearsFrom) % 100 != 0))
-                                        || (Integer.parseInt(daysTo) == 31 && (monthesTo.equals("04") || monthesTo.equals("06") || monthesTo.equals("09") || monthesTo.equals("11")))
-                                        || (Integer.parseInt(daysTo) >= 30 && monthesTo.equals("02") &&  ((Integer.parseInt(yearsTo) % 4 == 0) && Integer.parseInt(yearsTo) % 100 != 0) )
-                                        || (Integer.parseInt(daysTo) >= 29 && monthesTo.equals("02") &&  !((Integer.parseInt(yearsTo) % 4 == 0) && Integer.parseInt(yearsTo) % 100 != 0))
-                        ){
-
-                            JFrame frame = new JFrame("Error");
-                            JOptionPane.showMessageDialog(frame, "Too many days for this month");
-                        } else{
-                            String seconds =(String) cmbSecondsFrom.getSelectedItem();
-                            String minutes =(String) cmbMinutesFrom.getSelectedItem();
-                            String hours =(String) cmbHoursFrom.getSelectedItem();
-                            String days =(String) cmbDaysFrom.getSelectedItem();
-                            String monthes =(String) cmbMonthesFrom.getSelectedItem();
-                            String years =(String) cmbYearsFrom.getSelectedItem();
-
-                            String strDateFrom = days + monthes + years + hours + minutes + seconds;
-
-                            seconds =(String) cmbSecondsTo.getSelectedItem();
-                            minutes =(String) cmbMinutesTo.getSelectedItem();
-                            hours =(String) cmbHoursTo.getSelectedItem();
-                            days =(String) cmbDaysTo.getSelectedItem();
-                            monthes =(String) cmbMonthesTo.getSelectedItem();
-                            years =(String) cmbYearsTo.getSelectedItem();
-
-                            String strDateTo = days + monthes + years + hours + minutes + seconds;
-
-                            Date dateFrom = null;
-                            Date dateTo = null;
-                            try {
-                                dateFrom = (Date)taskFormat.parse(strDateFrom);
-                                dateTo = (Date)taskFormat.parse(strDateTo);
-                            } catch (ParseException e1) {
-                                e1.printStackTrace();
-                            }
-                            ArrayTaskList arr = (ArrayTaskList) Tasks.incoming(tasks, dateFrom, dateTo);
-                            Iterator<Task> taskIterator = arr.iterator();
-                            ArrayTaskList arrayTaskList = new ArrayTaskList();
-                            Task task;
-                            int i = 0;
-                            while (taskIterator.hasNext()){
-                                task = taskIterator.next();
-                                if (task.getTitle().equals(txfTitle.getText())){
-                                    arrayTaskList.add(task);
-                                }
-                                i++;
-                            }
-                            if (arr.size()>0){
-                                TaskTableFrame taskTableFrame = new TaskTableFrame(arr,controller);
-                            } else {
-                                JFrame frame = new JFrame("Error");
-                                JOptionPane.showMessageDialog(frame, "No tasks were found");
-                            }
-                        }
                     }
                 }
             }
         });
-
 
         this.add(panel);
         this.setVisible(true);

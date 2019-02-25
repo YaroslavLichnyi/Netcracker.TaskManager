@@ -2,6 +2,7 @@ package View;
 
 import Controller.TaskManagerController;
 import Model.Task;
+import Model.TaskInfo;
 
 import javax.swing.*;
 import java.awt.*;
@@ -133,7 +134,6 @@ class EditRepeatedTaskFrame extends JFrame{
         gridBagConstr.anchor = GridBagConstraints.NORTH;
         gridBagLayout.setConstraints(lbYear, gridBagConstr);
         panel.add(lbYear);
-
 
         JLabel lbHours = new JLabel("Hours");
         gridBagConstr.gridx = 1;
@@ -654,15 +654,9 @@ class EditRepeatedTaskFrame extends JFrame{
                 intervalValue += Integer.parseInt( (String) cmbMonthesInreval.getSelectedItem()) * 60 * 60 * 30;
                 intervalValue += Integer.parseInt( (String) cmbYearsInreval.getSelectedItem()) * 60 * 60  * 365;
 
-                if (
-                        (Integer.parseInt(daysFrom) == 31 && ( monthesFrom == "04" || monthesFrom == "06" || monthesFrom == "09" || monthesFrom == "11"))
-                                || (Integer.parseInt(daysFrom) >= 30 && monthesFrom == "02" &&  ((Integer.parseInt(yearsFrom) % 4 == 0) && Integer.parseInt(yearsFrom) % 100 != 0) )
-                                || (Integer.parseInt(daysFrom) >= 29 && monthesFrom == "02" &&  !((Integer.parseInt(yearsFrom) % 4 == 0) && Integer.parseInt(yearsFrom) % 100 != 0))
-                                || (Integer.parseInt(daysTo) == 31 && ( monthesTo == "04" || monthesTo == "06" || monthesTo == "09" || monthesTo == "11"))
-                                || (Integer.parseInt(daysTo) >= 30 && monthesTo == "02" &&  ((Integer.parseInt(yearsTo) % 4 == 0) && Integer.parseInt(yearsTo) % 100 != 0) )
-                                || (Integer.parseInt(daysTo) >= 29 && monthesTo == "02" &&  !((Integer.parseInt(yearsTo) % 4 == 0) && Integer.parseInt(yearsTo) % 100 != 0))
+                if ( TaskInfo.isDateIncorrect(Integer.parseInt(daysFrom),Integer.parseInt(monthesFrom) ,Integer.parseInt(yearsFrom))
+                     || TaskInfo.isDateIncorrect(Integer.parseInt(daysTo), Integer.parseInt(monthesTo), Integer.parseInt(yearsTo))
                 ){
-
                     JFrame frame = new JFrame("Error");
                     JOptionPane.showMessageDialog(frame, "Too many days for this month");
                 } else if (txfTitle.getText()==null || "".equals(txfTitle.getText())){
@@ -673,9 +667,9 @@ class EditRepeatedTaskFrame extends JFrame{
                     JOptionPane.showMessageDialog(frame, "Your interval must be at least 1 second (not 0)");
                 } else {
                     SimpleDateFormat taskFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
-                    String seconds =(String) cmbSecondsFrom.getSelectedItem();
-                    String minutes =(String) cmbMinutesFrom.getSelectedItem();
-                    String hours =(String) cmbHoursFrom.getSelectedItem();
+                    String seconds =(String)   cmbSecondsFrom.getSelectedItem();
+                    String minutes =(String)  cmbMinutesFrom.getSelectedItem();
+                    String hours =(String)  cmbHoursFrom.getSelectedItem();
                     String days =(String) cmbDaysFrom.getSelectedItem();
                     String monthes =(String) cmbMonthesFrom.getSelectedItem();
                     String years =(String) cmbYearsFrom.getSelectedItem();

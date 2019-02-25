@@ -2,6 +2,7 @@ package View;
 
 import Controller.TaskManagerController;
 import Model.Task;
+import Model.TaskInfo;
 
 import javax.swing.*;
 import java.awt.*;
@@ -92,7 +93,6 @@ public class AddRepeatedTaskFrame extends JFrame {
         gbPanel0.setConstraints(lbNames, gbcPanel0 );
         panel.add(lbNames);
 
-
         lbDay = new JLabel( "Day"  );
         gbcPanel0.gridx = 1;
         gbcPanel0.gridy = 3;
@@ -129,7 +129,6 @@ public class AddRepeatedTaskFrame extends JFrame {
         gbPanel0.setConstraints( lbYear, gbcPanel0 );
         panel.add( lbYear );
 
-
         lbHours = new JLabel( "Hours"  );
         gbcPanel0.gridx = 1;
         gbcPanel0.gridy = 5;
@@ -165,7 +164,6 @@ public class AddRepeatedTaskFrame extends JFrame {
         gbcPanel0.anchor = GridBagConstraints.NORTH;
         gbPanel0.setConstraints( lbSeconds, gbcPanel0 );
         panel.add( lbSeconds );
-
 
         String []dataDays = { "01", "02", "03", "04", "05", "06", "07",
                               "08", "09", "10", "11", "12", "13", "14", "15",
@@ -644,15 +642,9 @@ public class AddRepeatedTaskFrame extends JFrame {
                 intervalValue += Integer.parseInt( (String) cmbDaysInreval.getSelectedItem()) * 60 * 60 * 24 ;
                 intervalValue += Integer.parseInt( (String) cmbMonthesInreval.getSelectedItem()) * 60 * 60 * 30;
                 intervalValue += Integer.parseInt( (String) cmbYearsInreval.getSelectedItem()) * 60 * 60  * 365;
-                if (
-                           (Integer.parseInt(daysFrom) == 31 && ( monthesFrom == "04" || monthesFrom == "06" || monthesFrom == "09" || monthesFrom == "11"))
-                        || (Integer.parseInt(daysFrom) >= 30 && monthesFrom == "02" &&  ((Integer.parseInt(yearsFrom) % 4 == 0) && Integer.parseInt(yearsFrom) % 100 != 0) )
-                        || (Integer.parseInt(daysFrom) >= 29 && monthesFrom == "02" &&  !((Integer.parseInt(yearsFrom) % 4 == 0) && Integer.parseInt(yearsFrom) % 100 != 0))
-                        || (Integer.parseInt(daysTo) == 31 && ( monthesTo == "04" || monthesTo == "06" || monthesTo == "09" || monthesTo == "11"))
-                        || (Integer.parseInt(daysTo) >= 30 && monthesTo == "02" &&  ((Integer.parseInt(yearsTo) % 4 == 0) && Integer.parseInt(yearsTo) % 100 != 0) )
-                        || (Integer.parseInt(daysTo) >= 29 && monthesTo == "02" &&  !((Integer.parseInt(yearsTo) % 4 == 0) && Integer.parseInt(yearsTo) % 100 != 0))
-                ){
 
+                if (TaskInfo.isDateIncorrect(Integer.parseInt(daysFrom),Integer.parseInt(monthesFrom),Integer.parseInt(yearsFrom))
+                    || TaskInfo.isDateIncorrect(Integer.parseInt(daysTo),Integer.parseInt(monthesTo),Integer.parseInt(yearsTo))){
                     JFrame frame = new JFrame("Error");
                     JOptionPane.showMessageDialog(frame, "Too many days for this month");
                 } else if (intervalValue==0){

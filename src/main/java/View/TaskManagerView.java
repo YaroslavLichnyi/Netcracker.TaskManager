@@ -107,10 +107,12 @@ public class TaskManagerView  extends JFrame implements Observer {
         taskTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (tasks.getTask(taskTable.getSelectedRow()).isRepeated()){
-                    DetailInformationFrameRepeated detInfFrRep = new DetailInformationFrameRepeated(tasks.getTask(taskTable.getSelectedRow()),taskManagerController);
-                } else {
-                    DetailInformationFrame detInfFr = new DetailInformationFrame(tasks.getTask(taskTable.getSelectedRow()),taskManagerController);
+                if(tasks.getTask(taskTable.getSelectedRow()) != null){
+                    if (tasks.getTask(taskTable.getSelectedRow()).isRepeated()){
+                        DetailInformationFrameRepeated detInfFrRep = new DetailInformationFrameRepeated(tasks.getTask(taskTable.getSelectedRow()),taskManagerController);
+                    } else {
+                        DetailInformationFrame detInfFr = new DetailInformationFrame(tasks.getTask(taskTable.getSelectedRow()),taskManagerController);
+                    }
                 }
             }
         });
@@ -192,8 +194,8 @@ public class TaskManagerView  extends JFrame implements Observer {
             i++;
         }
         while(i<tableRowSize){
-            model.setValueAt(null, i , 0);
-            model.setValueAt(null, i , 1);
+            model.setValueAt(" ", i , 0);
+            model.setValueAt(" ", i , 1);
             i++;
         }
         taskTable.repaint();

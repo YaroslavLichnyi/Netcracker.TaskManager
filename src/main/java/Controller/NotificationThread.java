@@ -37,7 +37,7 @@ public class NotificationThread extends Thread {
         }
     }
 
-    private NotificationThread(ArrayTaskList tasks) {
+    public NotificationThread(ArrayTaskList tasks) {
         super();
         this.tasks = tasks;
         setDaemon(true);

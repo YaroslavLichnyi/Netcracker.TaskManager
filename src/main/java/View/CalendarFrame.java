@@ -47,7 +47,6 @@ public class CalendarFrame extends JFrame {
         this.setTitle("Calendar");
         this.setLayout(new BorderLayout());
 
-
         taskFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
         label = new JLabel();
         label.setHorizontalAlignment(SwingConstants.CENTER);

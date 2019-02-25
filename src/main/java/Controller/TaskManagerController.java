@@ -1,11 +1,15 @@
 package Controller;
-import Model.TaskIO;
+import Model.*;
 import org.apache.log4j.Logger;
-import Model.ArrayTaskList;
-import Model.Task;
 import View.*;
+
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.Observable;
 
 public class TaskManagerController extends Observable {
@@ -99,6 +103,44 @@ public class TaskManagerController extends Observable {
             e.printStackTrace();
         }
 
+    }
+
+    public ArrayTaskList findTasksByTime (TaskList taskList,Date from, Date to){
+
+            ArrayTaskList arr = (ArrayTaskList) Tasks.incoming(taskList, from, to);
+            if (arr.size()>0){
+                return arr;
+            } else {
+                JFrame frame = new JFrame("Error");
+                JOptionPane.showMessageDialog(frame, "No tasks were found");
+            }
+        return  null;
+    }
+
+    public ArrayTaskList findTasksByTitle (TaskList taskList, String name){
+        if (TaskInfo.isNameIncorrect(name)){
+            JFrame frame = new JFrame("Error");
+            JOptionPane.showMessageDialog(frame, "Too short title");
+        } else {
+            Iterator<Task> taskIterator = taskList.iterator();
+            ArrayTaskList arrayTaskList = new ArrayTaskList();
+            Task task;
+            int i = 0;
+            while (taskIterator.hasNext()){
+                task = taskIterator.next();
+                if (task.getTitle().toLowerCase().contains(name.toLowerCase())){
+                    arrayTaskList.add(task);
+                }
+                i++;
+            }
+            if (arrayTaskList.size()>0){
+                return arrayTaskList;
+            } else {
+                JFrame frame = new JFrame("Error");
+                JOptionPane.showMessageDialog(frame, "No tasks were found");
+            }
+        }
+        return  null;
     }
 
 }

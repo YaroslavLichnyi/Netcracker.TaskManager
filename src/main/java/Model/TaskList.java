@@ -9,6 +9,4 @@ public abstract class TaskList implements  Iterable, Cloneable, Serializable {
     public abstract Task getTask(int index);
     public abstract Iterator iterator() ;
 
-    // private abstract class LinkedListIterator() implements Iterator ;
-
 }

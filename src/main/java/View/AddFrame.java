@@ -2,6 +2,7 @@ package View;
 
 import Controller.TaskManagerController;
 import Model.ArrayTaskList;
+import Model.TaskInfo;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -93,7 +94,7 @@ class AddFrame extends JFrame{
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         btNext.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (txfTitle.getText().length() == 0){
+                if (TaskInfo.isNameIncorrect(txfTitle.getText())){
                     JFrame frame = new JFrame("Error");
                     JOptionPane.showMessageDialog(frame, "Enter task's title");
                     log.error("Title cannot be blank");

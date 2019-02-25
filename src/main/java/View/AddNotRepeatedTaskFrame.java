@@ -2,6 +2,8 @@ package View;
 
 import Controller.TaskManagerController;
 import Model.Task;
+import Model.TaskInfo;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -263,12 +265,7 @@ class AddNotRepeatedTaskFrame extends JFrame{
                 String monthes =(String) cmbMonthes.getSelectedItem();
                 String years =(String) cmbYear.getSelectedItem();
 
-                if (
-                    (Integer.parseInt(days) == 31 && ( monthes == "04" || monthes == "06" || monthes == "09" || monthes == "11")
-                  )
-                    || (Integer.parseInt(days) >= 30 && monthes == "02" &&  ((Integer.parseInt(years) % 4 == 0) && Integer.parseInt(years) % 100 != 0) )
-                    ||(Integer.parseInt(days) >= 29 && monthes == "02" &&  !((Integer.parseInt(years) % 4 == 0) && Integer.parseInt(years) % 100 != 0))){
-
+                if (TaskInfo.isDateIncorrect(Integer.parseInt(days),Integer.parseInt(monthes),Integer.parseInt(years))){
                     JFrame frame = new JFrame("Error");
                     JOptionPane.showMessageDialog(frame, "Too many days for this month");
                 } else {
