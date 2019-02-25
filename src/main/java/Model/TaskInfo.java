@@ -8,8 +8,8 @@ import java.util.Date;
 public class TaskInfo {
     public static boolean isDateIncorrect(int days, int months, int years ){
         return (days == 31 && (months==4 || months == 6 || months == 9 || months == 11))
-                || (days >= 30 && months == 02 && years % 4 == 0 && years % 100 != 0)
-                || (days >= 29 && months == 02 && !((years % 4 == 0) && years % 100 != 0));
+                || (days >= 30 && months == 2 && years % 4 == 0 && years % 100 != 0)
+                || (days >= 29 && months == 2 && !((years % 4 == 0) && years % 100 != 0));
     }
 
     public  static boolean isNameIncorrect(String name){
