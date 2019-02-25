@@ -640,70 +640,23 @@ class EditRepeatedTaskFrame extends JFrame{
         btAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String daysFrom =(String) cmbDaysFrom.getSelectedItem();
-                String monthesFrom =(String) cmbMonthesFrom.getSelectedItem();
-                String yearsFrom =(String) cmbYearsFrom.getSelectedItem();
-                String daysTo =(String) cmbDaysTo.getSelectedItem();
-                String monthesTo =(String) cmbMonthesTo.getSelectedItem();
-                String yearsTo =(String) cmbYearsTo.getSelectedItem();
-
-                int intervalValue = Integer.parseInt( (String) cmbSecondsInreval.getSelectedItem());
-                intervalValue += Integer.parseInt( (String) cmbMinutesInreval.getSelectedItem()) * 60;
-                intervalValue += Integer.parseInt( (String) cmbHoursInreval.getSelectedItem()) * 60 * 60 ;
-                intervalValue += Integer.parseInt( (String) cmbDaysInreval.getSelectedItem()) * 60 * 60 * 24 ;
-                intervalValue += Integer.parseInt( (String) cmbMonthesInreval.getSelectedItem()) * 60 * 60 * 30;
-                intervalValue += Integer.parseInt( (String) cmbYearsInreval.getSelectedItem()) * 60 * 60  * 365;
-
-                if ( TaskInfo.isDateIncorrect(Integer.parseInt(daysFrom),Integer.parseInt(monthesFrom) ,Integer.parseInt(yearsFrom))
-                     || TaskInfo.isDateIncorrect(Integer.parseInt(daysTo), Integer.parseInt(monthesTo), Integer.parseInt(yearsTo))
-                ){
+                if (isIncorrectTimeInputed()){
                     JFrame frame = new JFrame("Error");
                     JOptionPane.showMessageDialog(frame, "Too many days for this month");
-                } else if (txfTitle.getText()==null || "".equals(txfTitle.getText())){
+                } else if (TaskInfo.isNameIncorrect(txfTitle.getText())){
                     JFrame frame = new JFrame("Error");
                     JOptionPane.showMessageDialog(frame, "Too short title");
-                } else if (intervalValue==0){
+                } else if (getInputedInterval() == 0){
                     JFrame frame = new JFrame("Error");
                     JOptionPane.showMessageDialog(frame, "Your interval must be at least 1 second (not 0)");
                 } else {
-                    SimpleDateFormat taskFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
-                    String seconds =(String)   cmbSecondsFrom.getSelectedItem();
-                    String minutes =(String)  cmbMinutesFrom.getSelectedItem();
-                    String hours =(String)  cmbHoursFrom.getSelectedItem();
-                    String days =(String) cmbDaysFrom.getSelectedItem();
-                    String monthes =(String) cmbMonthesFrom.getSelectedItem();
-                    String years =(String) cmbYearsFrom.getSelectedItem();
-
-                    String strDateFrom = days + monthes + years + hours + minutes + seconds;
-
-                    seconds =(String) cmbSecondsTo.getSelectedItem();
-                    minutes =(String) cmbMinutesTo.getSelectedItem();
-                    hours =(String) cmbHoursTo.getSelectedItem();
-                    days =(String) cmbDaysTo.getSelectedItem();
-                    monthes =(String) cmbMonthesTo.getSelectedItem();
-                    years =(String) cmbYearsTo.getSelectedItem();
-
-                    String strDateTo = days + monthes + years + hours + minutes + seconds;
-
-                    Date dateFrom = null;
-                    Date dateTo = null;
-                    try {
-                        dateFrom = (Date)taskFormat.parse(strDateFrom);
-                        dateTo = (Date)taskFormat.parse(strDateTo);
-                    } catch (ParseException e1) {
-                        e1.printStackTrace();
-                    }
-                    title = txfTitle.getText();
-                    Task newTask = new Task(title, dateFrom, dateTo,intervalValue );
+                    Task newTask = new Task(txfTitle.getText(), getInputedStartTime(), getInputedEndTime(), getInputedInterval());
                     newTask.setActive(cbActiveBox.isSelected());
                     controller.editTask( oldTask, newTask);
                     dispose();
                 }
             }
         });
-
-
-
         cbActiveBox = new JCheckBox( "task is active"  );
         cbActiveBox.setSelected( task.isActive() );
         gridBagConstr.gridx = 1;
@@ -716,8 +669,49 @@ class EditRepeatedTaskFrame extends JFrame{
         gridBagConstr.anchor = GridBagConstraints.NORTH;
         gridBagLayout.setConstraints( cbActiveBox, gridBagConstr);
         panel.add( cbActiveBox );
-
         this.add(panel);
         this.setVisible(true);
+    }
+
+    private int getInputedInterval(){
+        return Integer.parseInt( (String) cmbSecondsInreval.getSelectedItem())
+             + Integer.parseInt( (String) cmbMinutesInreval.getSelectedItem()) * 60
+             + Integer.parseInt( (String) cmbHoursInreval.getSelectedItem())   * 60 * 60
+             + Integer.parseInt( (String) cmbDaysInreval.getSelectedItem())    * 60 * 60 * 24
+             + Integer.parseInt( (String) cmbMonthesInreval.getSelectedItem()) * 60 * 60 * 30
+             + Integer.parseInt( (String) cmbYearsInreval.getSelectedItem())   * 60 * 60 * 365;
+    }
+
+    private Date getInputedStartTime(){
+        String seconds =(String)   cmbSecondsFrom.getSelectedItem();
+        String minutes =(String)  cmbMinutesFrom.getSelectedItem();
+        String hours =(String)  cmbHoursFrom.getSelectedItem();
+        String days =(String) cmbDaysFrom.getSelectedItem();
+        String monthes =(String) cmbMonthesFrom.getSelectedItem();
+        String years =(String) cmbYearsFrom.getSelectedItem();
+        String strDateFrom = days + monthes + years + hours + minutes + seconds;
+        return TaskInfo.createDate(strDateFrom);
+    }
+
+    private  Date getInputedEndTime(){
+        String seconds =(String) cmbSecondsTo.getSelectedItem();
+        String minutes =(String) cmbMinutesTo.getSelectedItem();
+        String hours =(String) cmbHoursTo.getSelectedItem();
+        String days =(String) cmbDaysTo.getSelectedItem();
+        String monthes =(String) cmbMonthesTo.getSelectedItem();
+        String years =(String) cmbYearsTo.getSelectedItem();
+        String strDateTo = days + monthes + years + hours + minutes + seconds;
+        return TaskInfo.createDate(strDateTo);
+    }
+
+    private boolean isIncorrectTimeInputed(){
+        String daysFrom =(String) cmbDaysFrom.getSelectedItem();
+        String monthesFrom =(String) cmbMonthesFrom.getSelectedItem();
+        String yearsFrom =(String) cmbYearsFrom.getSelectedItem();
+        String daysTo =(String) cmbDaysTo.getSelectedItem();
+        String monthesTo =(String) cmbMonthesTo.getSelectedItem();
+        String yearsTo =(String) cmbYearsTo.getSelectedItem();
+        return TaskInfo.isDateIncorrect(Integer.parseInt(daysFrom),Integer.parseInt(monthesFrom),Integer.parseInt(yearsFrom))
+                || TaskInfo.isDateIncorrect(Integer.parseInt(daysTo),Integer.parseInt(monthesTo),Integer.parseInt(yearsTo));
     }
 }

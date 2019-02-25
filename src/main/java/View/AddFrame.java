@@ -67,7 +67,7 @@ class AddFrame extends JFrame{
         panel.add(lbTitle);
 
         boxRepeated = new JCheckBox( "Task is repeated", false  );
-        boxRepeated.setBackground(new Color(255, 255,255 ) );
+        boxRepeated.setBackground(new Color(255, 255,255 ));
         gridBag.gridx = 1;
         gridBag.gridy = 2;
         gridBag.gridwidth = 1;
@@ -94,18 +94,18 @@ class AddFrame extends JFrame{
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         btNext.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (TaskInfo.isNameIncorrect(txfTitle.getText())){
-                    JFrame frame = new JFrame("Error");
-                    JOptionPane.showMessageDialog(frame, "Enter task's title");
-                    log.error("Title cannot be blank");
+            if (TaskInfo.isNameIncorrect(txfTitle.getText())){
+                JFrame frame = new JFrame("Error");
+                JOptionPane.showMessageDialog(frame, "Enter task's title");
+                log.error("Title cannot be blank");
+            } else {
+                if (boxRepeated.isSelected()) {
+                    AddRepeatedTaskFrame addFrame = new AddRepeatedTaskFrame(txfTitle.getText(), taskManagerController);
                 } else {
-                    if (boxRepeated.isSelected()) {
-                        AddRepeatedTaskFrame addFrame = new AddRepeatedTaskFrame(txfTitle.getText(), taskManagerController);
-                    } else {
-                        AddNotRepeatedTaskFrame addFrame = new AddNotRepeatedTaskFrame(txfTitle.getText(), taskManagerController);
-                    }
-                    dispose();
+                    AddNotRepeatedTaskFrame addFrame = new AddNotRepeatedTaskFrame(txfTitle.getText(), taskManagerController);
                 }
+                dispose();
+            }
             }
         });
         this.setVisible(true);

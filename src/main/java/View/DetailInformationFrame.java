@@ -114,7 +114,6 @@ class DetailInformationFrame extends JFrame {
             }
         });
 
-
         JLabel lbLbTaskActive;
         if(task.isActive()){
             lbLbTaskActive = new JLabel( "Task is active"  );
@@ -135,7 +134,6 @@ class DetailInformationFrame extends JFrame {
         gbPanel0.setConstraints(lbLbTaskActive, gbcPanel0 );
         panel.add(lbLbTaskActive);
         this.add(panel);
-
         this.setVisible(true);
     }
 }

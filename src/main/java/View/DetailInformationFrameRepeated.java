@@ -78,6 +78,7 @@ class DetailInformationFrameRepeated extends JFrame {
         final int minute = 60;
         int intervalMinutes = (interval - interval % minute)/minute;
         interval = interval - intervalMinutes * minute;
+
         String intervalInf = "";
         if (intervalYears > 0)   intervalInf += intervalYears   + "y " ;
         if (intervalMonthes > 0) intervalInf += intervalMonthes + "m " ;
@@ -145,7 +146,6 @@ class DetailInformationFrameRepeated extends JFrame {
                 dispose();
             }
         });
-
         JButton btEdit = new JButton("Edit");
         btEdit.setBackground( new Color( 238,247,255 ) );
         gbcPanel0.gridx = 2;

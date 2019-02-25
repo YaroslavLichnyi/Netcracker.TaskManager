@@ -37,7 +37,7 @@ class AddNotRepeatedTaskFrame extends JFrame{
         }
 
         JPanel panel = new JPanel();
-       // panel.setBackground(new Color(255, 255, 255));
+        // panel.setBackground(new Color(255, 255, 255));
         GridBagLayout gbPanel0 = new GridBagLayout();
         GridBagConstraints gbcPanel0 = new GridBagConstraints();
         panel.setLayout( gbPanel0 );
@@ -260,27 +260,11 @@ class AddNotRepeatedTaskFrame extends JFrame{
 
         btAdd.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                SimpleDateFormat taskFormat = new SimpleDateFormat("ddMMyyyy HH:mm:ss");
-                String days =(String) cmbDays.getSelectedItem();
-                String monthes =(String) cmbMonthes.getSelectedItem();
-                String years =(String) cmbYear.getSelectedItem();
-
-                if (TaskInfo.isDateIncorrect(Integer.parseInt(days),Integer.parseInt(monthes),Integer.parseInt(years))){
+                if (isInputedTimeIncorrect()){
                     JFrame frame = new JFrame("Error");
                     JOptionPane.showMessageDialog(frame, "Too many days for this month");
                 } else {
-                    String seconds =(String) cmbSeconds.getSelectedItem();
-                    String minutes =(String) cmbMinutes.getSelectedItem();
-                    String hours =(String) cmbHours.getSelectedItem();
-
-                    String myDate =days+monthes+years+" "+hours+":"+minutes+":"+seconds;
-                    Date date = null;
-                    try {
-                        date = (Date)taskFormat.parse(myDate);
-                    } catch (ParseException e1) {
-                        e1.printStackTrace();
-                    }
-                    Task task = new Task(taskTitle ,date);
+                    Task task = new Task(taskTitle  ,getInputedTime());
                     task.setActive(cbActiveBox.isSelected());
                     taskManagerController.addTask(task);
                     dispose();
@@ -288,4 +272,23 @@ class AddNotRepeatedTaskFrame extends JFrame{
             }
         });
     }
+
+    private Date getInputedTime(){
+        String days     =(String) cmbDays.getSelectedItem();
+        String monthes  =(String) cmbMonthes.getSelectedItem();
+        String years    =(String) cmbYear.getSelectedItem();
+        String seconds  =(String) cmbSeconds.getSelectedItem();
+        String minutes  =(String) cmbMinutes.getSelectedItem();
+        String hours    =(String) cmbHours.getSelectedItem();
+        String strDate  = days + monthes + years + hours + minutes + seconds;
+        return TaskInfo.createDate(strDate);
+    }
+
+    private boolean isInputedTimeIncorrect(){
+        String days     =(String) cmbDays.getSelectedItem();
+        String monthes  =(String) cmbMonthes.getSelectedItem();
+        String years    =(String) cmbYear.getSelectedItem();
+        return TaskInfo.isDateIncorrect(Integer.parseInt(days),Integer.parseInt(monthes),Integer.parseInt(years));
+    }
+
 }

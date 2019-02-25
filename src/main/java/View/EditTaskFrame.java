@@ -272,7 +272,7 @@ public class EditTaskFrame extends JFrame {
                 if ( TaskInfo.isDateIncorrect(Integer.parseInt(days),Integer.parseInt(monthes),Integer.parseInt(years))){
                     JFrame frame = new JFrame("Error");
                     JOptionPane.showMessageDialog(frame, "Too many days for this month");
-                } else if (txfTitle.getText().length()<2){
+                } else if (TaskInfo.isNameIncorrect(txfTitle.getText())){
                     JFrame frame = new JFrame("Error");
                     JOptionPane.showMessageDialog(frame, "Too short title");
                 } else {

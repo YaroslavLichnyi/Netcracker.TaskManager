@@ -502,7 +502,7 @@ public class FindFrame extends JFrame {
                 if(rbTitle.isSelected()){
                     ArrayTaskList sortedByTitle = controller.findTasksByTitle(tasks, txfTitle.getText());
                     if (sortedByTitle != null){
-                        TaskTableFrame taskTableFrame = new TaskTableFrame(sortedByTitle, controller);
+                        new TaskTableFrame(sortedByTitle, controller);
                     }
                 } else if (rbTime.isSelected() || rbBoth.isSelected()){
 
@@ -533,11 +533,11 @@ public class FindFrame extends JFrame {
                         ArrayTaskList sortedByTime = controller.findTasksByTime(tasks, from, to);
                         if(sortedByTime != null){
                             if (rbTime.isSelected()){
-                                TaskTableFrame taskTableFrame = new TaskTableFrame(sortedByTime, controller);
+                                new TaskTableFrame(sortedByTime, controller);
                             } else {
                                 ArrayTaskList sortedByTimeAndTitle = controller.findTasksByTitle(sortedByTime , txfTitle.getText());
                                 if (sortedByTimeAndTitle != null){
-                                    TaskTableFrame taskTableFrame = new TaskTableFrame(sortedByTimeAndTitle, controller);
+                                    new TaskTableFrame(sortedByTimeAndTitle, controller);
                                 } else {
                                     JFrame frame = new JFrame("Error");
                                     JOptionPane.showMessageDialog(frame, "No tasks were found");
@@ -547,12 +547,10 @@ public class FindFrame extends JFrame {
                             JFrame frame = new JFrame("Error");
                             JOptionPane.showMessageDialog(frame, "No tasks were found");
                         }
-
                     }
                 }
             }
         });
-
         this.add(panel);
         this.setVisible(true);
     }
