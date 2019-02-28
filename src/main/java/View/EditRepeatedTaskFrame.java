@@ -507,7 +507,7 @@ class EditRepeatedTaskFrame extends JFrame{
         interval = interval - intervalMinutes * minute;
 
         cmbDaysInreval = new JComboBox( dataDays );
-        cmbDaysInreval.setSelectedItem(String.valueOf(intervalDays));
+        cmbDaysInreval.setSelectedItem(getFormatedItemName(intervalDays));
         gridBagConstr.gridx = 1;
         gridBagConstr.gridy = 14;
         gridBagConstr.gridwidth = 1;
@@ -523,7 +523,7 @@ class EditRepeatedTaskFrame extends JFrame{
                 "11", "12" };
 
         cmbMonthesInreval = new JComboBox(dataMonthesInterval);
-        cmbMonthesInreval.setSelectedItem(String.valueOf(intervalMonthes));
+        cmbMonthesInreval.setSelectedItem(getFormatedItemName(intervalMonthes));
         gridBagConstr.gridx = 2;
         gridBagConstr.gridy = 14;
         gridBagConstr.gridwidth = 1;
@@ -538,7 +538,7 @@ class EditRepeatedTaskFrame extends JFrame{
         String []dataYearsInterval = {"00", "01", "02", "03", "04", "05" };
 
         cmbYearsInreval = new JComboBox(dataYearsInterval);
-        cmbYearsInreval.setSelectedItem(String.valueOf(intervalYears));
+        cmbYearsInreval.setSelectedItem(getFormatedItemName(intervalYears));
         gridBagConstr.gridx = 3;
         gridBagConstr.gridy = 14;
         gridBagConstr.gridwidth = 1;
@@ -588,7 +588,7 @@ class EditRepeatedTaskFrame extends JFrame{
         panel.add(lbSeconds);
 
         cmbSecondsInreval = new JComboBox( dataSeconds );
-        cmbSecondsInreval.setSelectedItem(String.valueOf(interval));
+        cmbSecondsInreval.setSelectedItem(getFormatedItemName(interval));
         gridBagConstr.gridx = 3;
         gridBagConstr.gridy = 16;
         gridBagConstr.gridwidth = 1;
@@ -601,7 +601,7 @@ class EditRepeatedTaskFrame extends JFrame{
         panel.add( cmbSecondsInreval );
 
         cmbMinutesInreval = new JComboBox( dataMinutes );
-        cmbMinutesInreval.setSelectedItem(String.valueOf(intervalMinutes));
+        cmbMinutesInreval.setSelectedItem(getFormatedItemName(intervalMinutes));
         gridBagConstr.gridx = 2;
         gridBagConstr.gridy = 16;
         gridBagConstr.gridwidth = 1;
@@ -614,7 +614,7 @@ class EditRepeatedTaskFrame extends JFrame{
         panel.add( cmbMinutesInreval );
 
         cmbHoursInreval = new JComboBox( dataHours );
-        cmbHoursInreval.setSelectedItem(String.valueOf(intervalHours));
+        cmbHoursInreval.setSelectedItem(getFormatedItemName(intervalHours));
         gridBagConstr.gridx = 1;
         gridBagConstr.gridy = 16;
         gridBagConstr.gridwidth = 1;
@@ -713,5 +713,11 @@ class EditRepeatedTaskFrame extends JFrame{
         String yearsTo =(String) cmbYearsTo.getSelectedItem();
         return TaskInfo.isDateIncorrect(Integer.parseInt(daysFrom),Integer.parseInt(monthesFrom),Integer.parseInt(yearsFrom))
                 || TaskInfo.isDateIncorrect(Integer.parseInt(daysTo),Integer.parseInt(monthesTo),Integer.parseInt(yearsTo));
+    }
+
+    private String getFormatedItemName(int value){
+        String intervalDaysStr;
+        if (value < 10) return intervalDaysStr = "0" + String.valueOf(value);
+        return String.valueOf(value);
     }
 }
