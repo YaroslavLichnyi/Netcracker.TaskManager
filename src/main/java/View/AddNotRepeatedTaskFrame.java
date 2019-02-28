@@ -37,14 +37,13 @@ class AddNotRepeatedTaskFrame extends JFrame{
         }
 
         JPanel panel = new JPanel();
-        // panel.setBackground(new Color(255, 255, 255));
         GridBagLayout gbPanel0 = new GridBagLayout();
         GridBagConstraints gbcPanel0 = new GridBagConstraints();
         panel.setLayout( gbPanel0 );
 
         JLabel lbLabel0 = new JLabel("Time");
         gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 1;
+        gbcPanel0.gridy = 0;
         gbcPanel0.gridwidth = 1;
         gbcPanel0.gridheight = 1;
         gbcPanel0.fill = GridBagConstraints.BOTH;
@@ -89,7 +88,6 @@ class AddNotRepeatedTaskFrame extends JFrame{
         gbcPanel0.anchor = GridBagConstraints.NORTH;
         gbPanel0.setConstraints(lbYear, gbcPanel0 );
         panel.add(lbYear);
-
 
         JLabel lbHours = new JLabel("Hours");
         gbcPanel0.gridx = 1;

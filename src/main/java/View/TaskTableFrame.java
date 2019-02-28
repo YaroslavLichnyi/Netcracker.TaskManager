@@ -3,7 +3,6 @@ package View;
 import Controller.TaskManagerController;
 import Model.Task;
 import Model.TaskList;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -15,11 +14,11 @@ import java.util.Iterator;
 public class TaskTableFrame extends JFrame {
     private JTable taskTable;
     private DefaultTableModel model;
-    private TaskList mytasks;
+    private TaskList taskList;
     private TaskManagerController controller;
     public TaskTableFrame(TaskList tasks, TaskManagerController taskManagerController){
         super("Tasks");
-        mytasks = tasks;
+        taskList = tasks;
         controller = taskManagerController;
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension dimension = toolkit.getScreenSize();
@@ -40,13 +39,12 @@ public class TaskTableFrame extends JFrame {
         taskTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //String str = String.valueOf(table.getValueAt(table.getSelectedRow(), table.getSelectedColumn()));
-              //  System.out.println(String.valueOf(taskTable.getValueAt(taskTable.getSelectedRow(), taskTable.getSelectedColumn())));
-                if (mytasks.getTask(taskTable.getSelectedRow()).isRepeated()){
-                    DetailInformationFrameRepeated detInfFrRep = new DetailInformationFrameRepeated(mytasks.getTask(taskTable.getSelectedRow()),controller);
+                if (taskList.getTask(taskTable.getSelectedRow()).isRepeated()){
+                    DetailInformationFrameRepeated detInfFrRep = new DetailInformationFrameRepeated(taskList.getTask(taskTable.getSelectedRow()),controller);
                 } else {
-                    DetailInformationFrame detInfFr = new DetailInformationFrame(mytasks.getTask(taskTable.getSelectedRow()),controller);
+                    DetailInformationFrame detInfFr = new DetailInformationFrame(taskList.getTask(taskTable.getSelectedRow()),controller);
                 }
+                dispose();
             }
         });
         gridBag.gridx = 1;
@@ -59,8 +57,14 @@ public class TaskTableFrame extends JFrame {
         gridBag.anchor = GridBagConstraints.NORTH;
         gridBagLayout.setConstraints( taskTable, gridBag );
         panel.add( taskTable );
-        model.setRowCount(10);
-        Iterator<Task> taskIterator = tasks.iterator();
+        this.updateTableData();
+        this.add(panel);
+        this.setVisible(true);
+    }
+
+    private void updateTableData(){
+        model.setRowCount(taskList.size());
+        Iterator<Task> taskIterator = taskList.iterator();
         Task task;
         int i = 0;
         while (taskIterator.hasNext()){
@@ -74,7 +78,5 @@ public class TaskTableFrame extends JFrame {
             i++;
         }
         taskTable.repaint();
-        this.add(panel);
-        this.setVisible(true);
     }
 }

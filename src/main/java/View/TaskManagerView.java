@@ -78,7 +78,7 @@ public class TaskManagerView  extends JFrame implements Observer {
                 return false;
             }
         };
-        taskTable.setForeground(new Color(0, 128, 242));
+        taskTable.setGridColor(new Color(0, 128, 242));
         JScrollPane scrollPane = new JScrollPane( taskTable );
         gridBag.gridx = 0;
         gridBag.gridy = 2;
@@ -177,7 +177,7 @@ public class TaskManagerView  extends JFrame implements Observer {
      * Updates information in the table.
      */
     private void updateTable(){
-        final int tableRowSize = 15;
+        final int tableRowSize = tasks.size();
         model.setRowCount(tableRowSize);
         Iterator<Task> taskIterator = tasks.iterator();
         Task task;

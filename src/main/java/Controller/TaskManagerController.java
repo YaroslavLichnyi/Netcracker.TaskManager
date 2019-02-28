@@ -6,8 +6,6 @@ import View.*;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Observable;
@@ -27,8 +25,6 @@ public class TaskManagerController extends Observable {
         this.addObserver(view);
         NotificationThread notificationThread = new NotificationThread(tasks);
         notificationThread.start();
-
-
     }
 
     /**
@@ -63,6 +59,7 @@ public class TaskManagerController extends Observable {
      * @param newTask updated task, that will replace oldTask
      */
     public void editTask(Task oldTask, Task newTask ){
+
         if(oldTask.getTitle()!=null && newTask.getTitle()!=null && !oldTask.getTitle().equals(newTask.getTitle())){
             log.info("Task was edited("+oldTask.getTitle()+" -> "+newTask.getTitle()+")");
         } else if(oldTask.getTitle()!=null && newTask.getTitle()!=null && oldTask.getTitle().equals(newTask.getTitle())) {
@@ -105,8 +102,7 @@ public class TaskManagerController extends Observable {
 
     }
 
-    public ArrayTaskList findTasksByTime (TaskList taskList,Date from, Date to){
-
+    public ArrayTaskList findTasksByTime (ArrayTaskList taskList,Date from, Date to){
             ArrayTaskList arr = (ArrayTaskList) Tasks.incoming(taskList, from, to);
             if (arr.size()>0){
                 return arr;
@@ -117,7 +113,7 @@ public class TaskManagerController extends Observable {
         return  null;
     }
 
-    public ArrayTaskList findTasksByTitle (TaskList taskList, String name){
+    public ArrayTaskList findTasksByTitle (ArrayTaskList taskList, String name){
         if (TaskInfo.isNameIncorrect(name)){
             JFrame frame = new JFrame("Error");
             JOptionPane.showMessageDialog(frame, "Too short title");
@@ -125,13 +121,11 @@ public class TaskManagerController extends Observable {
             Iterator<Task> taskIterator = taskList.iterator();
             ArrayTaskList arrayTaskList = new ArrayTaskList();
             Task task;
-            int i = 0;
             while (taskIterator.hasNext()){
                 task = taskIterator.next();
                 if (task.getTitle().toLowerCase().contains(name.toLowerCase())){
                     arrayTaskList.add(task);
                 }
-                i++;
             }
             if (arrayTaskList.size()>0){
                 return arrayTaskList;

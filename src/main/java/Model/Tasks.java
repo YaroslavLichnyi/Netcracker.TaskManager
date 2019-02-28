@@ -30,13 +30,19 @@ public class Tasks implements Serializable {
     }
 
     public static Iterable<Task> incoming (Iterable<Task> tasks, Date start, Date end){
+      TaskList result;
+      if (tasks instanceof ArrayTaskList){
+          result = new ArrayTaskList();
+      } else result = new LinkedTaskList();
         Iterator<Task> taskIterator = tasks.iterator();
         while ( taskIterator.hasNext() ){
             Task myTask = taskIterator.next();
-            if (myTask.nextTimeAfter(start)==null || myTask.nextTimeAfter(start).after(end)){
-                taskIterator.remove();
+            if (!(myTask.nextTimeAfter(start)==null || myTask.nextTimeAfter(start).after(end))){
+                //taskIterator.remove();
+                result.add(myTask);
             }
         }
-        return tasks;
+        return result;
     }
+
 }

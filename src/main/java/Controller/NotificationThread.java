@@ -21,8 +21,7 @@ public class NotificationThread extends Thread {
         while (true){
             Date from = new Date();
             Date to = new Date(from.getTime() + 2000);
-            ArrayTaskList arrayTaskList = tasks.clone();
-            arrayTaskList = (ArrayTaskList) Tasks.incoming(arrayTaskList, from, to);
+            ArrayTaskList arrayTaskList  = (ArrayTaskList) Tasks.incoming(tasks, from, to);
             Iterator<Task> taskIterator = arrayTaskList.iterator();
             while(taskIterator.hasNext()){
                 Task task = taskIterator.next();

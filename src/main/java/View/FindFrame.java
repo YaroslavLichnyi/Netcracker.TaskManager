@@ -498,55 +498,33 @@ public class FindFrame extends JFrame {
         btFind.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                if(rbTitle.isSelected()){
-                    ArrayTaskList sortedByTitle = controller.findTasksByTitle(tasks, txfTitle.getText());
-                    if (sortedByTitle != null){
-                        new TaskTableFrame(sortedByTitle, controller);
-                    }
-                } else if (rbTime.isSelected() || rbBoth.isSelected()){
-
-                    String daysFrom =(String) cmbDaysFrom.getSelectedItem();
-                    String monthesFrom =(String) cmbMonthesFrom.getSelectedItem();
-                    String yearsFrom =(String) cmbYearsFrom.getSelectedItem();
-                    String secondsFrom =(String) cmbSecondsFrom.getSelectedItem();
-                    String minutesFrom =(String) cmbMinutesFrom.getSelectedItem();
-                    String hoursFrom =(String) cmbHoursFrom.getSelectedItem();
-                    String strDateFrom = daysFrom + monthesFrom + yearsFrom + hoursFrom + minutesFrom + secondsFrom;
-
-                    String daysTo =(String) cmbDaysTo.getSelectedItem();
-                    String monthesTo =(String) cmbMonthesTo.getSelectedItem();
-                    String yearsTo =(String) cmbYearsTo.getSelectedItem();
-                    String secondsTo =(String) cmbSecondsTo.getSelectedItem();
-                    String minutesTo =(String) cmbMinutesTo.getSelectedItem();
-                    String hoursTo =(String) cmbHoursTo.getSelectedItem();
-                    String strDateTo = daysTo + monthesTo + yearsTo + hoursTo + minutesTo + secondsTo;
-
-                    if (TaskInfo.isDateIncorrect(Integer.parseInt(daysFrom),Integer.parseInt(monthesFrom) ,Integer.parseInt(yearsFrom))
-                            || TaskInfo.isDateIncorrect(Integer.parseInt(daysTo), Integer.parseInt(monthesTo), Integer.parseInt(yearsTo))
-                    ){
-                        JFrame frame = new JFrame("Error");
-                        JOptionPane.showMessageDialog(frame, "Too many days for this month");
-                    } else {
-                        Date from = TaskInfo.createDate(strDateFrom);
-                        Date to = TaskInfo.createDate(strDateTo);
-                        ArrayTaskList sortedByTime = controller.findTasksByTime(tasks, from, to);
-                        if(sortedByTime != null){
-                            if (rbTime.isSelected()){
-                                new TaskTableFrame(sortedByTime, controller);
-                            } else {
-                                ArrayTaskList sortedByTimeAndTitle = controller.findTasksByTitle(sortedByTime , txfTitle.getText());
-                                if (sortedByTimeAndTitle != null){
-                                    new TaskTableFrame(sortedByTimeAndTitle, controller);
-                                } else {
-                                    JFrame frame = new JFrame("Error");
-                                    JOptionPane.showMessageDialog(frame, "No tasks were found");
-                                }
-                            }
+            if(rbTitle.isSelected()){
+                ArrayTaskList sortedByTitle = controller.findTasksByTitle(tasks, txfTitle.getText());
+                if (sortedByTitle != null){
+                    new TaskTableFrame(sortedByTitle, controller);
+                }
+            } else if (rbTime.isSelected() || rbBoth.isSelected()){
+                if (isIncorrectTimeInputed()){
+                    JFrame frame = new JFrame("Error");
+                    JOptionPane.showMessageDialog(frame, "Too many days for this month");
+                } else {
+                    ArrayTaskList sortedByTime = controller.findTasksByTime(tasks, getInputedStartTime(), getInputedEndTime());
+                    if(sortedByTime != null){
+                        if (rbTime.isSelected()){
+                            new TaskTableFrame(sortedByTime, controller);
                         } else {
-                            JFrame frame = new JFrame("Error");
-                            JOptionPane.showMessageDialog(frame, "No tasks were found");
+                            ArrayTaskList sortedByTimeAndTitle = controller.findTasksByTitle(sortedByTime , txfTitle.getText());
+                            if (sortedByTimeAndTitle != null){
+                                new TaskTableFrame(sortedByTimeAndTitle, controller);
+                            } else {
+                                JFrame frame = new JFrame("Error");
+                                JOptionPane.showMessageDialog(frame, "No tasks were found");
+                            }
                         }
+                    } else {
+                        JFrame frame = new JFrame("Error");
+                        JOptionPane.showMessageDialog(frame, "No tasks were found");
+                    }
                     }
                 }
             }
@@ -555,4 +533,36 @@ public class FindFrame extends JFrame {
         this.setVisible(true);
     }
 
+    private Date getInputedStartTime(){
+        String seconds =    (String) cmbSecondsFrom.getSelectedItem();
+        String minutes =    (String) cmbMinutesFrom.getSelectedItem();
+        String hours   =    (String) cmbHoursFrom.getSelectedItem();
+        String days    =    (String) cmbDaysFrom.getSelectedItem();
+        String monthes =    (String) cmbMonthesFrom.getSelectedItem();
+        String years   =    (String) cmbYearsFrom.getSelectedItem();
+        String strDateFrom = days + monthes + years + hours + minutes + seconds;
+        return TaskInfo.createDate(strDateFrom);
+    }
+
+    private  Date getInputedEndTime(){
+        String seconds =    (String) cmbSecondsTo.getSelectedItem();
+        String minutes =    (String) cmbMinutesTo.getSelectedItem();
+        String hours   =    (String) cmbHoursTo.getSelectedItem();
+        String days    =    (String) cmbDaysTo.getSelectedItem();
+        String monthes =    (String) cmbMonthesTo.getSelectedItem();
+        String years   =    (String) cmbYearsTo.getSelectedItem();
+        String strDateTo = days + monthes + years + hours + minutes + seconds;
+        return TaskInfo.createDate(strDateTo);
+    }
+
+    private boolean isIncorrectTimeInputed(){
+        String daysFrom  =  (String) cmbDaysFrom.getSelectedItem();
+        String monthesFrom =(String) cmbMonthesFrom.getSelectedItem();
+        String yearsFrom =  (String) cmbYearsFrom.getSelectedItem();
+        String daysTo    =  (String) cmbDaysTo.getSelectedItem();
+        String monthesTo =  (String) cmbMonthesTo.getSelectedItem();
+        String yearsTo   =  (String) cmbYearsTo.getSelectedItem();
+        return TaskInfo.isDateIncorrect(Integer.parseInt(daysFrom),Integer.parseInt(monthesFrom),Integer.parseInt(yearsFrom))
+                || TaskInfo.isDateIncorrect(Integer.parseInt(daysTo),Integer.parseInt(monthesTo),Integer.parseInt(yearsTo));
+    }
 }
