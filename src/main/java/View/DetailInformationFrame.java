@@ -9,22 +9,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-class DetailInformationFrame extends JFrame {
+class DetailInformationFrame extends TaskManagerGUI {
     private Task mytask;
-    private TaskManagerController controller;
 
     DetailInformationFrame(Task task, TaskManagerController taskManagerController)  {
-        super("Detail information");
+        super();
         mytask = task;
-        controller = taskManagerController;
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension dimension = toolkit.getScreenSize();
+        setController(taskManagerController);
         setBounds(dimension.width / 2 - 150, dimension.height / 2 - 100, 300, 200);
 
         JPanel panel = new JPanel();
-        GridBagLayout gbPanel0 = new GridBagLayout();
+        GridBagLayout gridBagLayout = new GridBagLayout();
         GridBagConstraints gbcPanel0 = new GridBagConstraints();
-        panel.setLayout( gbPanel0 );
+        panel.setLayout( gridBagLayout );
 
         JLabel lbLbTaskTitle = new JLabel(task.getTitle());
         gbcPanel0.gridx = 3;
@@ -35,7 +32,7 @@ class DetailInformationFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbLbTaskTitle, gbcPanel0 );
+        gridBagLayout.setConstraints(lbLbTaskTitle, gbcPanel0 );
         panel.add(lbLbTaskTitle);
 
         JLabel lbIbTaskTime = new JLabel(task.getTime().toString());
@@ -48,7 +45,7 @@ class DetailInformationFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbIbTaskTime, gbcPanel0 );
+        gridBagLayout.setConstraints(lbIbTaskTime, gbcPanel0 );
         panel.add(lbIbTaskTime);
 
         JLabel lbLabel2 = new JLabel("Title");
@@ -61,7 +58,7 @@ class DetailInformationFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbLabel2, gbcPanel0 );
+        gridBagLayout.setConstraints(lbLabel2, gbcPanel0 );
         panel.add(lbLabel2);
 
         JLabel lbLabel3 = new JLabel("Time");
@@ -73,7 +70,7 @@ class DetailInformationFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbLabel3, gbcPanel0 );
+        gridBagLayout.setConstraints(lbLabel3, gbcPanel0 );
         panel.add(lbLabel3);
 
         JButton btDelete = new JButton("Delete");
@@ -85,7 +82,7 @@ class DetailInformationFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 0;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(btDelete, gbcPanel0 );
+        gridBagLayout.setConstraints(btDelete, gbcPanel0 );
         panel.add(btDelete);
         btDelete.addActionListener(new ActionListener() {
             @Override
@@ -104,7 +101,7 @@ class DetailInformationFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 0;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(btEdit, gbcPanel0 );
+        gridBagLayout.setConstraints(btEdit, gbcPanel0 );
         panel.add(btEdit);
         btEdit.addActionListener(new ActionListener() {
             @Override
@@ -131,9 +128,14 @@ class DetailInformationFrame extends JFrame {
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbLbTaskActive, gbcPanel0 );
+        gridBagLayout.setConstraints(lbLbTaskActive, gbcPanel0 );
         panel.add(lbLbTaskActive);
         this.add(panel);
         this.setVisible(true);
+    }
+
+    @Override
+    protected void addElements() {
+
     }
 }

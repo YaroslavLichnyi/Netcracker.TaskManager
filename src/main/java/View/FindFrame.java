@@ -2,202 +2,177 @@ package View;
 
 import Controller.TaskManagerController;
 import Model.ArrayTaskList;
-import Model.Task;
-import Model.TaskInfo;
-import Model.Tasks;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
 
-public class FindFrame extends JFrame {
+public class FindFrame extends TaskManagerFillingFormGui {
 
     private ArrayTaskList tasks;
-    private JComboBox cmbDaysFrom;
-    private JComboBox cmbMonthesFrom;
-    private JComboBox cmbYearsFrom;
-    private JComboBox cmbSecondsFrom;
-    private JComboBox cmbMinutesFrom;
-    private JComboBox cmbHoursFrom;
-    private JComboBox cmbDaysTo;
-    private JComboBox cmbMonthesTo;
-    private JComboBox cmbYearsTo;
-    private JComboBox cmbSecondsTo;
-    private JComboBox cmbMinutesTo;
-    private JComboBox cmbHoursTo;
     private JTextField txfTitle;
     private JRadioButton rbTitle;
     private JRadioButton rbTime;
     private JRadioButton rbBoth;
-    private TaskManagerController controller;
 
     FindFrame(ArrayTaskList arr, TaskManagerController taskManagerController)  {
+        super();
         tasks = arr;
-        controller = taskManagerController;
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension dimension = toolkit.getScreenSize();
+        setController(taskManagerController);
         this.setBounds(dimension.width / 2 - 200, dimension.height / 2 - 250, 400, 500);
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        JPanel panel = new JPanel();
-        GridBagLayout gbPanel0 = new GridBagLayout();
-        GridBagConstraints gbcPanel0 = new GridBagConstraints();
-        panel.setLayout( gbPanel0 );
+        addElements();
+        this.setVisible(true);
+    }
+
+
+    @Override
+    protected void addElements() {
+        panel.setLayout( gridBagLayout );
         panel.setBackground(Color.WHITE);
 
         txfTitle = new JTextField( );
         txfTitle.setForeground(new Color( 0,128,242 ));
-        gbcPanel0.gridx = 1;
-        gbcPanel0.gridy = 1;
-        gbcPanel0.gridwidth = 3;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.SOUTH;
-        gbPanel0.setConstraints( txfTitle, gbcPanel0 );
+        gridBag.gridx = 1;
+        gridBag.gridy = 1;
+        gridBag.gridwidth = 3;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.SOUTH;
+        gridBagLayout.setConstraints( txfTitle, gridBag);
         panel.add( txfTitle );
 
         JLabel lbTitle = new JLabel("Title");
         lbTitle.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
         lbTitle.setForeground(new Color(0, 128, 242));
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 0;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbTitle, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 0;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbTitle, gridBag);
         panel.add(lbTitle);
 
         JLabel lbLabel0 = new JLabel( "From"  );
         lbLabel0.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
         lbLabel0.setForeground(new Color(0, 128, 242));
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 2;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbLabel0, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 2;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( lbLabel0, gridBag);
         panel.add( lbLabel0 );
 
 
         JLabel lbDay = new JLabel("Day");
-        gbcPanel0.gridx = 1;
-        gbcPanel0.gridy = 3;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbDay, gbcPanel0 );
+        gridBag.gridx = 1;
+        gridBag.gridy = 3;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbDay, gridBag);
         panel.add(lbDay);
 
         JLabel lbMonth = new JLabel("Month");
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 3;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbMonth, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 3;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbMonth, gridBag);
         panel.add(lbMonth);
 
         JLabel lbYear = new JLabel("Year");
-        gbcPanel0.gridx = 3;
-        gbcPanel0.gridy = 3;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbYear, gbcPanel0 );
+        gridBag.gridx = 3;
+        gridBag.gridy = 3;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbYear, gridBag);
         panel.add(lbYear);
 
-
         JLabel lbHours = new JLabel("Hours");
-        gbcPanel0.gridx = 1;
-        gbcPanel0.gridy = 5;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbHours, gbcPanel0 );
+        gridBag.gridx = 1;
+        gridBag.gridy = 5;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbHours, gridBag);
         panel.add(lbHours);
 
         JLabel lbMinutes = new JLabel("Minutes");
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 5;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbMinutes, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 5;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbMinutes, gridBag);
         panel.add(lbMinutes);
 
         JLabel lbSeconds = new JLabel("Seconds");
-        gbcPanel0.gridx = 3;
-        gbcPanel0.gridy = 5;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbSeconds, gbcPanel0 );
+        gridBag.gridx = 3;
+        gridBag.gridy = 5;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbSeconds, gridBag);
         panel.add(lbSeconds);
-
 
         String []dataDays = { "01", "02", "03", "04", "05", "06", "07",
                 "08", "09", "10", "11", "12", "13", "14", "15",
                 "16", "17", "18", "19", "20", "21", "22", "23",
                 "24", "25", "26", "27", "28", "29", "30", "31" };
         cmbDaysFrom = new JComboBox( dataDays );
-        gbcPanel0.gridx = 1;
-        gbcPanel0.gridy = 4;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( cmbDaysFrom, gbcPanel0 );
+        gridBag.gridx = 1;
+        gridBag.gridy = 4;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbDaysFrom, gridBag);
         panel.add( cmbDaysFrom );
 
         String []dataMonthes = { "01", "02", "03", "04", "05", "06", "07", "08", "09",
                 "10", "11", "12" };
         cmbMonthesFrom = new JComboBox( dataMonthes );
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 4;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( cmbMonthesFrom, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 4;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbMonthesFrom, gridBag);
         panel.add( cmbMonthesFrom );
 
         String []dataCombo3 = {  "2019", "2020", "2021", "2022",
@@ -207,15 +182,15 @@ public class FindFrame extends JFrame {
                 "2041", "2042", "2043", "2044", "2045", "2046",
                 "2047", "2048", "2049", "2050" };
         cmbYearsFrom = new JComboBox( dataCombo3 );
-        gbcPanel0.gridx = 3;
-        gbcPanel0.gridy = 4;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( cmbYearsFrom, gbcPanel0 );
+        gridBag.gridx = 3;
+        gridBag.gridy = 4;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbYearsFrom, gridBag);
         panel.add( cmbYearsFrom );
 
         String []dataSeconds = { "00", "01", "02", "03", "04", "05", "06", "07", "08",
@@ -226,15 +201,15 @@ public class FindFrame extends JFrame {
                 "45", "46", "47", "48", "49", "50", "51", "52", "53",
                 "54", "55", "56", "57", "58", "59" };
         cmbSecondsFrom = new JComboBox( dataSeconds );
-        gbcPanel0.gridx = 3;
-        gbcPanel0.gridy = 6;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( cmbSecondsFrom, gbcPanel0 );
+        gridBag.gridx = 3;
+        gridBag.gridy = 6;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbSecondsFrom, gridBag);
         panel.add( cmbSecondsFrom );
 
         String []dataMinutes = { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09",
@@ -245,237 +220,237 @@ public class FindFrame extends JFrame {
                 "46", "47", "48", "49", "50", "51", "52", "53", "54",
                 "55", "56", "57", "58", "59" };
         cmbMinutesFrom = new JComboBox( dataMinutes );
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 6;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( cmbMinutesFrom, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 6;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbMinutesFrom, gridBag);
         panel.add( cmbMinutesFrom );
 
         String []dataHours = { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09",
                 "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",
                 "20", "21", "22", "23" };
         cmbHoursFrom = new JComboBox( dataHours );
-        gbcPanel0.gridx = 1;
-        gbcPanel0.gridy = 6;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( cmbHoursFrom, gbcPanel0 );
+        gridBag.gridx = 1;
+        gridBag.gridy = 6;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbHoursFrom, gridBag);
         panel.add( cmbHoursFrom );
 
         lbLabel0 = new JLabel( "To"  );
         lbLabel0.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
         lbLabel0.setForeground(new Color(0, 128, 242));
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 7;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbLabel0, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 7;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( lbLabel0, gridBag);
         panel.add( lbLabel0 );
 
         lbDay = new JLabel( "Day"  );
-        gbcPanel0.gridx = 1;
-        gbcPanel0.gridy = 8;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbDay, gbcPanel0 );
+        gridBag.gridx = 1;
+        gridBag.gridy = 8;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbDay, gridBag);
         panel.add(lbDay);
 
         lbMonth = new JLabel( "Month"  );
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 8;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbMonth, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 8;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbMonth, gridBag);
         panel.add(lbMonth);
 
         lbYear = new JLabel( "Year"  );
-        gbcPanel0.gridx = 3;
-        gbcPanel0.gridy = 8;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbYear, gbcPanel0 );
+        gridBag.gridx = 3;
+        gridBag.gridy = 8;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbYear, gridBag);
         panel.add(lbYear);
 
         cmbDaysTo = new JComboBox( dataDays );
-        gbcPanel0.gridx = 1;
-        gbcPanel0.gridy = 9;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( cmbDaysTo, gbcPanel0 );
+        gridBag.gridx = 1;
+        gridBag.gridy = 9;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbDaysTo, gridBag);
         panel.add( cmbDaysTo );
 
         cmbMonthesTo = new JComboBox( dataMonthes );
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 9;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( cmbMonthesTo, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 9;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbMonthesTo, gridBag);
         panel.add( cmbMonthesTo );
 
         cmbYearsTo = new JComboBox( dataCombo3 );
-        gbcPanel0.gridx = 3;
-        gbcPanel0.gridy = 9;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( cmbYearsTo, gbcPanel0 );
+        gridBag.gridx = 3;
+        gridBag.gridy = 9;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbYearsTo, gridBag);
         panel.add( cmbYearsTo );
 
         lbHours = new JLabel( "Hours"  );
-        gbcPanel0.gridx = 1;
-        gbcPanel0.gridy = 10;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbHours, gbcPanel0 );
+        gridBag.gridx = 1;
+        gridBag.gridy = 10;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbHours, gridBag);
         panel.add(lbHours);
 
         lbMinutes = new JLabel( "Minutes"  );
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 10;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbMinutes, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 10;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbMinutes, gridBag);
         panel.add(lbMinutes);
 
         lbSeconds = new JLabel( "Seconds"  );
-        gbcPanel0.gridx = 3;
-        gbcPanel0.gridy = 10;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbSeconds, gbcPanel0 );
+        gridBag.gridx = 3;
+        gridBag.gridy = 10;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbSeconds, gridBag);
         panel.add(lbSeconds);
 
         cmbSecondsTo = new JComboBox( dataSeconds );
-        gbcPanel0.gridx = 3;
-        gbcPanel0.gridy = 11;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( cmbSecondsTo, gbcPanel0 );
+        gridBag.gridx = 3;
+        gridBag.gridy = 11;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbSecondsTo, gridBag);
         panel.add( cmbSecondsTo );
 
         cmbMinutesTo = new JComboBox( dataMinutes );
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 11;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( cmbMinutesTo, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 11;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbMinutesTo, gridBag);
         panel.add( cmbMinutesTo );
 
         cmbHoursTo = new JComboBox( dataHours );
-        gbcPanel0.gridx = 1;
-        gbcPanel0.gridy = 11;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( cmbHoursTo, gbcPanel0 );
+        gridBag.gridx = 1;
+        gridBag.gridy = 11;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbHoursTo, gridBag);
         panel.add( cmbHoursTo );
 
         JLabel lbSearchBy = new JLabel( "Search by"  );
-        gbcPanel0.gridx = 1;
-        gbcPanel0.gridy = 12;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( lbSearchBy, gbcPanel0 );
+        gridBag.gridx = 1;
+        gridBag.gridy = 12;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( lbSearchBy, gridBag);
         panel.add( lbSearchBy );
 
         rbTitle = new JRadioButton( "title"  );
-        gbcPanel0.gridx = 1;
-        gbcPanel0.gridy = 13;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 0;
-        gbcPanel0.fill = GridBagConstraints.HORIZONTAL;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( rbTitle, gbcPanel0 );
+        gridBag.gridx = 1;
+        gridBag.gridy = 13;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 0;
+        gridBag.fill = GridBagConstraints.HORIZONTAL;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( rbTitle, gridBag);
         panel.add( rbTitle );
 
         rbTime = new JRadioButton( "time"  );
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 13;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.HORIZONTAL;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( rbTime, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 13;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.HORIZONTAL;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( rbTime, gridBag);
         panel.add( rbTime );
 
         rbBoth = new JRadioButton( "both"  );
         rbBoth.setSelected( true );
-        gbcPanel0.gridx = 3;
-        gbcPanel0.gridy = 13;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.HORIZONTAL;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints( rbBoth, gbcPanel0 );
+        gridBag.gridx = 3;
+        gridBag.gridy = 13;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.HORIZONTAL;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( rbBoth, gridBag);
         panel.add( rbBoth );
 
         ButtonGroup group = new ButtonGroup();
@@ -484,85 +459,51 @@ public class FindFrame extends JFrame {
         group.add(rbBoth);
 
         JButton btFind = new JButton( "Find"  );
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 14;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.HORIZONTAL;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.CENTER;
-        gbPanel0.setConstraints( btFind, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 14;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.HORIZONTAL;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.CENTER;
+        gridBagLayout.setConstraints( btFind, gridBag);
         panel.add( btFind );
 
         btFind.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            if(rbTitle.isSelected()){
-                ArrayTaskList sortedByTitle = controller.findTasksByTitle(tasks, txfTitle.getText());
-                if (sortedByTitle != null){
-                    new TaskTableFrame(sortedByTitle, controller);
-                }
-            } else if (rbTime.isSelected() || rbBoth.isSelected()){
-                if (isIncorrectTimeInputed()){
-                    JFrame frame = new JFrame("Error");
-                    JOptionPane.showMessageDialog(frame, "Too many days for this month");
-                } else {
-                    ArrayTaskList sortedByTime = controller.findTasksByTime(tasks, getInputedStartTime(), getInputedEndTime());
-                    if(sortedByTime != null){
-                        if (rbTime.isSelected()){
-                            new TaskTableFrame(sortedByTime, controller);
-                        } else {
-                            ArrayTaskList sortedByTimeAndTitle = controller.findTasksByTitle(sortedByTime , txfTitle.getText());
-                            if (sortedByTimeAndTitle != null){
-                                new TaskTableFrame(sortedByTimeAndTitle, controller);
-                            } else {
-                                JFrame frame = new JFrame("Error");
-                                JOptionPane.showMessageDialog(frame, "No tasks were found");
-                            }
-                        }
-                    } else {
-                        JFrame frame = new JFrame("Error");
-                        JOptionPane.showMessageDialog(frame, "No tasks were found");
+                if(rbTitle.isSelected()){
+                    ArrayTaskList sortedByTitle = getController().findTasksByTitle(tasks, txfTitle.getText());
+                    if (sortedByTitle != null){
+                        new TaskTableFrame(sortedByTitle, getController());
                     }
+                } else if (rbTime.isSelected() || rbBoth.isSelected()){
+                    if (isIncorrectTimeInputed()){
+                        JFrame frame = new JFrame("Error");
+                        JOptionPane.showMessageDialog(frame, "Too many days for this month");
+                    } else {
+                        ArrayTaskList sortedByTime = getController().findTasksByTime(tasks, getInputedStartTime(), getInputedEndTime());
+                        if(sortedByTime != null){
+                            if (rbTime.isSelected()){
+                                new TaskTableFrame(sortedByTime, getController());
+                            } else {
+                                ArrayTaskList sortedByTimeAndTitle = getController().findTasksByTitle(sortedByTime , txfTitle.getText());
+                                if (sortedByTimeAndTitle != null){
+                                    new TaskTableFrame(sortedByTimeAndTitle, getController());
+                                } else {
+                                    JFrame frame = new JFrame("Error");
+                                    JOptionPane.showMessageDialog(frame, "No tasks were found");
+                                }
+                            }
+                        } else {
+                            JFrame frame = new JFrame("Error");
+                            JOptionPane.showMessageDialog(frame, "No tasks were found");
+                        }
                     }
                 }
             }
         });
         this.add(panel);
-        this.setVisible(true);
-    }
-
-    private Date getInputedStartTime(){
-        String seconds =    (String) cmbSecondsFrom.getSelectedItem();
-        String minutes =    (String) cmbMinutesFrom.getSelectedItem();
-        String hours   =    (String) cmbHoursFrom.getSelectedItem();
-        String days    =    (String) cmbDaysFrom.getSelectedItem();
-        String monthes =    (String) cmbMonthesFrom.getSelectedItem();
-        String years   =    (String) cmbYearsFrom.getSelectedItem();
-        String strDateFrom = days + monthes + years + hours + minutes + seconds;
-        return TaskInfo.createDate(strDateFrom);
-    }
-
-    private  Date getInputedEndTime(){
-        String seconds =    (String) cmbSecondsTo.getSelectedItem();
-        String minutes =    (String) cmbMinutesTo.getSelectedItem();
-        String hours   =    (String) cmbHoursTo.getSelectedItem();
-        String days    =    (String) cmbDaysTo.getSelectedItem();
-        String monthes =    (String) cmbMonthesTo.getSelectedItem();
-        String years   =    (String) cmbYearsTo.getSelectedItem();
-        String strDateTo = days + monthes + years + hours + minutes + seconds;
-        return TaskInfo.createDate(strDateTo);
-    }
-
-    private boolean isIncorrectTimeInputed(){
-        String daysFrom  =  (String) cmbDaysFrom.getSelectedItem();
-        String monthesFrom =(String) cmbMonthesFrom.getSelectedItem();
-        String yearsFrom =  (String) cmbYearsFrom.getSelectedItem();
-        String daysTo    =  (String) cmbDaysTo.getSelectedItem();
-        String monthesTo =  (String) cmbMonthesTo.getSelectedItem();
-        String yearsTo   =  (String) cmbYearsTo.getSelectedItem();
-        return TaskInfo.isDateIncorrect(Integer.parseInt(daysFrom),Integer.parseInt(monthesFrom),Integer.parseInt(yearsFrom))
-                || TaskInfo.isDateIncorrect(Integer.parseInt(daysTo),Integer.parseInt(monthesTo),Integer.parseInt(yearsTo));
     }
 }

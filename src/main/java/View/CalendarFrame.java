@@ -19,7 +19,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 
-public class CalendarFrame extends JFrame {
+public class CalendarFrame extends TaskManagerGUI {
     private ArrayTaskList tasks;
     private JTable table;
     private DefaultTableModel model;
@@ -28,22 +28,68 @@ public class CalendarFrame extends JFrame {
     private int year;
     private int monthNumber;
     private ArrayTaskList arrayTaskList;
-    private TaskManagerController taskManagerController;
     SimpleDateFormat taskFormat ;
 
-    CalendarFrame(ArrayTaskList tasksArr, TaskManagerController controller) {
+    CalendarFrame(ArrayTaskList tasksArr, TaskManagerController taskManagerController) {
         tasks = tasksArr;
-        taskManagerController = controller;
+        setController(taskManagerController);
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension dimension = toolkit.getScreenSize();
         setBounds(dimension.width / 2 - 150, dimension.height / 2 - 100, 300, 200);
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
+        addElements();
+        this.updateMonth();
+        this.setVisible(true);
+    }
+
+    void updateMonth() {
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        String month = cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US);
+        year = cal.get(Calendar.YEAR);
+        label.setText(month + " " + year);
+        int startDay = cal.get(Calendar.DAY_OF_WEEK);
+        int numberOfDays = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        int weeks = cal.getActualMaximum(Calendar.WEEK_OF_MONTH);
+        model.setRowCount(0);
+        model.setRowCount(6);
+        int i = startDay - 1;
+
+        monthNumber = cal.get(Calendar.MONTH)+1;
+        String dayStr = "";
+        String monthStr = "";
+        for (int day = 1; day <= numberOfDays; day++) {
+            if ( day < 10) {
+              dayStr = "0" + day;
+            } else {
+                dayStr = Integer.toString(day);
+            }
+            if (monthNumber < 10 ){
+                monthStr = "0" + monthNumber;
+            } else {
+                monthStr = Integer.toString(monthNumber);
+            }
+            String fromStr = dayStr + monthStr + year + "000000";
+            String toStr = dayStr + monthStr + year + "235959";
+            model.setValueAt(day, i / 7, i % 7); // в любом случае пишем число
+
+            if (tasks != null) {
+                try {
+                    Date from = (Date) taskFormat.parse(fromStr);
+                    Date to = (Date) taskFormat.parse(toStr);
+                    arrayTaskList = tasks.clone();
+                    arrayTaskList = (ArrayTaskList) Tasks.incoming(arrayTaskList,from, to);
+                    if(!arrayTaskList.isEmpty() ){
+                        model.setValueAt(day + "*" , i / 7, i % 7);
+                    }
+                } catch (ParseException e){
+                    System.out.println(e);
+                }
+            }
+               i += 1;
+            }
         }
 
+    @Override
+    protected void addElements() {
         this.setTitle("Calendar");
         this.setLayout(new BorderLayout());
 
@@ -73,13 +119,11 @@ public class CalendarFrame extends JFrame {
             }
         });
 
-        JPanel panel = new JPanel();
         panel.setBackground( new Color( 0,128,255 ) );
         panel.setLayout(new BorderLayout());
         panel.add(previous, BorderLayout.WEST);
         panel.add(label, BorderLayout.CENTER);
         panel.add(next, BorderLayout.EAST);
-
 
         String[] columns = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
         model = new DefaultTableModel(null, columns);
@@ -121,16 +165,15 @@ public class CalendarFrame extends JFrame {
                         try {
                             Date from = (Date) taskFormat.parse(fromStr);
                             Date to = (Date) taskFormat.parse(toStr);
-                            arrayTaskList = tasks.clone();
-                            arrayTaskList = (ArrayTaskList) Tasks.incoming(arrayTaskList,from, to);
+                            arrayTaskList = (ArrayTaskList) Tasks.incoming(tasks,from, to);
                             if (arrayTaskList.size()==1){
                                 if(arrayTaskList.getTask(0).isRepeated()){
-                                    DetailInformationFrameRepeated detInfFrRep = new DetailInformationFrameRepeated(arrayTaskList.getTask(0),taskManagerController);
+                                    DetailInformationFrameRepeated detInfFrRep = new DetailInformationFrameRepeated(arrayTaskList.getTask(0),getController());
                                 } else {
-                                    DetailInformationFrame detInfFr = new DetailInformationFrame(arrayTaskList.getTask(0),taskManagerController);
+                                    DetailInformationFrame detInfFr = new DetailInformationFrame(arrayTaskList.getTask(0),getController());
                                 }
                             } else if (arrayTaskList.size()>1) {
-                                TaskTableFrame tableFrame = new TaskTableFrame(arrayTaskList,taskManagerController);
+                                TaskTableFrame tableFrame = new TaskTableFrame(arrayTaskList,getController());
                             }
 
                         } catch (ParseException ex){
@@ -140,55 +183,5 @@ public class CalendarFrame extends JFrame {
                 }
             }
         });
-        this.updateMonth();
-        this.setVisible(true);
     }
-
-    void updateMonth() {
-        cal.set(Calendar.DAY_OF_MONTH, 1);
-        String month = cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US);
-        year = cal.get(Calendar.YEAR);
-        label.setText(month + " " + year);
-        int startDay = cal.get(Calendar.DAY_OF_WEEK);
-        int numberOfDays = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-        int weeks = cal.getActualMaximum(Calendar.WEEK_OF_MONTH);
-        model.setRowCount(0);
-        model.setRowCount(6);
-        int i = startDay - 1;
-
-        monthNumber = cal.get(Calendar.MONTH)+1;
-        String dayStr = "";
-        String monthStr = "";
-        for (int day = 1; day <= numberOfDays; day++) {
-            if ( day < 10) {
-              dayStr = "0"+day;
-            } else {
-                dayStr = Integer.toString(day);
-            }
-            if (monthNumber < 10 ){
-                monthStr = "0"+monthNumber;
-            } else {
-                monthStr = Integer.toString(monthNumber);
-            }
-            String fromStr = dayStr + monthStr + year + "000000";
-            String toStr = dayStr + monthStr + year + "235959";
-            model.setValueAt(day, i / 7, i % 7); // в любом случае пишем число
-
-            if (tasks != null) {
-                try {
-                    Date from = (Date) taskFormat.parse(fromStr);
-                    Date to = (Date) taskFormat.parse(toStr);
-                    arrayTaskList = tasks.clone();
-                    arrayTaskList = (ArrayTaskList) Tasks.incoming(arrayTaskList,from, to);
-                    if(!arrayTaskList.isEmpty() ){
-                        model.setValueAt(day + "*" , i / 7, i % 7);
-                    }
-                } catch (ParseException e){
-                    System.out.println(e);
-                }
-            }
-               i += 1;
-            }
-        }
-
-    }
+}

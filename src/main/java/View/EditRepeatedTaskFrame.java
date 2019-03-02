@@ -8,24 +8,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
-class EditRepeatedTaskFrame extends JFrame{
-    private String title;
-    private JComboBox cmbDaysFrom;
-    private JComboBox cmbMonthesFrom;
-    private JComboBox cmbYearsFrom;
-    private JComboBox cmbSecondsFrom;
-    private JComboBox cmbMinutesFrom;
-    private JComboBox cmbHoursFrom;
-    private JComboBox cmbDaysTo;
-    private JComboBox cmbMonthesTo;
-    private JComboBox cmbYearsTo;
-    private JComboBox cmbSecondsTo;
-    private JComboBox cmbMinutesTo;
-    private JComboBox cmbHoursTo;
+class EditRepeatedTaskFrame extends TaskManagerFillingFormGui{
     private JComboBox cmbDaysInreval;
     private JComboBox cmbSecondsInreval;
     private JComboBox cmbMinutesInreval;
@@ -33,26 +18,46 @@ class EditRepeatedTaskFrame extends JFrame{
     private JComboBox cmbYearsInreval;
     private JComboBox cmbMonthesInreval;
     private JTextField txfTitle;
-    private TaskManagerController controller;
     private Task oldTask;
     private JCheckBox cbActiveBox;
+    private int interval ;
+    private int intervalYears;
+    private int intervalMonthes ;
+    private int intervalDays;
+    private int intervalHours ;
+    private int intervalMinutes;
+
 
     public EditRepeatedTaskFrame(Task task, TaskManagerController taskManagerController ) {
-        controller = taskManagerController;
+        super();
+        setController(taskManagerController);
         oldTask = task;
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension dimension = toolkit.getScreenSize();
         this.setBounds(dimension.width / 2 - 150, dimension.height / 2 - 200, 300, 400);
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        calculateIntevals();
+        addElements();
+        this.setVisible(true);
+    }
+
+    private int getInputedInterval(){
+        return Integer.parseInt( (String) cmbSecondsInreval.getSelectedItem())
+             + Integer.parseInt( (String) cmbMinutesInreval.getSelectedItem()) * 60
+             + Integer.parseInt( (String) cmbHoursInreval.getSelectedItem())   * 60 * 60
+             + Integer.parseInt( (String) cmbDaysInreval.getSelectedItem())    * 60 * 60 * 24
+             + Integer.parseInt( (String) cmbMonthesInreval.getSelectedItem()) * 60 * 60 * 30
+             + Integer.parseInt( (String) cmbYearsInreval.getSelectedItem())   * 60 * 60 * 365;
+    }
+
+
+
+    private String getFormatedItemName(int value){
+        String intervalDaysStr;
+        if (value < 10) return intervalDaysStr = "0" + String.valueOf(value);
+        return String.valueOf(value);
+    }
+
+    @Override
+    protected void addElements() {
         JButton btAdd;
-        JPanel panel = new JPanel();
-        GridBagLayout gridBagLayout = new GridBagLayout();
-        GridBagConstraints gridBagConstr = new GridBagConstraints();
         panel.setLayout( gridBagLayout );
         SimpleDateFormat yearFormat = new SimpleDateFormat("YYYY");
         SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM");
@@ -61,147 +66,145 @@ class EditRepeatedTaskFrame extends JFrame{
         SimpleDateFormat minuteFormat = new SimpleDateFormat("mm");
         SimpleDateFormat secondFormat = new SimpleDateFormat("ss");
         JLabel lbLabel0 = new JLabel("Time");
-        gridBagConstr.gridx = 1;
-        gridBagConstr.gridy = 1;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbLabel0, gridBagConstr);
+        gridBag.gridx = 1;
+        gridBag.gridy = 1;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbLabel0, gridBag);
         panel.add(lbLabel0);
 
         txfTitle = new JTextField( );
-        txfTitle.setText(task.getTitle());
+        txfTitle.setText(oldTask.getTitle());
         txfTitle.setForeground(new Color( 0,128,255 ));
-        gridBagConstr.gridx = 2;
-        gridBagConstr.gridy = 1;
-        gridBagConstr.gridwidth = 2;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.SOUTH;
-        gridBagLayout.setConstraints( txfTitle, gridBagConstr);
+        gridBag.gridx = 2;
+        gridBag.gridy = 1;
+        gridBag.gridwidth = 2;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.SOUTH;
+        gridBagLayout.setConstraints( txfTitle, gridBag);
         panel.add( txfTitle );
 
         lbLabel0 = new JLabel( "From"  );
-        gridBagConstr.gridx = 1;
-        gridBagConstr.gridy = 2;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbLabel0, gridBagConstr);
+        gridBag.gridx = 1;
+        gridBag.gridy = 2;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbLabel0, gridBag);
         panel.add(lbLabel0);
 
-
         JLabel lbDay = new JLabel("Day");
-        gridBagConstr.gridx = 1;
-        gridBagConstr.gridy = 3;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbDay, gridBagConstr);
+        gridBag.gridx = 1;
+        gridBag.gridy = 3;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbDay, gridBag);
         panel.add(lbDay);
 
         JLabel lbMonth = new JLabel("Month");
-        gridBagConstr.gridx = 2;
-        gridBagConstr.gridy = 3;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbMonth, gridBagConstr);
+        gridBag.gridx = 2;
+        gridBag.gridy = 3;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbMonth, gridBag);
         panel.add(lbMonth);
 
         JLabel lbYear = new JLabel("Year");
-        gridBagConstr.gridx = 3;
-        gridBagConstr.gridy = 3;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbYear, gridBagConstr);
+        gridBag.gridx = 3;
+        gridBag.gridy = 3;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbYear, gridBag);
         panel.add(lbYear);
 
         JLabel lbHours = new JLabel("Hours");
-        gridBagConstr.gridx = 1;
-        gridBagConstr.gridy = 5;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbHours, gridBagConstr);
+        gridBag.gridx = 1;
+        gridBag.gridy = 5;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbHours, gridBag);
         panel.add(lbHours);
 
         JLabel lbMinutes = new JLabel("Minutes");
-        gridBagConstr.gridx = 2;
-        gridBagConstr.gridy = 5;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbMinutes, gridBagConstr);
+        gridBag.gridx = 2;
+        gridBag.gridy = 5;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbMinutes, gridBag);
         panel.add(lbMinutes);
 
         JLabel lbSeconds = new JLabel("Seconds");
-        gridBagConstr.gridx = 3;
-        gridBagConstr.gridy = 5;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbSeconds, gridBagConstr);
+        gridBag.gridx = 3;
+        gridBag.gridy = 5;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbSeconds, gridBag);
         panel.add(lbSeconds);
-
 
         String []dataDays = { "00", "01", "02", "03", "04", "05", "06", "07",
                 "08", "09", "10", "11", "12", "13", "14", "15",
                 "16", "17", "18", "19", "20", "21", "22", "23",
                 "24", "25", "26", "27", "28", "29", "30", "31" };
         cmbDaysFrom = new JComboBox( dataDays );
-        cmbDaysFrom.setSelectedItem(dayFormat.format(task.getStartTime()));
-        gridBagConstr.gridx = 1;
-        gridBagConstr.gridy = 4;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( cmbDaysFrom, gridBagConstr);
+        cmbDaysFrom.setSelectedItem(dayFormat.format(oldTask.getStartTime()));
+        gridBag.gridx = 1;
+        gridBag.gridy = 4;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbDaysFrom, gridBag);
         panel.add( cmbDaysFrom );
 
         String []dataMonthes = { "01", "02", "03", "04", "05", "06", "07", "08", "09",
                 "10", "11", "12" };
         cmbMonthesFrom = new JComboBox( dataMonthes );
-        cmbMonthesFrom.setSelectedItem(monthFormat.format(task.getStartTime()));
-        gridBagConstr.gridx = 2;
-        gridBagConstr.gridy = 4;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( cmbMonthesFrom, gridBagConstr);
+        cmbMonthesFrom.setSelectedItem(monthFormat.format(oldTask.getStartTime()));
+        gridBag.gridx = 2;
+        gridBag.gridy = 4;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbMonthesFrom, gridBag);
         panel.add( cmbMonthesFrom );
 
         String []dataCombo3 = {  "2019", "2020", "2021", "2022",
@@ -211,16 +214,16 @@ class EditRepeatedTaskFrame extends JFrame{
                 "2041", "2042", "2043", "2044", "2045", "2046",
                 "2047", "2048", "2049", "2050" };
         cmbYearsFrom = new JComboBox( dataCombo3 );
-        cmbYearsFrom.setSelectedItem(yearFormat.format(task.getStartTime()));
-        gridBagConstr.gridx = 3;
-        gridBagConstr.gridy = 4;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( cmbYearsFrom, gridBagConstr);
+        cmbYearsFrom.setSelectedItem(yearFormat.format(oldTask.getStartTime()));
+        gridBag.gridx = 3;
+        gridBag.gridy = 4;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbYearsFrom, gridBag);
         panel.add( cmbYearsFrom );
 
         String []dataSeconds = { "00", "01", "02", "03", "04", "05", "06", "07", "08",
@@ -231,16 +234,16 @@ class EditRepeatedTaskFrame extends JFrame{
                 "45", "46", "47", "48", "49", "50", "51", "52", "53",
                 "54", "55", "56", "57", "58", "59" };
         cmbSecondsFrom = new JComboBox( dataSeconds );
-        cmbSecondsFrom.setSelectedItem(secondFormat.format(task.getStartTime()));
-        gridBagConstr.gridx = 3;
-        gridBagConstr.gridy = 6;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( cmbSecondsFrom, gridBagConstr);
+        cmbSecondsFrom.setSelectedItem(secondFormat.format(oldTask.getStartTime()));
+        gridBag.gridx = 3;
+        gridBag.gridy = 6;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbSecondsFrom, gridBag);
         panel.add( cmbSecondsFrom );
 
         String []dataMinutes = { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09",
@@ -251,272 +254,255 @@ class EditRepeatedTaskFrame extends JFrame{
                 "46", "47", "48", "49", "50", "51", "52", "53", "54",
                 "55", "56", "57", "58", "59" };
         cmbMinutesFrom = new JComboBox( dataMinutes );
-        cmbMinutesFrom.setSelectedItem(minuteFormat.format(task.getStartTime()));
-        gridBagConstr.gridx = 2;
-        gridBagConstr.gridy = 6;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( cmbMinutesFrom, gridBagConstr);
+        cmbMinutesFrom.setSelectedItem(minuteFormat.format(oldTask.getStartTime()));
+        gridBag.gridx = 2;
+        gridBag.gridy = 6;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbMinutesFrom, gridBag);
         panel.add( cmbMinutesFrom );
 
         String []dataHours = { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09",
                 "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",
                 "20", "21", "22", "23" };
         cmbHoursFrom = new JComboBox( dataHours );
-        cmbHoursFrom.setSelectedItem(hourFormat.format(task.getStartTime()));
-        gridBagConstr.gridx = 1;
-        gridBagConstr.gridy = 6;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( cmbHoursFrom, gridBagConstr);
+        cmbHoursFrom.setSelectedItem(hourFormat.format(oldTask.getStartTime()));
+        gridBag.gridx = 1;
+        gridBag.gridy = 6;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbHoursFrom, gridBag);
         panel.add( cmbHoursFrom );
 
         lbLabel0 = new JLabel( "To"  );
-        gridBagConstr.gridx = 1;
-        gridBagConstr.gridy = 7;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbLabel0, gridBagConstr);
+        gridBag.gridx = 1;
+        gridBag.gridy = 7;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbLabel0, gridBag);
         panel.add(lbLabel0);
 
         lbDay = new JLabel( "Day"  );
-        gridBagConstr.gridx = 1;
-        gridBagConstr.gridy = 8;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbDay, gridBagConstr);
+        gridBag.gridx = 1;
+        gridBag.gridy = 8;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbDay, gridBag);
         panel.add(lbDay);
 
         lbMonth = new JLabel( "Month"  );
-        gridBagConstr.gridx = 2;
-        gridBagConstr.gridy = 8;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbMonth, gridBagConstr);
+        gridBag.gridx = 2;
+        gridBag.gridy = 8;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbMonth, gridBag);
         panel.add(lbMonth);
 
         lbYear = new JLabel( "Year"  );
-        gridBagConstr.gridx = 3;
-        gridBagConstr.gridy = 8;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbYear, gridBagConstr);
+        gridBag.gridx = 3;
+        gridBag.gridy = 8;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbYear, gridBag);
         panel.add(lbYear);
 
         cmbDaysTo = new JComboBox( dataDays );
-        cmbDaysTo.setSelectedItem(dayFormat.format(task.getStartTime()));
-        gridBagConstr.gridx = 1;
-        gridBagConstr.gridy = 9;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( cmbDaysTo, gridBagConstr);
+        cmbDaysTo.setSelectedItem(dayFormat.format(oldTask.getStartTime()));
+        gridBag.gridx = 1;
+        gridBag.gridy = 9;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbDaysTo, gridBag);
         panel.add( cmbDaysTo );
 
         cmbMonthesTo = new JComboBox( dataMonthes );
-        cmbMonthesTo.setSelectedItem(monthFormat.format(task.getEndTime()));
-        gridBagConstr.gridx = 2;
-        gridBagConstr.gridy = 9;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( cmbMonthesTo, gridBagConstr);
+        cmbMonthesTo.setSelectedItem(monthFormat.format(oldTask.getEndTime()));
+        gridBag.gridx = 2;
+        gridBag.gridy = 9;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbMonthesTo, gridBag);
         panel.add( cmbMonthesTo );
 
         cmbYearsTo = new JComboBox( dataCombo3 );
-        cmbYearsTo.setSelectedItem(yearFormat.format(task.getEndTime()));
-        gridBagConstr.gridx = 3;
-        gridBagConstr.gridy = 9;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( cmbYearsTo, gridBagConstr);
+        cmbYearsTo.setSelectedItem(yearFormat.format(oldTask.getEndTime()));
+        gridBag.gridx = 3;
+        gridBag.gridy = 9;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbYearsTo, gridBag);
         panel.add( cmbYearsTo );
 
         lbHours = new JLabel( "Hours"  );
-        gridBagConstr.gridx = 1;
-        gridBagConstr.gridy = 10;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbHours, gridBagConstr);
+        gridBag.gridx = 1;
+        gridBag.gridy = 10;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbHours, gridBag);
         panel.add(lbHours);
 
         lbMinutes = new JLabel( "Minutes"  );
-        gridBagConstr.gridx = 2;
-        gridBagConstr.gridy = 10;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbMinutes, gridBagConstr);
+        gridBag.gridx = 2;
+        gridBag.gridy = 10;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbMinutes, gridBag);
         panel.add(lbMinutes);
 
         lbSeconds = new JLabel( "Seconds"  );
-        gridBagConstr.gridx = 3;
-        gridBagConstr.gridy = 10;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbSeconds, gridBagConstr);
+        gridBag.gridx = 3;
+        gridBag.gridy = 10;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbSeconds, gridBag);
         panel.add(lbSeconds);
 
         cmbSecondsTo = new JComboBox( dataSeconds );
-        cmbSecondsTo.setSelectedItem(secondFormat.format(task.getEndTime()));
-        gridBagConstr.gridx = 3;
-        gridBagConstr.gridy = 11;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( cmbSecondsTo, gridBagConstr);
+        cmbSecondsTo.setSelectedItem(secondFormat.format(oldTask.getEndTime()));
+        gridBag.gridx = 3;
+        gridBag.gridy = 11;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbSecondsTo, gridBag);
         panel.add( cmbSecondsTo );
 
         cmbMinutesTo = new JComboBox( dataMinutes );
-        cmbMinutesTo.setSelectedItem(minuteFormat.format(task.getEndTime()));
-        gridBagConstr.gridx = 2;
-        gridBagConstr.gridy = 11;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( cmbMinutesTo, gridBagConstr);
+        cmbMinutesTo.setSelectedItem(minuteFormat.format(oldTask.getEndTime()));
+        gridBag.gridx = 2;
+        gridBag.gridy = 11;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbMinutesTo, gridBag);
         panel.add( cmbMinutesTo );
 
         cmbHoursTo = new JComboBox( dataHours );
-        cmbHoursTo.setSelectedItem(hourFormat.format(task.getEndTime()));
-        gridBagConstr.gridx = 1;
-        gridBagConstr.gridy = 11;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( cmbHoursTo, gridBagConstr);
+        cmbHoursTo.setSelectedItem(hourFormat.format(oldTask.getEndTime()));
+        gridBag.gridx = 1;
+        gridBag.gridy = 11;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbHoursTo, gridBag);
         panel.add( cmbHoursTo );
 
         lbLabel0 = new JLabel( "Interval"  );
-        gridBagConstr.gridx = 1;
-        gridBagConstr.gridy = 12;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbLabel0, gridBagConstr);
+        gridBag.gridx = 1;
+        gridBag.gridy = 12;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbLabel0, gridBag);
         panel.add(lbLabel0);
 
         lbDay = new JLabel( "Day"  );
-        gridBagConstr.gridx = 1;
-        gridBagConstr.gridy = 13;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbDay, gridBagConstr);
+        gridBag.gridx = 1;
+        gridBag.gridy = 13;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbDay, gridBag);
         panel.add(lbDay);
 
         lbMonth = new JLabel( "Month"  );
-        gridBagConstr.gridx = 2;
-        gridBagConstr.gridy = 13;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbMonth, gridBagConstr);
+        gridBag.gridx = 2;
+        gridBag.gridy = 13;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbMonth, gridBag);
         panel.add(lbMonth);
 
         lbYear = new JLabel( "Year"  );
-        gridBagConstr.gridx = 3;
-        gridBagConstr.gridy = 13;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbYear, gridBagConstr);
+        gridBag.gridx = 3;
+        gridBag.gridy = 13;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbYear, gridBag);
         panel.add(lbYear);
-
-        int interval = task.getRepeatInterval();
-        final int year = 31536000;
-        int intervalYears = (interval - interval % year)/year;
-        interval = interval - intervalYears * year;
-        final int month = 2592000;
-        int intervalMonthes = (interval - interval % month)/month;
-        interval = interval - intervalMonthes * month;
-        final int day = 86400;
-        int intervalDays = (interval - interval % day)/day;
-        interval = interval - intervalDays * day;
-        final int hour = 3600;
-        int intervalHours = (interval - interval % hour)/hour;
-        interval = interval - intervalHours * hour;
-        final int minute = 60;
-        int intervalMinutes = (interval - interval % minute)/minute;
-        interval = interval - intervalMinutes * minute;
 
         cmbDaysInreval = new JComboBox( dataDays );
         cmbDaysInreval.setSelectedItem(getFormatedItemName(intervalDays));
-        gridBagConstr.gridx = 1;
-        gridBagConstr.gridy = 14;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( cmbDaysInreval, gridBagConstr);
+        gridBag.gridx = 1;
+        gridBag.gridy = 14;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbDaysInreval, gridBag);
         panel.add( cmbDaysInreval );
 
         String []dataMonthesInterval = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
@@ -524,118 +510,118 @@ class EditRepeatedTaskFrame extends JFrame{
 
         cmbMonthesInreval = new JComboBox(dataMonthesInterval);
         cmbMonthesInreval.setSelectedItem(getFormatedItemName(intervalMonthes));
-        gridBagConstr.gridx = 2;
-        gridBagConstr.gridy = 14;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(cmbMonthesInreval, gridBagConstr);
+        gridBag.gridx = 2;
+        gridBag.gridy = 14;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(cmbMonthesInreval, gridBag);
         panel.add(cmbMonthesInreval);
 
         String []dataYearsInterval = {"00", "01", "02", "03", "04", "05" };
 
         cmbYearsInreval = new JComboBox(dataYearsInterval);
         cmbYearsInreval.setSelectedItem(getFormatedItemName(intervalYears));
-        gridBagConstr.gridx = 3;
-        gridBagConstr.gridy = 14;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(cmbYearsInreval, gridBagConstr);
+        gridBag.gridx = 3;
+        gridBag.gridy = 14;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(cmbYearsInreval, gridBag);
         panel.add(cmbYearsInreval);
 
         lbHours = new JLabel( "Hours"  );
 
-        gridBagConstr.gridx = 1;
-        gridBagConstr.gridy = 15;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbHours, gridBagConstr);
+        gridBag.gridx = 1;
+        gridBag.gridy = 15;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbHours, gridBag);
         panel.add(lbHours);
 
         lbMinutes = new JLabel( "Minutes"  );
-        gridBagConstr.gridx = 2;
-        gridBagConstr.gridy = 15;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbMinutes, gridBagConstr);
+        gridBag.gridx = 2;
+        gridBag.gridy = 15;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbMinutes, gridBag);
         panel.add(lbMinutes);
 
         lbSeconds = new JLabel( "Seconds"  );
-        gridBagConstr.gridx = 3;
-        gridBagConstr.gridy = 15;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 1;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbSeconds, gridBagConstr);
+        gridBag.gridx = 3;
+        gridBag.gridy = 15;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbSeconds, gridBag);
         panel.add(lbSeconds);
 
         cmbSecondsInreval = new JComboBox( dataSeconds );
         cmbSecondsInreval.setSelectedItem(getFormatedItemName(interval));
-        gridBagConstr.gridx = 3;
-        gridBagConstr.gridy = 16;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( cmbSecondsInreval, gridBagConstr);
+        gridBag.gridx = 3;
+        gridBag.gridy = 16;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbSecondsInreval, gridBag);
         panel.add( cmbSecondsInreval );
 
         cmbMinutesInreval = new JComboBox( dataMinutes );
         cmbMinutesInreval.setSelectedItem(getFormatedItemName(intervalMinutes));
-        gridBagConstr.gridx = 2;
-        gridBagConstr.gridy = 16;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( cmbMinutesInreval, gridBagConstr);
+        gridBag.gridx = 2;
+        gridBag.gridy = 16;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbMinutesInreval, gridBag);
         panel.add( cmbMinutesInreval );
 
         cmbHoursInreval = new JComboBox( dataHours );
         cmbHoursInreval.setSelectedItem(getFormatedItemName(intervalHours));
-        gridBagConstr.gridx = 1;
-        gridBagConstr.gridy = 16;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( cmbHoursInreval, gridBagConstr);
+        gridBag.gridx = 1;
+        gridBag.gridy = 16;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cmbHoursInreval, gridBag);
         panel.add( cmbHoursInreval );
 
         btAdd = new JButton( "Save"  );
-        gridBagConstr.gridx = 3;
-        gridBagConstr.gridy = 17;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( btAdd, gridBagConstr);
+        gridBag.gridx = 3;
+        gridBag.gridy = 17;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( btAdd, gridBag);
         panel.add( btAdd );
         btAdd.addActionListener(new ActionListener() {
             @Override
@@ -652,72 +638,49 @@ class EditRepeatedTaskFrame extends JFrame{
                 } else {
                     Task newTask = new Task(txfTitle.getText(), getInputedStartTime(), getInputedEndTime(), getInputedInterval());
                     newTask.setActive(cbActiveBox.isSelected());
-                    controller.editTask( oldTask, newTask);
+                    getController().editTask( oldTask, newTask);
                     dispose();
                 }
             }
         });
         cbActiveBox = new JCheckBox( "task is active"  );
-        cbActiveBox.setSelected( task.isActive() );
-        gridBagConstr.gridx = 1;
-        gridBagConstr.gridy = 17;
-        gridBagConstr.gridwidth = 1;
-        gridBagConstr.gridheight = 1;
-        gridBagConstr.fill = GridBagConstraints.BOTH;
-        gridBagConstr.weightx = 1;
-        gridBagConstr.weighty = 0;
-        gridBagConstr.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( cbActiveBox, gridBagConstr);
+        cbActiveBox.setSelected( oldTask.isActive() );
+        gridBag.gridx = 1;
+        gridBag.gridy = 17;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints( cbActiveBox, gridBag);
         panel.add( cbActiveBox );
         this.add(panel);
-        this.setVisible(true);
     }
 
-    private int getInputedInterval(){
-        return Integer.parseInt( (String) cmbSecondsInreval.getSelectedItem())
-             + Integer.parseInt( (String) cmbMinutesInreval.getSelectedItem()) * 60
-             + Integer.parseInt( (String) cmbHoursInreval.getSelectedItem())   * 60 * 60
-             + Integer.parseInt( (String) cmbDaysInreval.getSelectedItem())    * 60 * 60 * 24
-             + Integer.parseInt( (String) cmbMonthesInreval.getSelectedItem()) * 60 * 60 * 30
-             + Integer.parseInt( (String) cmbYearsInreval.getSelectedItem())   * 60 * 60 * 365;
-    }
+    private void calculateIntevals(){
 
-    private Date getInputedStartTime(){
-        String seconds =(String)   cmbSecondsFrom.getSelectedItem();
-        String minutes =(String)  cmbMinutesFrom.getSelectedItem();
-        String hours =(String)  cmbHoursFrom.getSelectedItem();
-        String days =(String) cmbDaysFrom.getSelectedItem();
-        String monthes =(String) cmbMonthesFrom.getSelectedItem();
-        String years =(String) cmbYearsFrom.getSelectedItem();
-        String strDateFrom = days + monthes + years + hours + minutes + seconds;
-        return TaskInfo.createDate(strDateFrom);
-    }
+        final int SECONDS_IN_A_YEAR = 31536000;
+        final int SECONDS_IN_A_MONTH = 2592000;
+        final int SECONDS_IN_A_DAY = 86400;
+        final int SECONDS_IN_AN_HOUR = 3600;
+        final int SECONDS_IN_A_MINUTE = 60;
 
-    private  Date getInputedEndTime(){
-        String seconds =(String) cmbSecondsTo.getSelectedItem();
-        String minutes =(String) cmbMinutesTo.getSelectedItem();
-        String hours =(String) cmbHoursTo.getSelectedItem();
-        String days =(String) cmbDaysTo.getSelectedItem();
-        String monthes =(String) cmbMonthesTo.getSelectedItem();
-        String years =(String) cmbYearsTo.getSelectedItem();
-        String strDateTo = days + monthes + years + hours + minutes + seconds;
-        return TaskInfo.createDate(strDateTo);
-    }
+        int interval = oldTask.getRepeatInterval();
 
-    private boolean isIncorrectTimeInputed(){
-        String daysFrom =(String) cmbDaysFrom.getSelectedItem();
-        String monthesFrom =(String) cmbMonthesFrom.getSelectedItem();
-        String yearsFrom =(String) cmbYearsFrom.getSelectedItem();
-        String daysTo =(String) cmbDaysTo.getSelectedItem();
-        String monthesTo =(String) cmbMonthesTo.getSelectedItem();
-        String yearsTo =(String) cmbYearsTo.getSelectedItem();
-        return TaskInfo.isDateIncorrect(Integer.parseInt(daysFrom),Integer.parseInt(monthesFrom),Integer.parseInt(yearsFrom))
-                || TaskInfo.isDateIncorrect(Integer.parseInt(daysTo),Integer.parseInt(monthesTo),Integer.parseInt(yearsTo));
-    }
+        intervalYears = (interval - interval % SECONDS_IN_A_YEAR)/SECONDS_IN_A_YEAR;
+        interval = interval - intervalYears * SECONDS_IN_A_YEAR;
 
-    private String getFormatedItemName(int value){
-        String intervalDaysStr;
-        if (value < 10) return intervalDaysStr = "0" + String.valueOf(value);
-        return String.valueOf(value);
+        intervalMonthes = (interval - interval % SECONDS_IN_A_MONTH)/SECONDS_IN_A_MONTH;
+        interval = interval - intervalMonthes * SECONDS_IN_A_MONTH;
+
+        intervalDays = (interval - interval % SECONDS_IN_A_DAY)/SECONDS_IN_A_DAY;
+        interval = interval - intervalDays * SECONDS_IN_A_DAY;
+
+        intervalHours = (interval - interval % SECONDS_IN_AN_HOUR)/SECONDS_IN_AN_HOUR;
+        interval = interval - intervalHours * SECONDS_IN_AN_HOUR;
+
+        intervalMinutes = (interval - interval % SECONDS_IN_A_MINUTE)/SECONDS_IN_A_MINUTE;
+        interval = interval - intervalMinutes * SECONDS_IN_A_MINUTE;
     }
 }

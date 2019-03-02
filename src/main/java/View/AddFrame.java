@@ -11,34 +11,27 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class AddFrame extends JFrame{
-    TaskManagerController taskManagerController;
+class AddFrame extends TaskManagerGUI{
     private JCheckBox boxRepeated;
     private JTextField txfTitle;
     private static final Logger log = Logger.getLogger(TaskManagerController.class);
 
-
-    AddFrame(final TaskManagerController controller) throws HeadlessException {
-
-        super("Task Manager");
-        taskManagerController = controller;
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension dimension = toolkit.getScreenSize();
+    AddFrame(TaskManagerController controller) throws HeadlessException {
+        super();
+        setController(controller);
         this.setBounds(dimension.width / 2 - 150, dimension.height / 2 - 70, 300, 140);
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        addElements();
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setVisible(true);
+    }
 
-        JPanel panel = new JPanel();
+    @Override
+    protected void addElements(){
+        panel = new JPanel();
         panel.setBackground( new Color(255, 255,255 ) );
-
-        GridBagLayout gridBagLayout = new GridBagLayout();
-        GridBagConstraints gridBag = new GridBagConstraints();
+        gridBagLayout = new GridBagLayout();
+        gridBag = new GridBagConstraints();
         panel.setLayout( gridBagLayout );
-
         txfTitle = new JTextField( );
         txfTitle.setForeground(new Color( 0,128,255 ));
         gridBag.gridx = 0;
@@ -51,7 +44,6 @@ class AddFrame extends JFrame{
         gridBag.anchor = GridBagConstraints.SOUTH;
         gridBagLayout.setConstraints( txfTitle, gridBag );
         panel.add( txfTitle );
-
         JLabel lbTitle = new JLabel("Title");
         lbTitle.setFont(new Font("TimesRoman", Font.PLAIN, 18));
 
@@ -90,24 +82,22 @@ class AddFrame extends JFrame{
         gridBag.anchor = GridBagConstraints.NORTH;
         gridBagLayout.setConstraints(btNext, gridBag );
         panel.add(btNext);
-        this.add(panel);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         btNext.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            if (TaskInfo.isNameIncorrect(txfTitle.getText())){
-                JFrame frame = new JFrame("Error");
-                JOptionPane.showMessageDialog(frame, "Enter task's title");
-                log.error("Title cannot be blank");
-            } else {
-                if (boxRepeated.isSelected()) {
-                    AddRepeatedTaskFrame addFrame = new AddRepeatedTaskFrame(txfTitle.getText(), taskManagerController);
+                if (TaskInfo.isNameIncorrect(txfTitle.getText())){
+                    JFrame frame = new JFrame("Error");
+                    JOptionPane.showMessageDialog(frame, "Enter task's title");
+                    log.error("Title cannot be blank");
                 } else {
-                    AddNotRepeatedTaskFrame addFrame = new AddNotRepeatedTaskFrame(txfTitle.getText(), taskManagerController);
+                    if (boxRepeated.isSelected()) {
+                        AddRepeatedTaskFrame addFrame = new AddRepeatedTaskFrame(txfTitle.getText(), controller);
+                    } else {
+                        AddNotRepeatedTaskFrame addFrame = new AddNotRepeatedTaskFrame(txfTitle.getText(), controller);
+                    }
+                    dispose();
                 }
-                dispose();
-            }
             }
         });
-        this.setVisible(true);
+        this.add(panel);
     }
 }

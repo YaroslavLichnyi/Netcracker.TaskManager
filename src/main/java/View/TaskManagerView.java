@@ -19,30 +19,72 @@ import java.util.Observer;
  *  1.List of tasks;
  *  2.Bottons
  */
-public class TaskManagerView  extends JFrame implements Observer {
-    private TaskManagerController taskManagerController;
+public class TaskManagerView  extends TaskManagerGUI implements Observer {
+
     private ArrayTaskList tasks;
     private JTable taskTable;
     private DefaultTableModel model;
 
-    public TaskManagerView(ArrayTaskList arr, final TaskManagerController controller) throws HeadlessException {
-        super("Task Manager");
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension dimension = toolkit.getScreenSize();
+    public TaskManagerView(ArrayTaskList arr, final TaskManagerController taskManagerController) throws HeadlessException {
+        super();
         setBounds(dimension.width / 2 - 300, dimension.height / 2 - 150, 600, 300);
         this.tasks = arr;
-        taskManagerController = controller;
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        JPanel panel = new JPanel();
-        GridBagLayout gridBagLayout = new GridBagLayout();
-        GridBagConstraints gridBag = new GridBagConstraints();
-        panel.setLayout( gridBagLayout );
 
+        setController(taskManagerController);
+        addElements();
+        setVisible(true);
+        updateTable();
+    }
+
+    /*
+     * Updates data and window
+     */
+    public void update(Observable o, Object arg) {
+        ArrayTaskList arrayTaskList = (ArrayTaskList) arg;
+        this.tasks = arrayTaskList;
+        updateTable();
+    }
+
+    /*
+     * Actions with table
+     */
+    private  void tableMouseClicked(MouseEvent event){
+        DefaultTableModel def = (DefaultTableModel) taskTable.getModel();
+        int selectedRow = taskTable.getSelectedRow();
+        taskTable.clearSelection();
+    }
+
+    /**
+     * Updates information in the table.
+     */
+    private void updateTable(){
+        final int tableRowSize = tasks.size();
+        model.setRowCount(tableRowSize);
+        Iterator<Task> taskIterator = tasks.iterator();
+        Task task;
+        int i = 0;
+        while (taskIterator.hasNext()){
+            task = taskIterator.next();
+            model.setValueAt(task.getTitle(), i , 0);
+            try {
+                assert(task.nextTimeAfter(new Date())!= null);
+                model.setValueAt(task.nextTimeAfter(new Date()), i , 1);
+            } catch (Exception ex){
+                model.setValueAt("-", i , 1);
+            }
+            i++;
+        }
+        while(i<tableRowSize){
+            model.setValueAt(" ", i , 0);
+            model.setValueAt(" ", i , 1);
+            i++;
+        }
+        taskTable.repaint();
+    }
+
+    @Override
+    protected void addElements() {
+        panel.setLayout( gridBagLayout );
         //ADD
         JButton addButton = new JButton("Add");
         gridBag.gridx = 1;
@@ -109,14 +151,13 @@ public class TaskManagerView  extends JFrame implements Observer {
             public void mouseClicked(MouseEvent e) {
                 if(tasks.getTask(taskTable.getSelectedRow()) != null){
                     if (tasks.getTask(taskTable.getSelectedRow()).isRepeated()){
-                        DetailInformationFrameRepeated detInfFrRep = new DetailInformationFrameRepeated(tasks.getTask(taskTable.getSelectedRow()),taskManagerController);
+                        DetailInformationFrameRepeated detInfFrRep = new DetailInformationFrameRepeated(tasks.getTask(taskTable.getSelectedRow()),getController());
                     } else {
-                        DetailInformationFrame detInfFr = new DetailInformationFrame(tasks.getTask(taskTable.getSelectedRow()),taskManagerController);
+                        DetailInformationFrame detInfFr = new DetailInformationFrame(tasks.getTask(taskTable.getSelectedRow()),getController());
                     }
                 }
             }
         });
-
         //ACTIONS
         /*
          *Action of button "Add". Creates a window/frame with callender
@@ -124,7 +165,7 @@ public class TaskManagerView  extends JFrame implements Observer {
         callenderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CalendarFrame  calendar = new CalendarFrame(tasks, controller);
+                CalendarFrame  calendar = new CalendarFrame(tasks, getController());
                 calendar.setVisible(true);
             }
         });
@@ -134,7 +175,7 @@ public class TaskManagerView  extends JFrame implements Observer {
          */
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { ;
-                AddFrame addFrame = new AddFrame(taskManagerController);
+                AddFrame addFrame = new AddFrame(getController());
                 addFrame.setVisible( true);
             }
         });
@@ -146,58 +187,10 @@ public class TaskManagerView  extends JFrame implements Observer {
         findButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FindFrame findFrame = new FindFrame(tasks, controller);
+                FindFrame findFrame = new FindFrame(tasks, getController());
             }
         });
 
         this.add(panel);
-        setVisible(true);
-        updateTable();
-    }
-
-    /*
-     * Updates data and window
-     */
-    public void update(Observable o, Object arg) {
-        ArrayTaskList arrayTaskList = (ArrayTaskList) arg;
-        this.tasks = arrayTaskList;
-        updateTable();
-    }
-
-    /*
-     * Actions with table
-     */
-    private  void tableMouseClicked(MouseEvent event){
-        DefaultTableModel def = (DefaultTableModel) taskTable.getModel();
-        int selectedRow = taskTable.getSelectedRow();
-        taskTable.clearSelection();
-    }
-
-    /**
-     * Updates information in the table.
-     */
-    private void updateTable(){
-        final int tableRowSize = tasks.size();
-        model.setRowCount(tableRowSize);
-        Iterator<Task> taskIterator = tasks.iterator();
-        Task task;
-        int i = 0;
-        while (taskIterator.hasNext()){
-            task = taskIterator.next();
-            model.setValueAt(task.getTitle(), i , 0);
-            try {
-                assert(task.nextTimeAfter(new Date())!= null);
-                model.setValueAt(task.nextTimeAfter(new Date()), i , 1);
-            } catch (Exception ex){
-                model.setValueAt("-", i , 1);
-            }
-            i++;
-        }
-        while(i<tableRowSize){
-            model.setValueAt(" ", i , 0);
-            model.setValueAt(" ", i , 1);
-            i++;
-        }
-        taskTable.repaint();
     }
 }
