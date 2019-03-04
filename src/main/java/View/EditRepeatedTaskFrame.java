@@ -10,13 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 
-class EditRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
-    private JComboBox cmbDaysInreval;
-    private JComboBox cmbSecondsInreval;
-    private JComboBox cmbMinutesInreval;
-    private JComboBox cmbHoursInreval;
-    private JComboBox cmbYearsInreval;
-    private JComboBox cmbMonthesInreval;
+class EditRepeatedTaskFrame extends RepeatedTaskFillingFormWithIntervalGUI {
+
     private JTextField txfTitle;
     private Task oldTask;
     private JCheckBox cbActiveBox;
@@ -26,6 +21,7 @@ class EditRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
     private int intervalDays;
     private int intervalHours ;
     private int intervalMinutes;
+
 
 
     public EditRepeatedTaskFrame(Task task, TaskManagerController taskManagerController ) {
@@ -38,14 +34,7 @@ class EditRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         this.setVisible(true);
     }
 
-    private int getInputedInterval(){
-        return Integer.parseInt( (String) cmbSecondsInreval.getSelectedItem())
-             + Integer.parseInt( (String) cmbMinutesInreval.getSelectedItem()) * 60
-             + Integer.parseInt( (String) cmbHoursInreval.getSelectedItem())   * 60 * 60
-             + Integer.parseInt( (String) cmbDaysInreval.getSelectedItem())    * 60 * 60 * 24
-             + Integer.parseInt( (String) cmbMonthesInreval.getSelectedItem()) * 60 * 60 * 30
-             + Integer.parseInt( (String) cmbYearsInreval.getSelectedItem())   * 60 * 60 * 365;
-    }
+
 
 
 

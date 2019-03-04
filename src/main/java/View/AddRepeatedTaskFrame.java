@@ -8,21 +8,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
+public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormWithIntervalGUI {
     private String title;
-    private JLabel lbNames;
-    private JLabel lbDay;
-    private JLabel lbMonth;
-    private JLabel lbYear;
-    private JLabel lbHours;
-    private JLabel lbMinutes;
-    private JLabel lbSeconds;
-    private JComboBox cmbDaysInreval;
-    private JComboBox cmbMonthesInreval;
-    private JComboBox cmbYearsInreval;
-    private JComboBox cmbSecondsInreval;
-    private JComboBox cmbMinutesInreval;
-    private JComboBox cmbHoursInreval;
     private JCheckBox cbActiveBox;
 
     public AddRepeatedTaskFrame(final String title, TaskManagerController controller ) {
@@ -33,14 +20,7 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         addElements();
         this.setVisible(true);
     }
-    private int getInputedInterval(){
-        return Integer.parseInt( (String) cmbSecondsInreval.getSelectedItem())
-                + Integer.parseInt( (String) cmbMinutesInreval.getSelectedItem()) * 60
-                + Integer.parseInt( (String) cmbHoursInreval.getSelectedItem())   * 60 * 60
-                + Integer.parseInt( (String) cmbDaysInreval.getSelectedItem())    * 60 * 60 * 24
-                + Integer.parseInt( (String) cmbMonthesInreval.getSelectedItem()) * 60 * 60 * 30
-                + Integer.parseInt( (String) cmbYearsInreval.getSelectedItem())   * 60 * 60 * 365;
-    }
+
 
     @Override
     protected void addElements() {
@@ -48,7 +28,7 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         panel.setLayout( gridBagLayout );
         panel.setBackground(Color.WHITE);
 
-        lbNames = new JLabel( "Time"  );
+        JLabel lbNames = new JLabel("Time");
         lbNames.setFont(new Font("Serif", Font.BOLD, 22));
         gridBag.gridx = 2;
         gridBag.gridy = 0;
@@ -75,7 +55,7 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         gridBagLayout.setConstraints(lbNames, gridBag);
         panel.add(lbNames);
 
-        lbDay = new JLabel( "Day"  );
+        JLabel lbDay = new JLabel("Day");
         gridBag.gridx = 1;
         gridBag.gridy = 3;
         gridBag.gridwidth = 1;
@@ -84,10 +64,10 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbDay, gridBag);
-        panel.add( lbDay );
+        gridBagLayout.setConstraints(lbDay, gridBag);
+        panel.add(lbDay);
 
-        lbMonth = new JLabel( "Month"  );
+        JLabel lbMonth = new JLabel("Month");
         gridBag.gridx = 2;
         gridBag.gridy = 3;
         gridBag.gridwidth = 1;
@@ -96,10 +76,10 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbMonth, gridBag);
-        panel.add( lbMonth );
+        gridBagLayout.setConstraints(lbMonth, gridBag);
+        panel.add(lbMonth);
 
-        lbYear = new JLabel( "Year"  );
+        JLabel lbYear = new JLabel("Year");
         gridBag.gridx = 3;
         gridBag.gridy = 3;
         gridBag.gridwidth = 1;
@@ -108,10 +88,10 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbYear, gridBag);
-        panel.add( lbYear );
+        gridBagLayout.setConstraints(lbYear, gridBag);
+        panel.add(lbYear);
 
-        lbHours = new JLabel( "Hours"  );
+        JLabel lbHours = new JLabel("Hours");
         gridBag.gridx = 1;
         gridBag.gridy = 5;
         gridBag.gridwidth = 1;
@@ -120,10 +100,10 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbHours, gridBag);
-        panel.add( lbHours );
+        gridBagLayout.setConstraints(lbHours, gridBag);
+        panel.add(lbHours);
 
-        lbMinutes = new JLabel( "Minutes"  );
+        JLabel lbMinutes = new JLabel("Minutes");
         gridBag.gridx = 2;
         gridBag.gridy = 5;
         gridBag.gridwidth = 1;
@@ -132,10 +112,10 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbMinutes, gridBag);
-        panel.add( lbMinutes );
+        gridBagLayout.setConstraints(lbMinutes, gridBag);
+        panel.add(lbMinutes);
 
-        lbSeconds = new JLabel( "Seconds"  );
+        JLabel lbSeconds = new JLabel("Seconds");
         gridBag.gridx = 3;
         gridBag.gridy = 5;
         gridBag.gridwidth = 1;
@@ -144,8 +124,8 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbSeconds, gridBag);
-        panel.add( lbSeconds );
+        gridBagLayout.setConstraints(lbSeconds, gridBag);
+        panel.add(lbSeconds);
 
         String []dataDays = { "01", "02", "03", "04", "05", "06", "07",
                 "08", "09", "10", "11", "12", "13", "14", "15",
@@ -271,8 +251,8 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbDay, gridBag);
-        panel.add( lbDay );
+        gridBagLayout.setConstraints(lbDay, gridBag);
+        panel.add(lbDay);
 
         lbMonth = new JLabel( "Month"  );
         gridBag.gridx = 2;
@@ -283,8 +263,8 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbMonth, gridBag);
-        panel.add( lbMonth );
+        gridBagLayout.setConstraints(lbMonth, gridBag);
+        panel.add(lbMonth);
 
         lbYear = new JLabel( "Year"  );
         gridBag.gridx = 3;
@@ -295,8 +275,8 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbYear, gridBag);
-        panel.add( lbYear );
+        gridBagLayout.setConstraints(lbYear, gridBag);
+        panel.add(lbYear);
 
         cmbDaysTo = new JComboBox( dataDays );
         gridBag.gridx = 1;
@@ -343,8 +323,8 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbHours, gridBag);
-        panel.add( lbHours );
+        gridBagLayout.setConstraints(lbHours, gridBag);
+        panel.add(lbHours);
 
         lbMinutes = new JLabel( "Minutes"  );
         gridBag.gridx = 2;
@@ -355,8 +335,8 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbMinutes, gridBag);
-        panel.add( lbMinutes );
+        gridBagLayout.setConstraints(lbMinutes, gridBag);
+        panel.add(lbMinutes);
 
         lbSeconds = new JLabel( "Seconds"  );
         gridBag.gridx = 3;
@@ -367,8 +347,8 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbSeconds, gridBag);
-        panel.add( lbSeconds );
+        gridBagLayout.setConstraints(lbSeconds, gridBag);
+        panel.add(lbSeconds);
 
         cmbSecondsTo = new JComboBox( dataSeconds );
         gridBag.gridx = 3;
@@ -430,8 +410,8 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbDay, gridBag);
-        panel.add( lbDay );
+        gridBagLayout.setConstraints(lbDay, gridBag);
+        panel.add(lbDay);
 
         lbMonth = new JLabel( "Month"  );
         gridBag.gridx = 2;
@@ -442,8 +422,8 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbMonth, gridBag);
-        panel.add( lbMonth );
+        gridBagLayout.setConstraints(lbMonth, gridBag);
+        panel.add(lbMonth);
 
         lbYear = new JLabel( "Year"  );
         gridBag.gridx = 3;
@@ -454,8 +434,8 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbYear, gridBag);
-        panel.add( lbYear );
+        gridBagLayout.setConstraints(lbYear, gridBag);
+        panel.add(lbYear);
 
         String []dataDaysInterval = { "00", "01", "02", "03", "04", "05", "06", "07",
                 "08", "09", "10", "11", "12", "13", "14", "15",
@@ -512,8 +492,8 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbHours, gridBag);
-        panel.add( lbHours );
+        gridBagLayout.setConstraints(lbHours, gridBag);
+        panel.add(lbHours);
 
         lbMinutes = new JLabel( "Minutes"  );
         gridBag.gridx = 2;
@@ -524,8 +504,8 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbMinutes, gridBag);
-        panel.add( lbMinutes );
+        gridBagLayout.setConstraints(lbMinutes, gridBag);
+        panel.add(lbMinutes);
 
         lbSeconds = new JLabel( "Seconds"  );
         gridBag.gridx = 3;
@@ -536,8 +516,8 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbSeconds, gridBag);
-        panel.add( lbSeconds );
+        gridBagLayout.setConstraints(lbSeconds, gridBag);
+        panel.add(lbSeconds);
 
         cmbSecondsInreval = new JComboBox( dataSeconds );
         gridBag.gridx = 3;

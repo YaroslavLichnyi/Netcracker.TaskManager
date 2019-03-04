@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FindFrame extends RepeatedTaskFillingFormGui {
+public class FindFrame extends RepeatedTaskFillingFormGUI {
 
     private ArrayTaskList tasks;
     private JTextField txfTitle;

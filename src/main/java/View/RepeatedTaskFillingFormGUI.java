@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Date;
 
-public abstract class RepeatedTaskFillingFormGui extends TaskManagerGUI{
+public abstract class RepeatedTaskFillingFormGUI extends TaskManagerGUI{
     protected JComboBox cmbDaysFrom;
     protected JComboBox cmbMonthesFrom;
     protected JComboBox cmbYearsFrom;
@@ -20,7 +20,7 @@ public abstract class RepeatedTaskFillingFormGui extends TaskManagerGUI{
     protected JComboBox cmbMinutesTo;
     protected JComboBox cmbHoursTo;
 
-    public RepeatedTaskFillingFormGui() throws HeadlessException {
+    public RepeatedTaskFillingFormGUI() throws HeadlessException {
         super();
     }
 
