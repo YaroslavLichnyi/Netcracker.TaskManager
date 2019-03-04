@@ -22,7 +22,6 @@ public class TaskTableFrame extends TaskManagerGUI{
         setBounds(dimension.width / 2 - 150, dimension.height / 2 - 100, 300, 200);
         this.addElements();
         this.updateTableData();
-        this.add(panel);
         this.setVisible(true);
     }
 
@@ -76,5 +75,6 @@ public class TaskTableFrame extends TaskManagerGUI{
         gridBag.anchor = GridBagConstraints.NORTH;
         gridBagLayout.setConstraints( taskTable, gridBag );
         panel.add( taskTable );
+        this.add(panel);
     }
 }

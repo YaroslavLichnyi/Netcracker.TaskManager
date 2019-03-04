@@ -17,91 +17,93 @@ class DetailInformationFrame extends TaskManagerGUI {
         mytask = task;
         setController(taskManagerController);
         setBounds(dimension.width / 2 - 150, dimension.height / 2 - 100, 300, 200);
+        addElements();
+        this.setVisible(true);
+    }
 
-        JPanel panel = new JPanel();
-        GridBagLayout gridBagLayout = new GridBagLayout();
-        GridBagConstraints gbcPanel0 = new GridBagConstraints();
+    @Override
+    protected void addElements() {
         panel.setLayout( gridBagLayout );
 
-        JLabel lbLbTaskTitle = new JLabel(task.getTitle());
-        gbcPanel0.gridx = 3;
-        gbcPanel0.gridy = 0;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbLbTaskTitle, gbcPanel0 );
+        JLabel lbLbTaskTitle = new JLabel(mytask.getTitle());
+        gridBag.gridx = 3;
+        gridBag.gridy = 0;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbLbTaskTitle, gridBag );
         panel.add(lbLbTaskTitle);
 
-        JLabel lbIbTaskTime = new JLabel(task.getTime().toString());
+        JLabel lbIbTaskTime = new JLabel(mytask.getTime().toString());
         lbIbTaskTime.setBackground( new Color( 245,249,252 ) );
-        gbcPanel0.gridx = 3;
-        gbcPanel0.gridy = 1;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbIbTaskTime, gbcPanel0 );
+        gridBag.gridx = 3;
+        gridBag.gridy = 1;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbIbTaskTime, gridBag );
         panel.add(lbIbTaskTime);
 
         JLabel lbLabel2 = new JLabel("Title");
         lbLabel2.setBackground( new Color( 227,230,255 ) );
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 0;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbLabel2, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 0;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbLabel2, gridBag );
         panel.add(lbLabel2);
 
         JLabel lbLabel3 = new JLabel("Time");
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 1;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbLabel3, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 1;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbLabel3, gridBag );
         panel.add(lbLabel3);
 
         JButton btDelete = new JButton("Delete");
-        gbcPanel0.gridx = 3;
-        gbcPanel0.gridy = 3;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(btDelete, gbcPanel0 );
+        gridBag.gridx = 3;
+        gridBag.gridy = 3;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(btDelete, gridBag );
         panel.add(btDelete);
         btDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                  controller.deleteTask(mytask);
-                  dispose();
+                controller.deleteTask(mytask);
+                dispose();
             }
         });
 
         JButton btEdit = new JButton("Edit");
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 3;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(btEdit, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 3;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(btEdit, gridBag );
         panel.add(btEdit);
         btEdit.addActionListener(new ActionListener() {
             @Override
@@ -112,7 +114,7 @@ class DetailInformationFrame extends TaskManagerGUI {
         });
 
         JLabel lbLbTaskActive;
-        if(task.isActive()){
+        if(mytask.isActive()){
             lbLbTaskActive = new JLabel( "Task is active"  );
             lbLbTaskActive.setForeground(new Color(0, 255, 0));
         } else {
@@ -120,22 +122,16 @@ class DetailInformationFrame extends TaskManagerGUI {
             lbLbTaskActive.setForeground(new Color(255, 0, 0));
         }
 
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 2;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbLbTaskActive, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 2;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbLbTaskActive, gridBag );
         panel.add(lbLbTaskActive);
         this.add(panel);
-        this.setVisible(true);
-    }
-
-    @Override
-    protected void addElements() {
-
     }
 }

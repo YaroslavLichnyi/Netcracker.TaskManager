@@ -2,24 +2,15 @@ package View;
 
 import Controller.TaskManagerController;
 import Model.Task;
-import Model.TaskInfo;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
-public class EditTaskFrame extends TaskManagerGUI {
+public class EditTaskFrame extends TaskFillingFormGUI {
     private String taskTitle;
-    private JComboBox cmbDays;
-    private JComboBox cmbMonthes;
-    private JComboBox cmbYear;
-    private JComboBox cmbSeconds;
-    private JComboBox cmbMinutes;
-    private JComboBox cmbHours;
     private JCheckBox cbActiveBox;
     private JTextField txfTitle;
     private Task oldTask;
@@ -265,37 +256,18 @@ public class EditTaskFrame extends TaskManagerGUI {
         btSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SimpleDateFormat taskFormat = new SimpleDateFormat("ddMMyyyy HH:mm:ss");
-                String days =(String) cmbDays.getSelectedItem();
-                String monthes =(String) cmbMonthes.getSelectedItem();
-                String years =(String) cmbYear.getSelectedItem();
-
-                if ( TaskInfo.isDateIncorrect(Integer.parseInt(days),Integer.parseInt(monthes),Integer.parseInt(years))){
+                if (isInputedTimeIncorrect()){
                     JFrame frame = new JFrame("Error");
                     JOptionPane.showMessageDialog(frame, "Too many days for this month");
-                } else if (TaskInfo.isNameIncorrect(txfTitle.getText())){
-                    JFrame frame = new JFrame("Error");
-                    JOptionPane.showMessageDialog(frame, "Too short title");
                 } else {
-                    String seconds =(String) cmbSeconds.getSelectedItem();
-                    String minutes =(String) cmbMinutes.getSelectedItem();
-                    String hours =(String) cmbHours.getSelectedItem();
-                    String myDate = days + monthes + years + " " + hours + ":" + minutes + ":" + seconds;
-                    Date date = null;
-                    try {
-                        date = (Date)taskFormat.parse(myDate);
-                    } catch (ParseException e1) {
-                        e1.printStackTrace();
-                    }
                     taskTitle = txfTitle.getText();
-                    Task newTask = new Task(taskTitle ,date);
+                    Task newTask = new Task(taskTitle  ,getInputedTime());
                     newTask.setActive(cbActiveBox.isSelected());
                     getController().editTask(oldTask, newTask);
                     dispose();
                 }
             }
         });
-
         cbActiveBox = new JCheckBox( "task is active"  );
         cbActiveBox.setSelected( oldTask.isActive() );
         gridBag.gridx = 1;
@@ -310,4 +282,6 @@ public class EditTaskFrame extends TaskManagerGUI {
         panel.add( cbActiveBox );
         this.add(panel);
     }
+
+
 }

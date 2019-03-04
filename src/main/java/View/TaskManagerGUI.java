@@ -19,8 +19,7 @@ public abstract class TaskManagerGUI extends JFrame {
         panel = new JPanel();
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         gridBag = new GridBagConstraints();

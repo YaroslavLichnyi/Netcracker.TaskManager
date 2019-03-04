@@ -27,10 +27,7 @@ class AddFrame extends TaskManagerGUI{
 
     @Override
     protected void addElements(){
-        panel = new JPanel();
         panel.setBackground( new Color(255, 255,255 ) );
-        gridBagLayout = new GridBagLayout();
-        gridBag = new GridBagConstraints();
         panel.setLayout( gridBagLayout );
         txfTitle = new JTextField( );
         txfTitle.setForeground(new Color( 0,128,255 ));

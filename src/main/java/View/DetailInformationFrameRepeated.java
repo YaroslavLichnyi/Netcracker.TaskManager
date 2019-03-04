@@ -10,8 +10,7 @@ import java.awt.event.ActionListener;
 /**
  * Shows detail information about repeated tasks.
  */
-class DetailInformationFrameRepeated extends JFrame {
-    private JPanel panel;
+class DetailInformationFrameRepeated extends TaskManagerGUI {
     /**
      * Information about this task is showed in the window.
      */
@@ -19,65 +18,53 @@ class DetailInformationFrameRepeated extends JFrame {
     /**
      *
      */
-    private TaskManagerController controller;
+    private int interval ;
+    private int intervalYears;
+    private int intervalMonthes ;
+    private int intervalDays;
+    private int intervalHours ;
+    private int intervalMinutes;
 
     DetailInformationFrameRepeated(Task task, TaskManagerController taskManagerController) {
-        super("Detail information");
+        super();
         mytask = task;
-        controller = taskManagerController;
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension dimension = toolkit.getScreenSize();
+        setController(taskManagerController);
         setBounds(dimension.width / 2 - 150, dimension.height / 2 - 100, 300, 200);
-        panel = new JPanel();
-        GridBagLayout gridBagLayout = new GridBagLayout();
-        GridBagConstraints gbcPanel0 = new GridBagConstraints();
+        calculateIntevals();
+        addElements();
+        this.setVisible(true);
+    }
+
+    @Override
+    protected void addElements() {
         panel.setLayout(gridBagLayout);
-
-
-        JLabel lbTaskStartTime = new JLabel(task.getStartTime().toString());
+        JLabel lbTaskStartTime = new JLabel(mytask.getStartTime().toString());
         lbTaskStartTime.setBackground(new Color(153,184,240));
         lbTaskStartTime.setForeground(new Color(0,0,88));
-        gbcPanel0.gridx = 3;
-        gbcPanel0.gridy = 1;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbTaskStartTime, gbcPanel0);
+        gridBag.gridx = 3;
+        gridBag.gridy = 1;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbTaskStartTime, gridBag);
         panel.add(lbTaskStartTime);
 
-        lbTaskStartTime = new JLabel(task.getEndTime().toString());
+        lbTaskStartTime = new JLabel(mytask.getEndTime().toString());
         lbTaskStartTime.setBackground(new Color(153,184,240 ));
         lbTaskStartTime.setForeground(new Color(0,0,88 ));
-        gbcPanel0.gridx = 3;
-        gbcPanel0.gridy = 2;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbTaskStartTime, gbcPanel0 );
+        gridBag.gridx = 3;
+        gridBag.gridy = 2;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbTaskStartTime, gridBag );
         panel.add(lbTaskStartTime);
-
-        int interval = task.getRepeatInterval();
-        final int year = 31536000;
-        int intervalYears = (interval - interval % year)/year;
-        interval = interval - intervalYears * year;
-        final int month = 2592000;
-        int intervalMonthes = (interval - interval % month)/month;
-        interval = interval - intervalMonthes * month;
-        final int day = 86400;
-        int intervalDays = (interval - interval % day)/day;
-        interval = interval - intervalDays * day;
-        final int hour = 3600;
-        int intervalHours = (interval - interval % hour)/hour;
-        interval = interval - intervalHours * hour;
-        final int minute = 60;
-        int intervalMinutes = (interval - interval % minute)/minute;
-        interval = interval - intervalMinutes * minute;
 
         String intervalInf = "";
         if (intervalYears > 0)   intervalInf += intervalYears   + "y " ;
@@ -90,54 +77,54 @@ class DetailInformationFrameRepeated extends JFrame {
         lbTaskStartTime = new JLabel(intervalInf);
         lbTaskStartTime.setBackground( new Color( 153,184,240 ) );
         lbTaskStartTime.setForeground( new Color( 0,0,88 ) );
-        gbcPanel0.gridx = 3;
-        gbcPanel0.gridy = 3;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbTaskStartTime, gbcPanel0 );
+        gridBag.gridx = 3;
+        gridBag.gridy = 3;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbTaskStartTime, gridBag );
         panel.add(lbTaskStartTime);
 
         JLabel lbTaskEndTime = new JLabel("Start time");
         lbTaskEndTime.setBackground( new Color( 153,184,240 ) );
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 1;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbTaskEndTime, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 1;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbTaskEndTime, gridBag );
         panel.add(lbTaskEndTime);
 
         JLabel lbEndTime = new JLabel("End time");
         lbEndTime.setBackground( new Color( 181,209,240 ) );
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 2;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbEndTime, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 2;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbEndTime, gridBag );
         panel.add(lbEndTime);
 
         JButton btDelete = new JButton("Delete");
         btDelete.setBackground( new Color( 238,247,255 ) );
-        gbcPanel0.gridx = 3;
-        gbcPanel0.gridy = 5;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(btDelete, gbcPanel0 );
+        gridBag.gridx = 3;
+        gridBag.gridy = 5;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(btDelete, gridBag );
         panel.add(btDelete);
         btDelete.addActionListener(new ActionListener() {
             @Override
@@ -148,15 +135,15 @@ class DetailInformationFrameRepeated extends JFrame {
         });
         JButton btEdit = new JButton("Edit");
         btEdit.setBackground( new Color( 238,247,255 ) );
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 5;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(btEdit, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 5;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 0;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(btEdit, gridBag );
         panel.add(btEdit);
         btEdit.addActionListener(new ActionListener() {
             @Override
@@ -167,7 +154,7 @@ class DetailInformationFrameRepeated extends JFrame {
         });
 
         JLabel lbLbTaskActive;
-        if(task.isActive()){
+        if(mytask.isActive()){
             lbLbTaskActive = new JLabel( "Task is active"  );
             lbLbTaskActive.setForeground(new Color(0, 255, 0));
         } else {
@@ -175,57 +162,82 @@ class DetailInformationFrameRepeated extends JFrame {
             lbLbTaskActive.setForeground(new Color(255, 0, 0));
         }
         lbLbTaskActive.setBackground(new Color(238,247,255 ));
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 4;
-        gbcPanel0.gridwidth = 2;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbLbTaskActive, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 4;
+        gridBag.gridwidth = 2;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbLbTaskActive, gridBag );
         panel.add(lbLbTaskActive);
 
         JLabel lbTitle = new JLabel("Title");
         lbTitle.setBackground(new Color(128,159,240));
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 0;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbTitle, gbcPanel0 );
+        gridBag.gridx = 2;
+        gridBag.gridy = 0;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbTitle, gridBag );
         panel.add(lbTitle);
 
-        JLabel lbTaskTitle = new JLabel(task.getTitle());
+        JLabel lbTaskTitle = new JLabel(mytask.getTitle());
         lbTaskTitle.setBackground( new Color(128,159,240));
-        gbcPanel0.gridx = 3;
-        gbcPanel0.gridy = 0;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbTaskTitle, gbcPanel0 );
+        gridBag.gridx = 3;
+        gridBag.gridy = 0;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbTaskTitle, gridBag );
         panel.add(lbTaskTitle);
 
         JLabel lbInterval = new JLabel("Interval");
         lbInterval.setBackground(new Color( 206,230,240));
-        gbcPanel0.gridx = 2;
-        gbcPanel0.gridy = 3;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbInterval, gbcPanel0);
+        gridBag.gridx = 2;
+        gridBag.gridy = 3;
+        gridBag.gridwidth = 1;
+        gridBag.gridheight = 1;
+        gridBag.fill = GridBagConstraints.BOTH;
+        gridBag.weightx = 1;
+        gridBag.weighty = 1;
+        gridBag.anchor = GridBagConstraints.NORTH;
+        gridBagLayout.setConstraints(lbInterval, gridBag);
         panel.add(lbInterval);
         this.add(panel);
-        this.setVisible(true);
+    }
+
+    private void calculateIntevals(){
+        final int SECONDS_IN_A_YEAR = 31536000;
+        final int SECONDS_IN_A_MONTH = 2592000;
+        final int SECONDS_IN_A_DAY = 86400;
+        final int SECONDS_IN_AN_HOUR = 3600;
+        final int SECONDS_IN_A_MINUTE = 60;
+
+        interval = mytask.getRepeatInterval();
+
+        intervalYears = (interval - interval % SECONDS_IN_A_YEAR)/SECONDS_IN_A_YEAR;
+        interval = interval - intervalYears * SECONDS_IN_A_YEAR;
+
+        intervalMonthes = (interval - interval % SECONDS_IN_A_MONTH)/SECONDS_IN_A_MONTH;
+        interval = interval - intervalMonthes * SECONDS_IN_A_MONTH;
+
+        intervalDays = (interval - interval % SECONDS_IN_A_DAY)/SECONDS_IN_A_DAY;
+        interval = interval - intervalDays * SECONDS_IN_A_DAY;
+
+        intervalHours = (interval - interval % SECONDS_IN_AN_HOUR)/SECONDS_IN_AN_HOUR;
+        interval = interval - intervalHours * SECONDS_IN_AN_HOUR;
+
+        intervalMinutes = (interval - interval % SECONDS_IN_A_MINUTE)/SECONDS_IN_A_MINUTE;
+        interval = interval - intervalMinutes * SECONDS_IN_A_MINUTE;
+
     }
 }
 

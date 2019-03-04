@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FindFrame extends TaskManagerFillingFormGui {
+public class FindFrame extends RepeatedTaskFillingFormGui {
 
     private ArrayTaskList tasks;
     private JTextField txfTitle;
@@ -24,7 +24,6 @@ public class FindFrame extends TaskManagerFillingFormGui {
         addElements();
         this.setVisible(true);
     }
-
 
     @Override
     protected void addElements() {
@@ -58,9 +57,9 @@ public class FindFrame extends TaskManagerFillingFormGui {
         gridBagLayout.setConstraints(lbTitle, gridBag);
         panel.add(lbTitle);
 
-        JLabel lbLabel0 = new JLabel( "From"  );
-        lbLabel0.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
-        lbLabel0.setForeground(new Color(0, 128, 242));
+        JLabel lbFrom = new JLabel( "From"  );
+        lbFrom.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
+        lbFrom.setForeground(new Color(0, 128, 242));
         gridBag.gridx = 2;
         gridBag.gridy = 2;
         gridBag.gridwidth = 1;
@@ -69,8 +68,8 @@ public class FindFrame extends TaskManagerFillingFormGui {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbLabel0, gridBag);
-        panel.add( lbLabel0 );
+        gridBagLayout.setConstraints( lbFrom, gridBag);
+        panel.add( lbFrom );
 
 
         JLabel lbDay = new JLabel("Day");
@@ -246,9 +245,9 @@ public class FindFrame extends TaskManagerFillingFormGui {
         gridBagLayout.setConstraints( cmbHoursFrom, gridBag);
         panel.add( cmbHoursFrom );
 
-        lbLabel0 = new JLabel( "To"  );
-        lbLabel0.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
-        lbLabel0.setForeground(new Color(0, 128, 242));
+        lbFrom = new JLabel( "To"  );
+        lbFrom.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
+        lbFrom.setForeground(new Color(0, 128, 242));
         gridBag.gridx = 2;
         gridBag.gridy = 7;
         gridBag.gridwidth = 1;
@@ -257,8 +256,8 @@ public class FindFrame extends TaskManagerFillingFormGui {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints( lbLabel0, gridBag);
-        panel.add( lbLabel0 );
+        gridBagLayout.setConstraints( lbFrom, gridBag);
+        panel.add( lbFrom );
 
         lbDay = new JLabel( "Day"  );
         gridBag.gridx = 1;

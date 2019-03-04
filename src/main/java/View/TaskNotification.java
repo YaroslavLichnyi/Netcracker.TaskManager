@@ -8,7 +8,6 @@ import java.awt.TrayIcon.MessageType;
 
 public class TaskNotification {
     private Task task;
-
     public TaskNotification(Task task) {
     this.task = task;
     }
@@ -24,7 +23,7 @@ public class TaskNotification {
             trayIcon.displayMessage("TaskManager", "Don't forget about " + task.getTitle(), MessageType.INFO);
         }  catch (AWTException e){
             JFrame frame = new JFrame("TaskManager");
-            JOptionPane.showMessageDialog(frame, "Don't forget about " + task.getTitle());
+            JOptionPane.showMessageDialog(frame, "Don'tforget about " + task.getTitle());
         }
     }
 }

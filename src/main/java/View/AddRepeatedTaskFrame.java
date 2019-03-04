@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AddRepeatedTaskFrame extends TaskManagerFillingFormGui {
+public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
     private String title;
     private JLabel lbNames;
     private JLabel lbDay;
@@ -177,13 +177,13 @@ public class AddRepeatedTaskFrame extends TaskManagerFillingFormGui {
         gridBagLayout.setConstraints( cmbMonthesFrom, gridBag);
         panel.add( cmbMonthesFrom );
 
-        String []dataCombo3 = {  "2019", "2020", "2021", "2022",
+        String []dataYears = {  "2019", "2020", "2021", "2022",
                 "2023", "2024", "2025", "2026", "2027",  "2028",
                 "2029", "2030", "2031", "2032", "2033", "2034",
                 "2035", "2036", "2037", "2038", "2039", "2040",
                 "2041", "2042", "2043", "2044", "2045", "2046",
                 "2047", "2048", "2049", "2050" };
-        cmbYearsFrom = new JComboBox( dataCombo3 );
+        cmbYearsFrom = new JComboBox( dataYears );
         gridBag.gridx = 3;
         gridBag.gridy = 4;
         gridBag.gridwidth = 1;
@@ -322,7 +322,7 @@ public class AddRepeatedTaskFrame extends TaskManagerFillingFormGui {
         gridBagLayout.setConstraints( cmbMonthesTo, gridBag);
         panel.add( cmbMonthesTo );
 
-        cmbYearsTo = new JComboBox( dataCombo3 );
+        cmbYearsTo = new JComboBox( dataYears );
         gridBag.gridx = 3;
         gridBag.gridy = 9;
         gridBag.gridwidth = 1;

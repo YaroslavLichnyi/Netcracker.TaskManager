@@ -11,13 +11,14 @@ import java.util.Iterator;
 import java.util.Observable;
 
 public class TaskManagerController extends Observable {
+    private static final TaskManagerController instance = new TaskManagerController();
     ArrayTaskList tasks ;
     TaskManagerView view ;
     private static final Logger log = Logger.getLogger(TaskManagerController.class);
     File tasksTextFile = new File("tasksForTaskManager.txt");
     File tasksFile = new File("TaskManagerTasks");
 
-    public TaskManagerController() {
+    private TaskManagerController() {
 
         tasks = new ArrayTaskList();
         readTasks();
@@ -25,6 +26,10 @@ public class TaskManagerController extends Observable {
         this.addObserver(view);
         NotificationThread notificationThread = new NotificationThread(tasks);
         notificationThread.start();
+    }
+
+    public static TaskManagerController getInstance() {
+        return instance;
     }
 
     /**

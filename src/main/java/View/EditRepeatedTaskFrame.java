@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 
-class EditRepeatedTaskFrame extends TaskManagerFillingFormGui{
+class EditRepeatedTaskFrame extends RepeatedTaskFillingFormGui {
     private JComboBox cmbDaysInreval;
     private JComboBox cmbSecondsInreval;
     private JComboBox cmbMinutesInreval;
