@@ -473,33 +473,11 @@ public class FindFrame extends RepeatedTaskFillingFormGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(rbTitle.isSelected()){
-                    ArrayTaskList sortedByTitle = getController().findTasksByTitle(tasks, txfTitle.getText());
-                    if (sortedByTitle != null){
-                        new TaskTableFrame(sortedByTitle, getController());
-                    }
-                } else if (rbTime.isSelected() || rbBoth.isSelected()){
-                    if (isIncorrectTimeInputed()){
-                        JFrame frame = new JFrame("Error");
-                        JOptionPane.showMessageDialog(frame, "Too many days for this month");
-                    } else {
-                        ArrayTaskList sortedByTime = getController().findTasksByTime(tasks, getInputedStartTime(), getInputedEndTime());
-                        if(sortedByTime != null){
-                            if (rbTime.isSelected()){
-                                new TaskTableFrame(sortedByTime, getController());
-                            } else {
-                                ArrayTaskList sortedByTimeAndTitle = getController().findTasksByTitle(sortedByTime , txfTitle.getText());
-                                if (sortedByTimeAndTitle != null){
-                                    new TaskTableFrame(sortedByTimeAndTitle, getController());
-                                } else {
-                                    JFrame frame = new JFrame("Error");
-                                    JOptionPane.showMessageDialog(frame, "No tasks were found");
-                                }
-                            }
-                        } else {
-                            JFrame frame = new JFrame("Error");
-                            JOptionPane.showMessageDialog(frame, "No tasks were found");
-                        }
-                    }
+                    new TaskTableFrame(getController().findTasksByTitle(tasks, txfTitle.getText()), getController());
+                } else if (rbTime.isSelected()){
+                    new TaskTableFrame(getController().findTasksByTime(tasks,getInputedStartTime(), getInputedEndTime()), getController());
+                } else if (rbBoth.isSelected()){
+                    new TaskTableFrame(getController().findTasksByTime(tasks,getInputedStartTime(), getInputedEndTime()), getController());
                 }
             }
         });

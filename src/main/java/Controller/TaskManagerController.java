@@ -141,5 +141,18 @@ public class TaskManagerController extends Observable {
         }
         return  null;
     }
+    public ArrayTaskList findTasksByTimeAndTitle (ArrayTaskList taskList,Date from, Date to, String name){
+        ArrayTaskList arr = findTasksByTitle(taskList, name);
+        if (arr != null && arr.size()>0){
+          arr = findTasksByTime(taskList, from, to);
+            if (arr != null && arr.size()>0){
+                return arr;
+            }
+        }
+        JFrame frame = new JFrame("Error");
+        JOptionPane.showMessageDialog(frame, "No tasks were found");
+        return  null;
+    }
+
 
 }

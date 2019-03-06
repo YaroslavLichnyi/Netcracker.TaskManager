@@ -260,10 +260,7 @@ public class EditTaskFrame extends TaskFillingFormGUI {
                     JFrame frame = new JFrame("Error");
                     JOptionPane.showMessageDialog(frame, "Too many days for this month");
                 } else {
-                    taskTitle = txfTitle.getText();
-                    Task newTask = new Task(taskTitle  ,getInputedTime());
-                    newTask.setActive(cbActiveBox.isSelected());
-                    getController().editTask(oldTask, newTask);
+                    getController().editTask(oldTask, getNewTask());
                     dispose();
                 }
             }
@@ -281,6 +278,13 @@ public class EditTaskFrame extends TaskFillingFormGUI {
         gridBagLayout.setConstraints( cbActiveBox, gridBag );
         panel.add( cbActiveBox );
         this.add(panel);
+    }
+
+    private Task getNewTask(){
+        taskTitle = txfTitle.getText();
+        Task newTask = new Task(taskTitle  ,getInputedTime());
+        newTask.setActive(cbActiveBox.isSelected());
+        return newTask;
     }
 
 

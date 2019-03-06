@@ -3,7 +3,9 @@ package View;
 import Controller.TaskManagerController;
 import Model.ArrayTaskList;
 import Model.Task;
+import Model.TaskList;
 import Model.Tasks;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +30,9 @@ public class CalendarFrame extends TaskManagerGUI {
     private int year;
     private int monthNumber;
     private ArrayTaskList arrayTaskList;
-    SimpleDateFormat taskFormat ;
+    SimpleDateFormat taskFormat;
+    private static final Logger log = Logger.getLogger(CalendarFrame.class);
+
 
     CalendarFrame(ArrayTaskList tasksArr, TaskManagerController taskManagerController) {
         tasks = tasksArr;
@@ -53,16 +57,16 @@ public class CalendarFrame extends TaskManagerGUI {
         model.setRowCount(6);
         int i = startDay - 1;
 
-        monthNumber = cal.get(Calendar.MONTH)+1;
+        monthNumber = cal.get(Calendar.MONTH) + 1;
         String dayStr = "";
         String monthStr = "";
         for (int day = 1; day <= numberOfDays; day++) {
-            if ( day < 10) {
-              dayStr = "0" + day;
+            if (day < 10) {
+                dayStr = "0" + day;
             } else {
                 dayStr = Integer.toString(day);
             }
-            if (monthNumber < 10 ){
+            if (monthNumber < 10) {
                 monthStr = "0" + monthNumber;
             } else {
                 monthStr = Integer.toString(monthNumber);
@@ -76,17 +80,17 @@ public class CalendarFrame extends TaskManagerGUI {
                     Date from = (Date) taskFormat.parse(fromStr);
                     Date to = (Date) taskFormat.parse(toStr);
                     arrayTaskList = tasks.clone();
-                    arrayTaskList = (ArrayTaskList) Tasks.incoming(arrayTaskList,from, to);
-                    if(!arrayTaskList.isEmpty() ){
-                        model.setValueAt(day + "*" , i / 7, i % 7);
+                    arrayTaskList = (ArrayTaskList) Tasks.incoming(arrayTaskList, from, to);
+                    if (!arrayTaskList.isEmpty()) {
+                        model.setValueAt(day + "*", i / 7, i % 7);
                     }
-                } catch (ParseException e){
+                } catch (ParseException e) {
                     System.out.println(e);
                 }
             }
-               i += 1;
-            }
+            i += 1;
         }
+    }
 
     @Override
     protected void addElements() {
@@ -96,12 +100,12 @@ public class CalendarFrame extends TaskManagerGUI {
         taskFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
         label = new JLabel();
         label.setHorizontalAlignment(SwingConstants.CENTER);
-        label.setBackground( new Color( 0,128,255 ) );
-        label.setForeground( new Color( 255,255,255 ) );
+        label.setBackground(new Color(0, 128, 255));
+        label.setForeground(new Color(255, 255, 255));
 
         JButton previous = new JButton("<-");
-        previous.setBackground( new Color( 0,128,255 ) );
-        previous.setBackground( new Color( 0,128,255 ) );
+        previous.setBackground(new Color(0, 128, 255));
+        previous.setBackground(new Color(0, 128, 255));
         previous.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 cal.add(Calendar.MONTH, -1);
@@ -110,8 +114,8 @@ public class CalendarFrame extends TaskManagerGUI {
         });
 
         JButton next = new JButton("->");
-        next.setBackground( new Color( 0,128,255 ) );
-        next.setBackground( new Color( 0,128,255 ) );
+        next.setBackground(new Color(0, 128, 255));
+        next.setBackground(new Color(0, 128, 255));
         next.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 cal.add(Calendar.MONTH, +1);
@@ -119,7 +123,7 @@ public class CalendarFrame extends TaskManagerGUI {
             }
         });
 
-        panel.setBackground( new Color( 0,128,255 ) );
+        panel.setBackground(new Color(0, 128, 255));
         panel.setLayout(new BorderLayout());
         panel.add(previous, BorderLayout.WEST);
         panel.add(label, BorderLayout.CENTER);
@@ -127,13 +131,13 @@ public class CalendarFrame extends TaskManagerGUI {
 
         String[] columns = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
         model = new DefaultTableModel(null, columns);
-        table = new JTable(model){
+        table = new JTable(model) {
             @Override
             public boolean isCellEditable(int arg0, int arg1) {
                 return false;
             }
         };
-        table.setGridColor( new Color( 0,128,255 ) );
+        table.setGridColor(new Color(0, 128, 255));
         JScrollPane pane = new JScrollPane(table);
 
         this.add(panel, BorderLayout.NORTH);
@@ -142,46 +146,64 @@ public class CalendarFrame extends TaskManagerGUI {
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                String str =String.valueOf(table.getValueAt(table.getSelectedRow(), table.getSelectedColumn())) ;
-                String dayStr = "";
-                if (str.charAt(str.length()-1) == '*'){
-                    if (str.length()==2){
-                        dayStr+="0";
-                        dayStr+=str.charAt(0);
-                    } else {
-                        dayStr+=str.charAt(0);
-                        dayStr+=str.charAt(1);
-                    }
-                    String monthStr = "";
-                    if (monthNumber < 10 ){
-                        monthStr = "0"+monthNumber;
-                    } else {
-                        monthStr = Integer.toString(monthNumber);
-                    }
-                    String fromStr = dayStr + monthStr + year + "000000";
-                    String toStr = dayStr + monthStr + year + "235959";
-
-                    if (tasks != null) {
-                        try {
-                            Date from = (Date) taskFormat.parse(fromStr);
-                            Date to = (Date) taskFormat.parse(toStr);
-                            arrayTaskList = (ArrayTaskList) Tasks.incoming(tasks,from, to);
-                            if (arrayTaskList.size()==1){
-                                if(arrayTaskList.getTask(0).isRepeated()){
-                                    DetailInformationFrameRepeated detInfFrRep = new DetailInformationFrameRepeated(arrayTaskList.getTask(0),getController());
-                                } else {
-                                    DetailInformationFrame detInfFr = new DetailInformationFrame(arrayTaskList.getTask(0),getController());
-                                }
-                            } else if (arrayTaskList.size()>1) {
-                                TaskTableFrame tableFrame = new TaskTableFrame(arrayTaskList,getController());
-                            }
-
-                        } catch (ParseException ex){
-                            System.out.println(ex);
-                        }
-                    }
-                }
+                getDetailInfo();
             }
         });
     }
+
+    private void getDetailInfo() {
+        if (isExistsAnyTaskSelectedDay() && tasks != null) {
+            try {
+                arrayTaskList = (ArrayTaskList) getTasksSelectedDay();
+                if (arrayTaskList.size() == 1) {
+                    if (arrayTaskList.getTask(0).isRepeated()) {
+                        new DetailInformationFrameRepeated(arrayTaskList.getTask(0), getController());
+                    } else {
+                        new DetailInformationFrame(arrayTaskList.getTask(0), getController());
+                    }
+                } else if (arrayTaskList.size() > 1) {
+                    new TaskTableFrame(arrayTaskList, getController());
+                }
+            } catch (ParseException ex) {
+                log.error(ex.getMessage());
+            }
+        }
+    }
+
+    private TaskList getTasksSelectedDay() throws ParseException {
+        Date from = getSelectedDayFrom();
+        Date to = getSelectedDayTo();
+        return  (ArrayTaskList) Tasks.incoming(tasks, from, to);
+    }
+
+    private boolean isExistsAnyTaskSelectedDay(){
+        String str = String.valueOf(table.getValueAt(table.getSelectedRow(), table.getSelectedColumn()));
+        return str.charAt(str.length() - 1) == '*';
+    }
+
+    private Date getSelectedDayFrom() throws ParseException {
+        String fromStr = getDayStr() + getMonthStr() + year + "000000";
+        return (Date) taskFormat.parse(fromStr);
+    }
+
+    private Date getSelectedDayTo () throws ParseException {
+        String toStr = getDayStr() + getMonthStr() + year + "235959";
+        return (Date) taskFormat.parse(toStr);
+    }
+
+    private String getMonthStr(){
+        if (monthNumber < 10) return "0" + monthNumber;
+        return Integer.toString(monthNumber);
+    }
+
+    private String getDayStr(){
+        String str = String.valueOf(table.getValueAt(table.getSelectedRow(), table.getSelectedColumn()));
+        if (str.length() == 2) return "0"  + str.charAt(0);
+        String dayStr = "";
+        dayStr += str.charAt(0);
+        dayStr += str.charAt(1);
+        return dayStr;
+    }
+
+
 }

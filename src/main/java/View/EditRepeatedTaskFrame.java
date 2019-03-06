@@ -34,10 +34,6 @@ class EditRepeatedTaskFrame extends RepeatedTaskFillingFormWithIntervalGUI {
         this.setVisible(true);
     }
 
-
-
-
-
     private String getFormatedItemName(int value){
         String intervalDaysStr;
         if (value < 10) return intervalDaysStr = "0" + String.valueOf(value);

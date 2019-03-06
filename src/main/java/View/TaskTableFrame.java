@@ -18,6 +18,11 @@ public class TaskTableFrame extends TaskManagerGUI{
     public TaskTableFrame(TaskList tasks, TaskManagerController taskManagerController){
         super();
         taskList = tasks;
+        if (isTaskListBlank()){
+            JFrame frame = new JFrame("Error");
+            JOptionPane.showMessageDialog(frame, "No tasks were found");
+            return;
+        }
         setController(taskManagerController);
         setBounds(dimension.width / 2 - 150, dimension.height / 2 - 100, 300, 200);
         this.addElements();
@@ -76,5 +81,9 @@ public class TaskTableFrame extends TaskManagerGUI{
         gridBagLayout.setConstraints( taskTable, gridBag );
         panel.add( taskTable );
         this.add(panel);
+    }
+
+    private boolean isTaskListBlank(){
+        return taskList == null;
     }
 }
