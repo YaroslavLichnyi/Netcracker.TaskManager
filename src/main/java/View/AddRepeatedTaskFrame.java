@@ -21,7 +21,6 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormWithIntervalGUI
         this.setVisible(true);
     }
 
-
     @Override
     protected void addElements() {
         JButton btAdd;

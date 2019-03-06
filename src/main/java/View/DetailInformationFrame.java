@@ -9,10 +9,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-class DetailInformationFrame extends TaskManagerGUI {
+public class DetailInformationFrame extends TaskManagerGUI {
     private Task mytask;
 
-    DetailInformationFrame(Task task, TaskManagerController taskManagerController)  {
+    public DetailInformationFrame(Task task, TaskManagerController taskManagerController)  {
         super();
         mytask = task;
         setController(taskManagerController);

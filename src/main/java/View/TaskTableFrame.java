@@ -18,12 +18,16 @@ public class TaskTableFrame extends TaskManagerGUI{
     public TaskTableFrame(TaskList tasks, TaskManagerController taskManagerController){
         super();
         taskList = tasks;
+        setController(taskManagerController);
         if (isTaskListBlank()){
             JFrame frame = new JFrame("Error");
             JOptionPane.showMessageDialog(frame, "No tasks were found");
             return;
         }
-        setController(taskManagerController);
+        if (tasks.size() == 1){
+            getController().getDetailInformation(tasks.getTask(0));
+            return;
+        }
         setBounds(dimension.width / 2 - 150, dimension.height / 2 - 100, 300, 200);
         this.addElements();
         this.updateTableData();
@@ -62,11 +66,7 @@ public class TaskTableFrame extends TaskManagerGUI{
         taskTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (taskList.getTask(taskTable.getSelectedRow()).isRepeated()){
-                    DetailInformationFrameRepeated detInfFrRep = new DetailInformationFrameRepeated(taskList.getTask(taskTable.getSelectedRow()),controller);
-                } else {
-                    DetailInformationFrame detInfFr = new DetailInformationFrame(taskList.getTask(taskTable.getSelectedRow()),controller);
-                }
+                getController().getDetailInformation(taskList.getTask(taskTable.getSelectedRow()));
                 dispose();
             }
         });
@@ -86,4 +86,6 @@ public class TaskTableFrame extends TaskManagerGUI{
     private boolean isTaskListBlank(){
         return taskList == null;
     }
+
+
 }

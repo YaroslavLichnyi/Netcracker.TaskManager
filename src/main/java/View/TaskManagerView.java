@@ -150,11 +150,7 @@ public class TaskManagerView  extends TaskManagerGUI implements Observer {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(tasks.getTask(taskTable.getSelectedRow()) != null){
-                    if (tasks.getTask(taskTable.getSelectedRow()).isRepeated()){
-                        DetailInformationFrameRepeated detInfFrRep = new DetailInformationFrameRepeated(tasks.getTask(taskTable.getSelectedRow()),getController());
-                    } else {
-                        DetailInformationFrame detInfFr = new DetailInformationFrame(tasks.getTask(taskTable.getSelectedRow()),getController());
-                    }
+                    getController().getDetailInformation(tasks.getTask(taskTable.getSelectedRow()));
                 }
             }
         });
@@ -165,8 +161,7 @@ public class TaskManagerView  extends TaskManagerGUI implements Observer {
         callenderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CalendarFrame  calendar = new CalendarFrame(tasks, getController());
-                calendar.setVisible(true);
+                new CalendarFrame(tasks, getController());
             }
         });
 
@@ -175,8 +170,7 @@ public class TaskManagerView  extends TaskManagerGUI implements Observer {
          */
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { ;
-                AddFrame addFrame = new AddFrame(getController());
-                addFrame.setVisible( true);
+                new AddFrame(getController());
             }
         });
 
@@ -187,7 +181,7 @@ public class TaskManagerView  extends TaskManagerGUI implements Observer {
         findButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FindFrame findFrame = new FindFrame(tasks, getController());
+               new FindFrame(tasks, getController());
             }
         });
 

@@ -621,9 +621,7 @@ class EditRepeatedTaskFrame extends RepeatedTaskFillingFormWithIntervalGUI {
                     JFrame frame = new JFrame("Error");
                     JOptionPane.showMessageDialog(frame, "Your interval must be at least 1 second (not 0)");
                 } else {
-                    Task newTask = new Task(txfTitle.getText(), getInputedStartTime(), getInputedEndTime(), getInputedInterval());
-                    newTask.setActive(cbActiveBox.isSelected());
-                    getController().editTask( oldTask, newTask);
+                    getController().editTask( oldTask, getNewTask());
                     dispose();
                 }
             }
@@ -667,5 +665,11 @@ class EditRepeatedTaskFrame extends RepeatedTaskFillingFormWithIntervalGUI {
 
         intervalMinutes = (interval - interval % SECONDS_IN_A_MINUTE)/SECONDS_IN_A_MINUTE;
         interval = interval - intervalMinutes * SECONDS_IN_A_MINUTE;
+    }
+
+    private Task getNewTask(){
+        Task newTask = new Task(txfTitle.getText(), getInputedStartTime(), getInputedEndTime(), getInputedInterval());
+        newTask.setActive(cbActiveBox.isSelected());
+        return newTask;
     }
 }

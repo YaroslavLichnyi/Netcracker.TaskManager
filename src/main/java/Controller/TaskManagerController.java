@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Observable;
-
 public class TaskManagerController extends Observable {
     private static final TaskManagerController instance = new TaskManagerController();
     ArrayTaskList tasks ;
@@ -154,5 +153,12 @@ public class TaskManagerController extends Observable {
         return  null;
     }
 
+    public void getDetailInformation(Task task){
+        if (task.isRepeated()) {
+            new DetailInformationFrameRepeated(task,this);
+        } else {
+            new DetailInformationFrame(task, this);
+        }
+    }
 
 }

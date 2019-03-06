@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 /**
  * Shows detail information about repeated tasks.
  */
-class DetailInformationFrameRepeated extends TaskManagerGUI {
+public class DetailInformationFrameRepeated extends TaskManagerGUI {
     /**
      * Information about this task is showed in the window.
      */
@@ -25,7 +25,7 @@ class DetailInformationFrameRepeated extends TaskManagerGUI {
     private int intervalHours ;
     private int intervalMinutes;
 
-    DetailInformationFrameRepeated(Task task, TaskManagerController taskManagerController) {
+    public DetailInformationFrameRepeated(Task task, TaskManagerController taskManagerController) {
         super();
         mytask = task;
         setController(taskManagerController);
@@ -66,15 +66,7 @@ class DetailInformationFrameRepeated extends TaskManagerGUI {
         gridBagLayout.setConstraints(lbTaskStartTime, gridBag );
         panel.add(lbTaskStartTime);
 
-        String intervalInf = "";
-        if (intervalYears > 0)   intervalInf += intervalYears   + "y " ;
-        if (intervalMonthes > 0) intervalInf += intervalMonthes + "m " ;
-        if (intervalDays > 0)    intervalInf += intervalDays    + "d " ;
-        if (intervalHours > 0)   intervalInf += intervalHours   + "h " ;
-        if (intervalMinutes > 0) intervalInf += intervalMinutes + "min " ;
-        if (interval > 0)        intervalInf += interval        + "s " ;
-
-        lbTaskStartTime = new JLabel(intervalInf);
+        lbTaskStartTime = new JLabel(getTimeInformation());
         lbTaskStartTime.setBackground( new Color( 153,184,240 ) );
         lbTaskStartTime.setForeground( new Color( 0,0,88 ) );
         gridBag.gridx = 3;
@@ -238,6 +230,17 @@ class DetailInformationFrameRepeated extends TaskManagerGUI {
         intervalMinutes = (interval - interval % SECONDS_IN_A_MINUTE)/SECONDS_IN_A_MINUTE;
         interval = interval - intervalMinutes * SECONDS_IN_A_MINUTE;
 
+    }
+
+    private String getTimeInformation(){
+        String intervalInf = "";
+        if (intervalYears > 0)   intervalInf += intervalYears   + "y " ;
+        if (intervalMonthes > 0) intervalInf += intervalMonthes + "m " ;
+        if (intervalDays > 0)    intervalInf += intervalDays    + "d " ;
+        if (intervalHours > 0)   intervalInf += intervalHours   + "h " ;
+        if (intervalMinutes > 0) intervalInf += intervalMinutes + "min " ;
+        if (interval > 0)        intervalInf += interval        + "s " ;
+        return intervalInf;
     }
 }
 

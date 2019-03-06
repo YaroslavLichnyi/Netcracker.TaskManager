@@ -153,26 +153,19 @@ public class CalendarFrame extends TaskManagerGUI {
 
     private void getDetailInfo() {
         if (isExistsAnyTaskSelectedDay() && tasks != null) {
-            try {
-                arrayTaskList = (ArrayTaskList) getTasksSelectedDay();
-                if (arrayTaskList.size() == 1) {
-                    if (arrayTaskList.getTask(0).isRepeated()) {
-                        new DetailInformationFrameRepeated(arrayTaskList.getTask(0), getController());
-                    } else {
-                        new DetailInformationFrame(arrayTaskList.getTask(0), getController());
-                    }
-                } else if (arrayTaskList.size() > 1) {
-                    new TaskTableFrame(arrayTaskList, getController());
-                }
-            } catch (ParseException ex) {
-                log.error(ex.getMessage());
-            }
+            new TaskTableFrame((ArrayTaskList) getTasksSelectedDay(), getController());
         }
     }
 
-    private TaskList getTasksSelectedDay() throws ParseException {
-        Date from = getSelectedDayFrom();
-        Date to = getSelectedDayTo();
+    private TaskList getTasksSelectedDay() {
+        Date from = new Date();
+        Date to = new Date();
+        try {
+            from = getSelectedDayFrom();
+            to = getSelectedDayTo();
+        } catch (ParseException pe){
+            log.error(pe.getMessage());
+        }
         return  (ArrayTaskList) Tasks.incoming(tasks, from, to);
     }
 
