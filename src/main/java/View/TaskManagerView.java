@@ -84,7 +84,6 @@ public class TaskManagerView  extends TaskManagerGUI implements Observer {
 
     @Override
     protected void addElements() {
-        panel.setLayout( gridBagLayout );
         //ADD
         JButton addButton = new JButton("Add");
         gridBag.gridx = 1;
@@ -150,7 +149,7 @@ public class TaskManagerView  extends TaskManagerGUI implements Observer {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(tasks.getTask(taskTable.getSelectedRow()) != null){
-                    getController().getDetailInformation(tasks.getTask(taskTable.getSelectedRow()));
+                    new DetailInformationFrame(tasks.getTask(taskTable.getSelectedRow()), getController());
                 }
             }
         });

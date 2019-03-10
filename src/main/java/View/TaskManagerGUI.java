@@ -24,7 +24,7 @@ public abstract class TaskManagerGUI extends JFrame {
         }
         gridBag = new GridBagConstraints();
         gridBagLayout = new GridBagLayout();
-
+        panel.setLayout(gridBagLayout);
     }
 
     public void setController(TaskManagerController controller) {

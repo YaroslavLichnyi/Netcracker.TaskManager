@@ -4,6 +4,6 @@ import View.FindFrame;
 
 public class Main {
     public static void main(String[] args) {
-        TaskManagerController.getInstance();
+        new TaskManagerController();
     }
 }

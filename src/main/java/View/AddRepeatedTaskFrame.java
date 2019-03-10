@@ -24,7 +24,6 @@ public class AddRepeatedTaskFrame extends RepeatedTaskFillingFormWithIntervalGUI
     @Override
     protected void addElements() {
         JButton btAdd;
-        panel.setLayout( gridBagLayout );
         panel.setBackground(Color.WHITE);
 
         JLabel lbNames = new JLabel("Time");

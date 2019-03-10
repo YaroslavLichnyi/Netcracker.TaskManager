@@ -43,8 +43,21 @@ public abstract class RepeatedTaskFillingFormGUI extends TaskManagerGUI{
         String monthes =    (String) cmbMonthesTo.getSelectedItem();
         String years   =    (String) cmbYearsTo.getSelectedItem();
         String strDateTo = days + monthes + years + hours + minutes + seconds;
+      //  getDate(cmbSecondsTo, )
         return TaskInfo.createDate(strDateTo);
     }
+
+  /*  protected Date getDate(JComboBox cmbSeconds, JComboBox cmbMinutes, JComboBox cmbHours,
+                 JComboBox cmbDays, JComboBox cmbMonthes, JComboBox cmbYears){
+        String seconds =    (String) cmbSeconds.getSelectedItem();
+        String minutes =    (String) cmbMinutes.getSelectedItem();
+        String hours   =    (String) cmbHours.getSelectedItem();
+        String days    =    (String) cmbDays.getSelectedItem();
+        String monthes =    (String) cmbMonthes.getSelectedItem();
+        String years   =    (String) cmbYears.getSelectedItem();
+        String strDate = days + monthes + years + hours + minutes + seconds;
+        return strDate;
+    }*/
 
     protected boolean isIncorrectTimeInputed(){
         String daysFrom  =  (String) cmbDaysFrom.getSelectedItem();

@@ -85,6 +85,31 @@ public class CalendarFrame extends TaskManagerGUI {
                         model.setValueAt(day + "*", i / 7, i % 7);
                     }
                 } catch (ParseException e) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     System.out.println(e);
                 }
             }

@@ -33,7 +33,6 @@ public class EditTaskFrame extends TaskFillingFormGUI {
         SimpleDateFormat minuteFormat = new SimpleDateFormat("mm");
         SimpleDateFormat secondFormat = new SimpleDateFormat("ss");
 
-        panel.setLayout( gridBagLayout );
         JLabel lbLabel0 = new JLabel("Title: ");
         gridBag.gridx = 1;
         gridBag.gridy = 1;

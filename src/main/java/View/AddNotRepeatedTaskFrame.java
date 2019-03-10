@@ -24,7 +24,6 @@ class AddNotRepeatedTaskFrame extends TaskFillingFormGUI {
 
     @Override
     protected void addElements() {
-        panel.setLayout( gridBagLayout );
         JLabel lbLabel0 = new JLabel("Time");
         gridBag.gridx = 2;
         gridBag.gridy = 0;

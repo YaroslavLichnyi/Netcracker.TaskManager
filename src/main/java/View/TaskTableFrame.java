@@ -25,7 +25,7 @@ public class TaskTableFrame extends TaskManagerGUI{
             return;
         }
         if (tasks.size() == 1){
-            getController().getDetailInformation(tasks.getTask(0));
+            new DetailInformationFrame(tasks.getTask(0), getController());
             return;
         }
         setBounds(dimension.width / 2 - 150, dimension.height / 2 - 100, 300, 200);
@@ -54,7 +54,6 @@ public class TaskTableFrame extends TaskManagerGUI{
 
     @Override
     protected void addElements() {
-        panel.setLayout( gridBagLayout );
         Object[] headers = {"Name", "Next time"};
         model = new DefaultTableModel(null, headers);
         taskTable = new JTable(model){
@@ -66,7 +65,7 @@ public class TaskTableFrame extends TaskManagerGUI{
         taskTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                getController().getDetailInformation(taskList.getTask(taskTable.getSelectedRow()));
+                new DetailInformationFrame(taskList.getTask(taskTable.getSelectedRow()), getController());
                 dispose();
             }
         });

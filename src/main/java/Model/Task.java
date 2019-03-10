@@ -1,4 +1,6 @@
 package Model;
+import org.apache.log4j.Logger;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -11,6 +13,7 @@ public class Task implements Cloneable{
     private final int doNot = -1;
     private boolean active;
     private boolean repeated;
+    private static final Logger log = Logger.getLogger(Task.class);
 
     public void setTitle(String title) {
         this.title = title;
@@ -57,7 +60,7 @@ public class Task implements Cloneable{
             this.endTime.setTime(endTime.getTime());
             this.interval = interval;
         } catch( Exception ex ) {
-            System.out.println("Interval cannot be 0");
+            log.error("Interval cannot be 0",ex);
         }
     }
 
@@ -104,10 +107,11 @@ public class Task implements Cloneable{
             if ((repeated && (startTime==null || endTime == null) || (!repeated && time==null))) return null;
             if (currentTime==null) return null;
             try{
-                if (currentTime.before(time) && isRepeated()==false){
+                if (isRepeated()==false  && currentTime.before(time)){
                     return time;
                 }
             } catch (Exception e){
+                log.error(e);
                 return null;
             }
 
@@ -157,6 +161,7 @@ public class Task implements Cloneable{
         try {
             return (Task)super.clone();
         } catch( CloneNotSupportedException ex ) {
+            log.error(ex);
             throw new InternalError();
         }
     }
@@ -175,7 +180,7 @@ public class Task implements Cloneable{
                 this.endTime = end;
                 this.interval = interval;
             } catch( Exception ex ) {
-                System.out.println("Interval cannot be 0");
+                log.error("Interval cannot be 0",ex);
             }
     }
 }

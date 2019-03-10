@@ -27,7 +27,6 @@ public class FindFrame extends RepeatedTaskFillingFormGUI {
 
     @Override
     protected void addElements() {
-        panel.setLayout( gridBagLayout );
         panel.setBackground(Color.WHITE);
 
         txfTitle = new JTextField( );

@@ -1,9 +1,12 @@
 package Model;
 
+import org.apache.log4j.Logger;
+
 import java.io.*;
 import java.util.*;
 
 public class TaskIO {
+    private static final Logger log = Logger.getLogger(TaskInfo.class);
 
     public static void write(TaskList tasks, OutputStream out) throws IOException {
 
@@ -54,20 +57,14 @@ public class TaskIO {
     }
 
     public static void writeBinary(TaskList tasks, File file) throws IOException {
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
-        try {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(file);){
             write(tasks, fileOutputStream);
-        }finally {
-            fileOutputStream.close();
         }
     }
 
     public static void readBinary(TaskList tasks, File file) throws IOException {
-        FileInputStream fileInputStream = new FileInputStream(file);
-        try {
+        try ( FileInputStream fileInputStream = new FileInputStream(file);){
             read(tasks, fileInputStream);
-        }finally {
-            fileInputStream.close();
         }
     }
 
@@ -255,23 +252,16 @@ public class TaskIO {
     }
 
     public static void writeText(TaskList tasks, File file) throws IOException {
-        FileWriter fileWriter = new FileWriter(file,false);
-        try {
+        try(FileWriter fileWriter = new FileWriter(file,false);) {
             write(tasks, fileWriter);
-        }finally {
-            fileWriter.close();
         }
     }
 
     public static void readText(TaskList tasks, File file) throws IOException {
-        FileReader fileReader = new FileReader(file);
-        try {
+        try (FileReader fileReader = new FileReader(file);){
             read(tasks, fileReader);
-        }finally {
-            fileReader.close();
         }
     }
-
     public static Date parsDate(String pars){
         pars+=']';
         int curr = 0;

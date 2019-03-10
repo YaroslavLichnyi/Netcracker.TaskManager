@@ -10,25 +10,19 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Observable;
 public class TaskManagerController extends Observable {
-    private static final TaskManagerController instance = new TaskManagerController();
     ArrayTaskList tasks ;
     TaskManagerView view ;
     private static final Logger log = Logger.getLogger(TaskManagerController.class);
     File tasksTextFile = new File("tasksForTaskManager.txt");
-    File tasksFile = new File("TaskManagerTasks");
 
-    private TaskManagerController() {
+    public TaskManagerController() {
 
         tasks = new ArrayTaskList();
         readTasks();
         view = new TaskManagerView(tasks, this);
         this.addObserver(view);
-        NotificationThread notificationThread = new NotificationThread(tasks);
+        NotificationThread notificationThread = new NotificationThread(tasks, this);
         notificationThread.start();
-    }
-
-    public static TaskManagerController getInstance() {
-        return instance;
     }
 
     /**
@@ -87,9 +81,8 @@ public class TaskManagerController extends Observable {
     public void writeTasks(){
         try {
                TaskIO.writeText(tasks, tasksTextFile);
-            //  TaskIO.writeBinary(tasks, tasksFile);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -99,9 +92,8 @@ public class TaskManagerController extends Observable {
     public void readTasks(){
         try {
              TaskIO.readText(tasks, tasksTextFile);
-            // TaskIO.readBinary(tasks, tasksFile);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
 
     }
@@ -153,12 +145,5 @@ public class TaskManagerController extends Observable {
         return  null;
     }
 
-    public void getDetailInformation(Task task){
-        if (task.isRepeated()) {
-            new DetailInformationFrameRepeated(task,this);
-        } else {
-            new DetailInformationFrame(task, this);
-        }
-    }
 
 }

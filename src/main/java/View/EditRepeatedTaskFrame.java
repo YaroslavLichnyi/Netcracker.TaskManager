@@ -43,7 +43,6 @@ class EditRepeatedTaskFrame extends RepeatedTaskFillingFormWithIntervalGUI {
     @Override
     protected void addElements() {
         JButton btAdd;
-        panel.setLayout( gridBagLayout );
         SimpleDateFormat yearFormat = new SimpleDateFormat("YYYY");
         SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM");
         SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
