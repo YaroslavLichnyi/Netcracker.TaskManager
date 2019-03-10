@@ -25,39 +25,27 @@ public abstract class RepeatedTaskFillingFormGUI extends TaskManagerGUI{
     }
 
     protected Date getInputedStartTime(){
-        String seconds =    (String) cmbSecondsFrom.getSelectedItem();
-        String minutes =    (String) cmbMinutesFrom.getSelectedItem();
-        String hours   =    (String) cmbHoursFrom.getSelectedItem();
-        String days    =    (String) cmbDaysFrom.getSelectedItem();
-        String monthes =    (String) cmbMonthesFrom.getSelectedItem();
-        String years   =    (String) cmbYearsFrom.getSelectedItem();
-        String strDateFrom = days + monthes + years + hours + minutes + seconds;
-        return TaskInfo.createDate(strDateFrom);
+        return getDate(cmbSecondsFrom, cmbMinutesFrom, cmbHoursFrom, cmbDaysFrom, cmbMonthesFrom, cmbYearsFrom);
     }
 
     protected  Date getInputedEndTime(){
-        String seconds =    (String) cmbSecondsTo.getSelectedItem();
-        String minutes =    (String) cmbMinutesTo.getSelectedItem();
-        String hours   =    (String) cmbHoursTo.getSelectedItem();
-        String days    =    (String) cmbDaysTo.getSelectedItem();
-        String monthes =    (String) cmbMonthesTo.getSelectedItem();
-        String years   =    (String) cmbYearsTo.getSelectedItem();
-        String strDateTo = days + monthes + years + hours + minutes + seconds;
-      //  getDate(cmbSecondsTo, )
-        return TaskInfo.createDate(strDateTo);
+        return getDate(cmbSecondsTo, cmbMinutesTo, cmbHoursTo, cmbDaysTo, cmbMonthesTo, cmbYearsTo);
     }
 
-  /*  protected Date getDate(JComboBox cmbSeconds, JComboBox cmbMinutes, JComboBox cmbHours,
+    protected Date getDate(JComboBox cmbSeconds, JComboBox cmbMinutes, JComboBox cmbHours,
                  JComboBox cmbDays, JComboBox cmbMonthes, JComboBox cmbYears){
         String seconds =    (String) cmbSeconds.getSelectedItem();
         String minutes =    (String) cmbMinutes.getSelectedItem();
         String hours   =    (String) cmbHours.getSelectedItem();
         String days    =    (String) cmbDays.getSelectedItem();
-        String monthes =    (String) cmbMonthes.getSelectedItem();
+        String months  =    (String) cmbMonthes.getSelectedItem();
         String years   =    (String) cmbYears.getSelectedItem();
-        String strDate = days + monthes + years + hours + minutes + seconds;
-        return strDate;
-    }*/
+        String strDate = days + months + years + hours + minutes + seconds;
+        if (TaskInfo.isDateIncorrect(Integer.parseInt(days),Integer.parseInt(months),Integer.parseInt(years))){
+            return TaskInfo.createDate(strDate);
+        }
+        return null;
+    }
 
     protected boolean isIncorrectTimeInputed(){
         String daysFrom  =  (String) cmbDaysFrom.getSelectedItem();
