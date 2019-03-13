@@ -1,12 +1,10 @@
 package View;
 
 import Controller.TaskManagerController;
-import Model.ArrayTaskList;
 import Model.TaskInfo;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -85,11 +83,7 @@ class AddFrame extends TaskManagerGUI{
                     JOptionPane.showMessageDialog(frame, "Enter task's title");
                     log.error("Title cannot be blank");
                 } else {
-                    if (boxRepeated.isSelected()) {
-                        AddRepeatedTaskFrame addFrame = new AddRepeatedTaskFrame(txfTitle.getText(), controller);
-                    } else {
-                        AddNotRepeatedTaskFrame addFrame = new AddNotRepeatedTaskFrame(txfTitle.getText(), controller);
-                    }
+                    AddTaskNext addFrame = new AddTaskNext(txfTitle.getText(), controller, boxRepeated.isSelected() );
                     dispose();
                 }
             }

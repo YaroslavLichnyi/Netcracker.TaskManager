@@ -20,9 +20,41 @@ public abstract class RepeatedTaskFillingFormGUI extends TaskManagerGUI{
     protected JComboBox cmbMinutesTo;
     protected JComboBox cmbHoursTo;
 
-    public RepeatedTaskFillingFormGUI() throws HeadlessException {
-        super();
-    }
+    protected String [] dataDays = { "01", "02", "03", "04", "05", "06", "07",
+            "08", "09", "10", "11", "12", "13", "14", "15",
+            "16", "17", "18", "19", "20", "21", "22", "23",
+            "24", "25", "26", "27", "28", "29", "30", "31" };
+
+    protected String []dataYears = {  "2019", "2020", "2021", "2022",
+            "2023", "2024", "2025", "2026", "2027",  "2028",
+            "2029", "2030", "2031", "2032", "2033", "2034",
+            "2035", "2036", "2037", "2038", "2039", "2040",
+            "2041", "2042", "2043", "2044", "2045", "2046",
+            "2047", "2048", "2049", "2050" };
+
+    protected String []dataSeconds = { "00", "01", "02", "03", "04", "05", "06", "07", "08",
+            "09", "10", "11", "12", "13", "14", "15", "16", "17",
+            "18", "19", "20", "21", "22", "23", "24", "25", "26",
+            "27", "28", "29", "30", "31", "32", "33", "34", "35",
+            "36", "37", "38", "39", "40", "41", "42", "43", "44",
+            "45", "46", "47", "48", "49", "50", "51", "52", "53",
+            "54", "55", "56", "57", "58", "59" };
+
+    protected String []dataMinutes = { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09",
+            "10", "11", "12", "13", "14", "15", "16", "17", "18",
+            "19", "20", "21", "22", "23", "24", "25", "26", "27",
+            "28", "29", "30", "31", "32", "33", "34", "35", "36",
+            "37", "38", "39", "40", "41", "42", "43", "44", "45",
+            "46", "47", "48", "49", "50", "51", "52", "53", "54",
+            "55", "56", "57", "58", "59" };
+
+    protected String []dataHours = { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09",
+            "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",
+            "20", "21", "22", "23" };
+
+    protected String []dataMonthes = { "01", "02", "03", "04", "05", "06", "07", "08", "09",
+            "10", "11", "12" };
+
 
     protected Date getInputedStartTime(){
         return getDate(cmbSecondsFrom, cmbMinutesFrom, cmbHoursFrom, cmbDaysFrom, cmbMonthesFrom, cmbYearsFrom);
@@ -42,19 +74,25 @@ public abstract class RepeatedTaskFillingFormGUI extends TaskManagerGUI{
         String years   =    (String) cmbYears.getSelectedItem();
         String strDate = days + months + years + hours + minutes + seconds;
         if (TaskInfo.isDateIncorrect(Integer.parseInt(days),Integer.parseInt(months),Integer.parseInt(years))){
-            return TaskInfo.createDate(strDate);
+            return null;
         }
-        return null;
+        return TaskInfo.createDate(strDate);
     }
 
-    protected boolean isIncorrectTimeInputed(){
-        String daysFrom  =  (String) cmbDaysFrom.getSelectedItem();
-        String monthesFrom =(String) cmbMonthesFrom.getSelectedItem();
-        String yearsFrom =  (String) cmbYearsFrom.getSelectedItem();
-        String daysTo    =  (String) cmbDaysTo.getSelectedItem();
-        String monthesTo =  (String) cmbMonthesTo.getSelectedItem();
-        String yearsTo   =  (String) cmbYearsTo.getSelectedItem();
-        return TaskInfo.isDateIncorrect(Integer.parseInt(daysFrom),Integer.parseInt(monthesFrom),Integer.parseInt(yearsFrom))
-                || TaskInfo.isDateIncorrect(Integer.parseInt(daysTo),Integer.parseInt(monthesTo),Integer.parseInt(yearsTo));
+    protected boolean isIncorrectStartTimeInputted(){
+        return isIncorrectTimeInputed(cmbDaysFrom, cmbMonthesFrom, cmbYearsFrom);
     }
+
+    protected boolean isIncorrectEndTimeInputted(){
+        return isIncorrectTimeInputed(cmbDaysTo, cmbMonthesTo, cmbYearsTo);
+    }
+
+    protected boolean isIncorrectTimeInputed(JComboBox days, JComboBox months, JComboBox years){
+        String daysStr  =  (String) days.getSelectedItem();
+        String monthsStr = (String) months.getSelectedItem();
+        String yearsStr =  (String) years.getSelectedItem();
+        return TaskInfo.isDateIncorrect(Integer.parseInt(daysStr),Integer.parseInt(monthsStr),Integer.parseInt(yearsStr));
+    }
+
+
 }

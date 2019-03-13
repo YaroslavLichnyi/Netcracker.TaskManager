@@ -52,7 +52,6 @@ public class CalendarFrame extends TaskManagerGUI {
         label.setText(month + " " + year);
         int startDay = cal.get(Calendar.DAY_OF_WEEK);
         int numberOfDays = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-        int weeks = cal.getActualMaximum(Calendar.WEEK_OF_MONTH);
         model.setRowCount(0);
         model.setRowCount(6);
         int i = startDay - 1;
@@ -85,32 +84,7 @@ public class CalendarFrame extends TaskManagerGUI {
                         model.setValueAt(day + "*", i / 7, i % 7);
                     }
                 } catch (ParseException e) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    System.out.println(e);
+                    log.error(e);
                 }
             }
             i += 1;
@@ -222,6 +196,4 @@ public class CalendarFrame extends TaskManagerGUI {
         dayStr += str.charAt(1);
         return dayStr;
     }
-
-
 }

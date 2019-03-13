@@ -20,7 +20,6 @@ import java.util.Observer;
  *  2.Bottons
  */
 public class TaskManagerView  extends TaskManagerGUI implements Observer {
-
     private ArrayTaskList tasks;
     private JTable taskTable;
     private DefaultTableModel model;

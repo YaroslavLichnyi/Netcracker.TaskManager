@@ -41,7 +41,6 @@ public class DetailInformationFrame extends TaskManagerGUI {
         gridBagLayout.setConstraints(lbLabel2, gridBag );
         panel.add(lbLabel2);
 
-
         JLabel lbLbTaskTitle = new JLabel(mytask.getTitle());
         gridBag.gridx = 3;
         gridBag.gridy = 0;
@@ -57,15 +56,15 @@ public class DetailInformationFrame extends TaskManagerGUI {
         if (mytask.isRepeated()) addElementsForRepeatedTask();
         else addElementsForNonRepeatedTask();
 
-        JLabel lbLbTaskActive;
+        JLabel lbTaskActive;
         if(mytask.isActive()){
-            lbLbTaskActive = new JLabel( "Task is active"  );
-            lbLbTaskActive.setForeground(new Color(0, 255, 0));
+            lbTaskActive = new JLabel( "Task is active"  );
+            lbTaskActive.setForeground(new Color(0, 255, 0));
         } else {
-            lbLbTaskActive = new JLabel( "Task is not active "  );
-            lbLbTaskActive.setForeground(new Color(255, 0, 0));
+            lbTaskActive = new JLabel( "Task is not active "  );
+            lbTaskActive.setForeground(new Color(255, 0, 0));
         }
-        lbLbTaskActive.setBackground(new Color(238,247,255 ));
+        lbTaskActive.setBackground(new Color(238,247,255 ));
         gridBag.gridx = 2;
         gridBag.gridy = 4;
         gridBag.gridwidth = 2;
@@ -74,8 +73,8 @@ public class DetailInformationFrame extends TaskManagerGUI {
         gridBag.weightx = 1;
         gridBag.weighty = 1;
         gridBag.anchor = GridBagConstraints.NORTH;
-        gridBagLayout.setConstraints(lbLbTaskActive, gridBag );
-        panel.add(lbLbTaskActive);
+        gridBagLayout.setConstraints(lbTaskActive, gridBag );
+        panel.add(lbTaskActive);
 
         JButton btDelete = new JButton("Delete");
         btDelete.setBackground( new Color( 238,247,255 ) );
@@ -112,8 +111,7 @@ public class DetailInformationFrame extends TaskManagerGUI {
         btEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // repeated or not repeated
-               // new EditRepeatedTaskFrame(mytask, controller);
+                new EditFrame(mytask, controller);
                 dispose();
             }
         });
@@ -148,17 +146,8 @@ public class DetailInformationFrame extends TaskManagerGUI {
 
     }
 
-
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
     private void addElementsForRepeatedTask(){
-
         calculateIntevals();
-
-
-
         JLabel lbTaskStartTime = new JLabel(mytask.getStartTime().toString());
         lbTaskStartTime.setBackground(new Color(153,184,240));
         lbTaskStartTime.setForeground(new Color(0,0,88));
@@ -226,12 +215,6 @@ public class DetailInformationFrame extends TaskManagerGUI {
         gridBag.anchor = GridBagConstraints.NORTH;
         gridBagLayout.setConstraints(lbEndTime, gridBag );
         panel.add(lbEndTime);
-
-
-
-
-
-
 
         JLabel lbInterval = new JLabel("Interval");
         lbInterval.setBackground(new Color( 206,230,240));
