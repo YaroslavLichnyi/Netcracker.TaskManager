@@ -89,6 +89,8 @@ public class Task implements Cloneable{
     }
 
     public Date nextTimeAfter(Date currentTime){
+        if ((repeated && (startTime==null || endTime == null) || (!repeated && time==null))) return null;
+        if (currentTime==null) return null;
         if (isActive()){
             if (isRepeated()){
                 if (currentTime.before(startTime)  ){
@@ -98,23 +100,22 @@ public class Task implements Cloneable{
                 long remainder = (endTime.getTime()-startTime.getTime())%(interval*1000);
                 for (int i=0; i<nemberOfIntervals+1; i++){
                     if (currentTime.getTime() >= startTime.getTime() + (interval*1000*i) && currentTime.getTime() < endTime.getTime()-remainder-(interval*1000*(nemberOfIntervals-i-1) ) && currentTime.getTime() < endTime.getTime()-remainder){
+                       // System.out.println("date " + new Date(startTime.getTime() +(interval*1000 + interval*1000*i) ));
+                       // System.out.println("after " + new Date(startTime.getTime() + (interval*1000*i)));
+                       // System.out.println("before " + new Date(endTime.getTime()-remainder-(interval*1000*(nemberOfIntervals-i-1) ) ));
                         Date myDate = new Date();
                         myDate.setTime(startTime.getTime() +(interval*1000 + interval*1000*i));
                         return myDate;
                     }
                 }
             }
-            if ((repeated && (startTime==null || endTime == null) || (!repeated && time==null))) return null;
-            if (currentTime==null) return null;
             try{
-                if (isRepeated()==false  && currentTime.before(time)){
+                if (currentTime.before(time) && isRepeated()==false){
                     return time;
                 }
             } catch (Exception e){
-                log.error(e);
                 return null;
             }
-
         }
         return null;
     }

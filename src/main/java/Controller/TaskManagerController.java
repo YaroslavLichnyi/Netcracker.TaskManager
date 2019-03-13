@@ -9,14 +9,14 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Observable;
+
 public class TaskManagerController extends Observable {
-    ArrayTaskList tasks ;
-    TaskManagerView view ;
+    private ArrayTaskList tasks ;
+    private TaskManagerView view ;
     private static final Logger log = Logger.getLogger(TaskManagerController.class);
-    File tasksTextFile = new File("tasksForTaskManager.txt");
+    private File tasksTextFile = new File("tasksForTaskManager.txt");
 
     public TaskManagerController() {
-
         tasks = new ArrayTaskList();
         readTasks();
         view = new TaskManagerView(tasks, this);
@@ -47,7 +47,10 @@ public class TaskManagerController extends Observable {
         this.notifyObservers(tasks);
         view.update(this, tasks);
         writeTasks();
+    }
 
+    public void updateTasks(){
+        view.update(this, tasks);
     }
 
     /**
@@ -75,6 +78,10 @@ public class TaskManagerController extends Observable {
         writeTasks();
     }
 
+    public void notifyOb(){
+        this.notifyObservers(tasks);
+    }
+
     /**
      * Writes list of tasks to file.
      */
@@ -95,7 +102,6 @@ public class TaskManagerController extends Observable {
         } catch (IOException e) {
             log.error(e);
         }
-
     }
 
     public ArrayTaskList findTasksByTime (ArrayTaskList taskList,Date from, Date to){
@@ -144,6 +150,4 @@ public class TaskManagerController extends Observable {
         JOptionPane.showMessageDialog(frame, "No tasks were found");
         return  null;
     }
-
-
 }

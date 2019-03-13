@@ -3,6 +3,7 @@ package View;
 import Model.Task;
 
 import javax.swing.*;
+import java.util.Date;
 
 public abstract class TaskFillingFormWithIntervalGUI extends TaskFillingFormGUI {
     protected JComboBox cmbDaysInreval;
@@ -33,24 +34,24 @@ public abstract class TaskFillingFormWithIntervalGUI extends TaskFillingFormGUI 
     }
 
     protected boolean isTimeCorrect(boolean repeated){
+        if (getInputedStartTime().before(new Date())){
+            JFrame frame = new JFrame("Error");
+            JOptionPane.showMessageDialog(frame,
+                    "Selected date is already in the past. The purpose of the application is to plan future tasks. ");
+            return  false;
+        }
+        if(isIncorrectStartTimeInputted()){
+            JFrame frame = new JFrame("Error");
+            JOptionPane.showMessageDialog(frame, "Too many days for this month");
+            return  false;
+        }
         if(repeated){
-            if(isIncorrectStartTimeInputted() || isIncorrectEndTimeInputted() ){
-                JFrame frame = new JFrame("Error");
-                JOptionPane.showMessageDialog(frame, "Too many days for this month");
-                return  false;
-            }
             if (getInputedInterval() == 0){
                 JFrame frame = new JFrame("Error");
                 JOptionPane.showMessageDialog(frame, "Your interval must be at least 1 second (not 0)");
                 return  false;
             }
             return true;
-        } else {
-            if(isIncorrectStartTimeInputted()){
-                JFrame frame = new JFrame("Error");
-                JOptionPane.showMessageDialog(frame, "Too many days for this month");
-                return  false;
-            }
         }
         return true;
     }
