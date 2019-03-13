@@ -86,5 +86,4 @@ public class TaskTableFrame extends TaskManagerGUI{
         return taskList == null;
     }
 
-
 }

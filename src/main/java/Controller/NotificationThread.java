@@ -37,7 +37,7 @@ public class NotificationThread extends Thread {
             }
             try {
                 sleep(1000);
-                controller.updateTasks();
+                if (needToUpdateData) controller.updateTasks();
             } catch (InterruptedException e) {
                 log.error(e);
             }

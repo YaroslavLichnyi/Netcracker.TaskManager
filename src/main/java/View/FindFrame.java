@@ -143,10 +143,6 @@ public class FindFrame extends TaskFillingFormGUI {
         gridBagLayout.setConstraints(lbSeconds, gridBag);
         panel.add(lbSeconds);
 
-        String []dataDays = { "01", "02", "03", "04", "05", "06", "07",
-                "08", "09", "10", "11", "12", "13", "14", "15",
-                "16", "17", "18", "19", "20", "21", "22", "23",
-                "24", "25", "26", "27", "28", "29", "30", "31" };
         cmbDaysFrom = new JComboBox( dataDays );
         gridBag.gridx = 1;
         gridBag.gridy = 4;
@@ -159,8 +155,6 @@ public class FindFrame extends TaskFillingFormGUI {
         gridBagLayout.setConstraints( cmbDaysFrom, gridBag);
         panel.add( cmbDaysFrom );
 
-        String []dataMonthes = { "01", "02", "03", "04", "05", "06", "07", "08", "09",
-                "10", "11", "12" };
         cmbMonthesFrom = new JComboBox( dataMonthes );
         gridBag.gridx = 2;
         gridBag.gridy = 4;
@@ -173,13 +167,7 @@ public class FindFrame extends TaskFillingFormGUI {
         gridBagLayout.setConstraints( cmbMonthesFrom, gridBag);
         panel.add( cmbMonthesFrom );
 
-        String []dataCombo3 = {  "2019", "2020", "2021", "2022",
-                "2023", "2024", "2025", "2026", "2027",  "2028",
-                "2029", "2030", "2031", "2032", "2033", "2034",
-                "2035", "2036", "2037", "2038", "2039", "2040",
-                "2041", "2042", "2043", "2044", "2045", "2046",
-                "2047", "2048", "2049", "2050" };
-        cmbYearsFrom = new JComboBox( dataCombo3 );
+        cmbYearsFrom = new JComboBox( dataYears);
         gridBag.gridx = 3;
         gridBag.gridy = 4;
         gridBag.gridwidth = 1;
@@ -191,13 +179,6 @@ public class FindFrame extends TaskFillingFormGUI {
         gridBagLayout.setConstraints( cmbYearsFrom, gridBag);
         panel.add( cmbYearsFrom );
 
-        String []dataSeconds = { "00", "01", "02", "03", "04", "05", "06", "07", "08",
-                "09", "10", "11", "12", "13", "14", "15", "16", "17",
-                "18", "19", "20", "21", "22", "23", "24", "25", "26",
-                "27", "28", "29", "30", "31", "32", "33", "34", "35",
-                "36", "37", "38", "39", "40", "41", "42", "43", "44",
-                "45", "46", "47", "48", "49", "50", "51", "52", "53",
-                "54", "55", "56", "57", "58", "59" };
         cmbSecondsFrom = new JComboBox( dataSeconds );
         gridBag.gridx = 3;
         gridBag.gridy = 6;
@@ -210,13 +191,6 @@ public class FindFrame extends TaskFillingFormGUI {
         gridBagLayout.setConstraints( cmbSecondsFrom, gridBag);
         panel.add( cmbSecondsFrom );
 
-        String []dataMinutes = { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09",
-                "10", "11", "12", "13", "14", "15", "16", "17", "18",
-                "19", "20", "21", "22", "23", "24", "25", "26", "27",
-                "28", "29", "30", "31", "32", "33", "34", "35", "36",
-                "37", "38", "39", "40", "41", "42", "43", "44", "45",
-                "46", "47", "48", "49", "50", "51", "52", "53", "54",
-                "55", "56", "57", "58", "59" };
         cmbMinutesFrom = new JComboBox( dataMinutes );
         gridBag.gridx = 2;
         gridBag.gridy = 6;
@@ -229,9 +203,6 @@ public class FindFrame extends TaskFillingFormGUI {
         gridBagLayout.setConstraints( cmbMinutesFrom, gridBag);
         panel.add( cmbMinutesFrom );
 
-        String []dataHours = { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09",
-                "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",
-                "20", "21", "22", "23" };
         cmbHoursFrom = new JComboBox( dataHours );
         gridBag.gridx = 1;
         gridBag.gridy = 6;
@@ -318,7 +289,7 @@ public class FindFrame extends TaskFillingFormGUI {
         gridBagLayout.setConstraints( cmbMonthesTo, gridBag);
         panel.add( cmbMonthesTo );
 
-        cmbYearsTo = new JComboBox( dataCombo3 );
+        cmbYearsTo = new JComboBox( dataYears );
         gridBag.gridx = 3;
         gridBag.gridy = 9;
         gridBag.gridwidth = 1;
