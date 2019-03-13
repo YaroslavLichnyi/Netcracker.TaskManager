@@ -1,14 +1,13 @@
 package View;
 
 import Controller.TaskManagerController;
-import Model.Task;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AddTaskNext extends RepeatedTaskFillingFormWithIntervalGUI {
+public class AddTaskNext extends TaskFillingFormWithIntervalGUI {
     private String title;
     private boolean repeated;
 

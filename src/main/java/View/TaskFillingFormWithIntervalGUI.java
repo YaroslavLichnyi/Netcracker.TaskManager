@@ -4,7 +4,7 @@ import Model.Task;
 
 import javax.swing.*;
 
-public abstract class RepeatedTaskFillingFormWithIntervalGUI extends RepeatedTaskFillingFormGUI {
+public abstract class TaskFillingFormWithIntervalGUI extends TaskFillingFormGUI {
     protected JComboBox cmbDaysInreval;
     protected JComboBox cmbSecondsInreval;
     protected JComboBox cmbMinutesInreval;

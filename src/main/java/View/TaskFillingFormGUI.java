@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Date;
 
-public abstract class RepeatedTaskFillingFormGUI extends TaskManagerGUI{
+public abstract class TaskFillingFormGUI extends TaskManagerGUI{
     protected JComboBox cmbDaysFrom;
     protected JComboBox cmbMonthesFrom;
     protected JComboBox cmbYearsFrom;

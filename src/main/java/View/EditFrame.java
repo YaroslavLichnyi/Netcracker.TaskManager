@@ -2,7 +2,6 @@ package View;
 
 import Controller.TaskManagerController;
 import Model.Task;
-import Model.TaskInfo;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 
-class EditFrame extends RepeatedTaskFillingFormWithIntervalGUI {
+class EditFrame extends TaskFillingFormWithIntervalGUI {
 
     private JTextField txfTitle;
     private Task oldTask;
