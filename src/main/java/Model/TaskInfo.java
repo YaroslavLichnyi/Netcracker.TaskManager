@@ -32,6 +32,53 @@ public class TaskInfo {
             JOptionPane.showMessageDialog(frame, e1);
         }
         return date;
+    }
 
+    public static String getIntervalInStr(int interval){
+        final int day = 86400;
+        final int hour = 3600;
+        final int minute = 60;
+        StringBuilder result = new StringBuilder();
+        result.append( " [");
+        int intervalDays = (interval - interval%day)/day;
+        interval = interval - intervalDays * day;
+        if (intervalDays > 0) {
+            result.append(" ");
+            result.append(intervalDays);
+            result.append(" ");
+            result.append("day");
+            if (intervalDays >= 1) result.append('s');
+        }
+
+        int intervalHours = (interval - interval%hour)/hour;
+        interval = interval - intervalHours * hour;
+        if (intervalHours > 0) {
+            result.append(" ");
+            result.append(intervalHours);
+            result.append(" ");
+            result.append("hour ");
+            if (intervalHours >= 1) result.append('s');
+        }
+
+        int intervalMinutes = (interval - interval%minute)/minute;
+        interval = interval - intervalMinutes * minute;
+        if (intervalMinutes > 0) {
+            result.append(" ");
+            result.append(intervalMinutes);
+            result.append(" ");
+            result.append("minute");
+            if (intervalMinutes >= 1) result.append('s');
+        }
+
+        if (interval > 0) {
+            result.append(" ");
+            result.append(interval);
+            result.append(" ");
+            result.append("second");
+
+            if (interval >= 1) result.append('s');
+        }
+        result.append("]");
+        return result.toString();
     }
 }

@@ -68,89 +68,18 @@ public class TaskIO {
         }
     }
 
-    public static void write(TaskList tasks, Writer out) throws IOException {
-        BufferedWriter output = new BufferedWriter(out);
-        String myString;
-        Task task ;
-        Iterator<Task> taskIterator = tasks.iterator();
-        while (taskIterator.hasNext()){
-
-            task = taskIterator.next();
-            myString = "";
-            myString +=  '"';
-            for(int i = 0; i < task.getTitle().length();i++){
-                myString+= task.getTitle().charAt(i);
+    public static void write(TaskList tasks, Writer out){
+        try (BufferedWriter output = new BufferedWriter(out)) {
+            Iterator<Task> taskIterator = tasks.iterator();
+            while(taskIterator.hasNext()) {
+                output.write(taskIterator.next().toString());
+                if (taskIterator.hasNext()) output.write(";");
+                else output.write(".");
+                output.newLine();
+                //output.flush();
             }
-
-            myString +=  '"';
-
-            if (task.isRepeated()) {
-                Calendar startCal = new GregorianCalendar();
-                startCal.setTime(task.getStartTime());
-                Calendar endCal = new GregorianCalendar();
-                endCal.setTime(task.getEndTime());
-
-                //start
-                myString += " from " + '[' + (startCal.get(Calendar.YEAR)) + '-' + startCal.get(Calendar.MONTH) + '-' + startCal.get(Calendar.DAY_OF_MONTH) + ' ' + startCal.get(Calendar.HOUR) + ':' + startCal.get(Calendar.MINUTE) + ':' + startCal.get(Calendar.SECOND)+ '.' + startCal.get(Calendar.MILLISECOND) + ']';
-
-                //end
-                myString += " to " + '[' + (endCal.get(Calendar.YEAR)) + '-' + endCal.get(Calendar.MONTH) + '-' + endCal.get(Calendar.DAY_OF_MONTH) + ' ' + endCal.get(Calendar.HOUR) + ':' + endCal.get(Calendar.MINUTE) + ':' + endCal.get(Calendar.SECOND)+ '.' + endCal.get(Calendar.MILLISECOND) + ']';
-
-                //interval
-                int interval = task.getRepeatInterval();
-                myString += " [";
-                final int day = 86400;
-                final int hour = 3600;
-                final int minute = 60;
-
-
-
-                int intervalDays = (interval - interval%day)/day;
-                interval = interval - intervalDays * day;
-                if (intervalDays > 0) {
-                    myString += " " + intervalDays + " " + "day";
-                    if (intervalDays >= 1) myString += 's';
-                }
-
-                int intervalHours = (interval - interval%hour)/hour;
-                interval = interval - intervalHours * hour;
-                if (intervalHours > 0) {
-                    myString += " " + intervalHours + " " + "hour";
-                    if (intervalHours >= 1) myString += 's';
-                }
-
-                int intervalMinutes = (interval - interval%minute)/minute;
-                interval = interval - intervalMinutes * minute;
-                if (intervalMinutes > 0) {
-                    myString += " " + intervalMinutes + " " + "minute";
-                    if (intervalMinutes >= 1) myString += 's';
-                }
-
-                if (interval > 0) {
-                    myString += " " + interval + " " +"second";
-                    if (interval >= 1) myString += 's';
-                }
-                myString+="]";
-            }else {
-
-                Calendar calendar = new GregorianCalendar();
-                calendar.setTime(task.getTime());
-                myString += " at " + '[' + (calendar.get(Calendar.YEAR)) + '-' + calendar.get(Calendar.MONTH) + '-' + calendar.get(Calendar.DAY_OF_MONTH) + ' ' + calendar.get(Calendar.HOUR) + ':' + calendar.get(Calendar.MINUTE) + ':' + calendar.get(Calendar.SECOND)+ '.' + calendar.get(Calendar.MILLISECOND) + ']';
-            }
-
-            if (task.isActive()){
-                myString += " inactive";
-            }
-
-            if (taskIterator.hasNext()){
-                myString+=';';
-            }else {
-                myString += '.';
-            }
-
-            output.write(myString);
-            output.newLine();
-            output.flush();
+        } catch (IOException e) {
+            log.error(e);
         }
     }
 

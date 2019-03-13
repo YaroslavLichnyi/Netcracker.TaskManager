@@ -1,6 +1,7 @@
 package Model;
 import org.apache.log4j.Logger;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -12,6 +13,8 @@ public class Task implements Cloneable{
     private int interval;
     private final int doNot = -1;
     private boolean active;
+
+    private static String text;
     private boolean repeated;
     private static final Logger log = Logger.getLogger(Task.class);
 
@@ -100,9 +103,6 @@ public class Task implements Cloneable{
                 long remainder = (endTime.getTime()-startTime.getTime())%(interval*1000);
                 for (int i=0; i<nemberOfIntervals+1; i++){
                     if (currentTime.getTime() >= startTime.getTime() + (interval*1000*i) && currentTime.getTime() < endTime.getTime()-remainder-(interval*1000*(nemberOfIntervals-i-1) ) && currentTime.getTime() < endTime.getTime()-remainder){
-                       // System.out.println("date " + new Date(startTime.getTime() +(interval*1000 + interval*1000*i) ));
-                       // System.out.println("after " + new Date(startTime.getTime() + (interval*1000*i)));
-                       // System.out.println("before " + new Date(endTime.getTime()-remainder-(interval*1000*(nemberOfIntervals-i-1) ) ));
                         Date myDate = new Date();
                         myDate.setTime(startTime.getTime() +(interval*1000 + interval*1000*i));
                         return myDate;
@@ -145,16 +145,24 @@ public class Task implements Cloneable{
 
     @Override
     public String toString() {
-        return "Task{" +
-                "title='" + title + '\'' +
-                ", time=" + time +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", interval=" + interval +
-                ", doNot=" + doNot +
-                ", active=" + active +
-                ", repeated=" + repeated +
-                '}';
+        SimpleDateFormat taskFormat = new SimpleDateFormat("[YYYY-MM-dd HH:mm:ss.SSS]");
+        StringBuilder result = new StringBuilder();
+        result.append("\"");
+        result.append(getTitle());
+        result.append("\"");
+        if (isRepeated()) {
+            result.append(" from ");
+            result.append(taskFormat.format(this.startTime));
+            result.append(" to ");
+            result.append(taskFormat.format(this.endTime));
+            result.append(TaskInfo.getIntervalInStr(interval));
+        }
+        else {
+            result.append(" at ");
+            result.append(taskFormat.format(time));
+        }
+        if (isActive()) result.append(" inactive");
+        return result.toString();
     }
 
     @Override
