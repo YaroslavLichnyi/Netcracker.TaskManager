@@ -13,7 +13,6 @@ public class Task implements Cloneable{
     private int interval;
     private final int doNot = -1;
     private boolean active;
-
     private static String text;
     private boolean repeated;
     private static final Logger log = Logger.getLogger(Task.class);
@@ -155,13 +154,13 @@ public class Task implements Cloneable{
             result.append(taskFormat.format(this.startTime));
             result.append(" to ");
             result.append(taskFormat.format(this.endTime));
-            result.append(TaskInfo.getIntervalInStr(interval));
+            result.append(Interval.getIntervalInFullStr(interval));
         }
         else {
             result.append(" at ");
             result.append(taskFormat.format(time));
         }
-        if (isActive()) result.append(" inactive");
+        if (isActive()) result.append(" active");
         return result.toString();
     }
 

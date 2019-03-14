@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Observable;
@@ -23,16 +24,17 @@ public class TaskManagerView  extends TaskManagerGUI implements Observer {
     private ArrayTaskList tasks;
     private JTable taskTable;
     private DefaultTableModel model;
+    protected final SimpleDateFormat standartTaskFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
 
     public TaskManagerView(ArrayTaskList arr, final TaskManagerController taskManagerController) throws HeadlessException {
         super();
         setBounds(dimension.width / 2 - 300, dimension.height / 2 - 150, 600, 300);
         this.tasks = arr;
-
         setController(taskManagerController);
         addElements();
         setVisible(true);
         updateTable();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     /*
@@ -118,7 +120,7 @@ public class TaskManagerView  extends TaskManagerGUI implements Observer {
                 return false;
             }
         };
-        taskTable.setGridColor(new Color(0, 128, 242));
+        taskTable.setGridColor( TaskColor.getBlue());
         JScrollPane scrollPane = new JScrollPane( taskTable );
         gridBag.gridx = 0;
         gridBag.gridy = 2;

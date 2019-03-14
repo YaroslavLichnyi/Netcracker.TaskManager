@@ -30,7 +30,7 @@ public class CalendarFrame extends TaskManagerGUI {
     private int year;
     private int monthNumber;
     private ArrayTaskList arrayTaskList;
-    SimpleDateFormat taskFormat;
+    SimpleDateFormat standartTaskFormat;
     private static final Logger log = Logger.getLogger(CalendarFrame.class);
 
 
@@ -40,6 +40,7 @@ public class CalendarFrame extends TaskManagerGUI {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension dimension = toolkit.getScreenSize();
         setBounds(dimension.width / 2 - 150, dimension.height / 2 - 100, 300, 200);
+        standartTaskFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
         addElements();
         this.updateMonth();
         this.setVisible(true);
@@ -76,8 +77,8 @@ public class CalendarFrame extends TaskManagerGUI {
 
             if (tasks != null) {
                 try {
-                    Date from = (Date) taskFormat.parse(fromStr);
-                    Date to = (Date) taskFormat.parse(toStr);
+                    Date from = (Date) standartTaskFormat.parse(fromStr);
+                    Date to = (Date) standartTaskFormat.parse(toStr);
                     arrayTaskList = tasks.clone();
                     arrayTaskList = (ArrayTaskList) Tasks.incoming(arrayTaskList, from, to);
                     if (!arrayTaskList.isEmpty()) {
@@ -96,15 +97,14 @@ public class CalendarFrame extends TaskManagerGUI {
         this.setTitle("Calendar");
         this.setLayout(new BorderLayout());
 
-        taskFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
         label = new JLabel();
         label.setHorizontalAlignment(SwingConstants.CENTER);
-        label.setBackground(new Color(0, 128, 255));
-        label.setForeground(new Color(255, 255, 255));
+        label.setBackground(TaskColor.getBlue());
+        label.setForeground(Color.WHITE);
 
         JButton previous = new JButton("<-");
-        previous.setBackground(new Color(0, 128, 255));
-        previous.setBackground(new Color(0, 128, 255));
+        previous.setBackground(TaskColor.getBlue());
+        previous.setBackground(TaskColor.getBlue());
         previous.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 cal.add(Calendar.MONTH, -1);
@@ -113,8 +113,8 @@ public class CalendarFrame extends TaskManagerGUI {
         });
 
         JButton next = new JButton("->");
-        next.setBackground(new Color(0, 128, 255));
-        next.setBackground(new Color(0, 128, 255));
+        next.setBackground(TaskColor.getBlue());
+        next.setBackground(TaskColor.getBlue());
         next.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 cal.add(Calendar.MONTH, +1);
@@ -122,7 +122,7 @@ public class CalendarFrame extends TaskManagerGUI {
             }
         });
 
-        panel.setBackground(new Color(0, 128, 255));
+        panel.setBackground(TaskColor.getBlue());
         panel.setLayout(new BorderLayout());
         panel.add(previous, BorderLayout.WEST);
         panel.add(label, BorderLayout.CENTER);
@@ -136,7 +136,7 @@ public class CalendarFrame extends TaskManagerGUI {
                 return false;
             }
         };
-        table.setGridColor(new Color(0, 128, 255));
+        table.setGridColor(TaskColor.getBlue());
         JScrollPane pane = new JScrollPane(table);
 
         this.add(panel, BorderLayout.NORTH);
@@ -175,12 +175,12 @@ public class CalendarFrame extends TaskManagerGUI {
 
     private Date getSelectedDayFrom() throws ParseException {
         String fromStr = getDayStr() + getMonthStr() + year + "000000";
-        return (Date) taskFormat.parse(fromStr);
+        return (Date) standartTaskFormat.parse(fromStr);
     }
 
     private Date getSelectedDayTo () throws ParseException {
         String toStr = getDayStr() + getMonthStr() + year + "235959";
-        return (Date) taskFormat.parse(toStr);
+        return (Date) standartTaskFormat.parse(toStr);
     }
 
     private String getMonthStr(){

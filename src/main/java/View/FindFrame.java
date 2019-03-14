@@ -30,7 +30,7 @@ public class FindFrame extends TaskFillingFormGUI {
         panel.setBackground(Color.WHITE);
 
         txfTitle = new JTextField( );
-        txfTitle.setForeground(new Color( 0,128,242 ));
+        txfTitle.setForeground(TaskColor.getBlue());
         gridBag.gridx = 1;
         gridBag.gridy = 1;
         gridBag.gridwidth = 3;
@@ -44,7 +44,7 @@ public class FindFrame extends TaskFillingFormGUI {
 
         JLabel lbTitle = new JLabel("Title");
         lbTitle.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
-        lbTitle.setForeground(new Color(0, 128, 242));
+        lbTitle.setForeground(TaskColor.getBlue());
         gridBag.gridx = 2;
         gridBag.gridy = 0;
         gridBag.gridwidth = 1;
@@ -58,7 +58,7 @@ public class FindFrame extends TaskFillingFormGUI {
 
         JLabel lbFrom = new JLabel( "From"  );
         lbFrom.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
-        lbFrom.setForeground(new Color(0, 128, 242));
+        lbFrom.setForeground(TaskColor.getBlue());
         gridBag.gridx = 2;
         gridBag.gridy = 2;
         gridBag.gridwidth = 1;
@@ -217,7 +217,7 @@ public class FindFrame extends TaskFillingFormGUI {
 
         lbFrom = new JLabel( "To"  );
         lbFrom.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
-        lbFrom.setForeground(new Color(0, 128, 242));
+        lbFrom.setForeground(TaskColor.getBlue());
         gridBag.gridx = 2;
         gridBag.gridy = 7;
         gridBag.gridwidth = 1;

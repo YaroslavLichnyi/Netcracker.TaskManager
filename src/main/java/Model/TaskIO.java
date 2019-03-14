@@ -76,7 +76,6 @@ public class TaskIO {
                 if (taskIterator.hasNext()) output.write(";");
                 else output.write(".");
                 output.newLine();
-                //output.flush();
             }
         } catch (IOException e) {
             log.error(e);
@@ -87,9 +86,6 @@ public class TaskIO {
         BufferedReader reader = new BufferedReader(in);
         String myChecker;
         while (reader.ready()){
-            final int day = 86400;
-            final int hour = 3600;
-            final int minute = 60;
             int filePointer = 1;
             boolean repeated;
             myChecker = reader.readLine();
@@ -151,15 +147,15 @@ public class TaskIO {
                         switch (myChecker.charAt(filePointer)){
 
                             case 'd':
-                                inteval+=a*day;
+                                inteval+=a* SecondsIn.DAY;
                                 break;
 
                             case 'h':
-                                inteval+=a*hour;
+                                inteval+=a * SecondsIn.HOUR;
                                 break;
 
                             case 'm':
-                                inteval+=a*minute;
+                                inteval+=a * SecondsIn.MINUTE;
                                 break;
 
                             case 's':

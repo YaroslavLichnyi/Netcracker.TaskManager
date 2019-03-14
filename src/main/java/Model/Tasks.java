@@ -38,7 +38,6 @@ public class Tasks implements Serializable {
         while ( taskIterator.hasNext() ){
             Task myTask = taskIterator.next();
             if (!(myTask.nextTimeAfter(start)==null || myTask.nextTimeAfter(start).after(end))){
-                //taskIterator.remove();
                 result.add(myTask);
             }
         }

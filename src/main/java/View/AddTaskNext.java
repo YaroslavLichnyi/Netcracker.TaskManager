@@ -223,7 +223,7 @@ public class AddTaskNext extends TaskFillingFormWithIntervalGUI {
     private void addElementsFroRepeatedTask(){
         JLabel lbNames = new JLabel( "From"  );
         lbNames.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
-        lbNames.setForeground(new Color(0, 128, 242));
+        lbNames.setForeground(TaskColor.getBlue());
         gridBag.gridx = 2;
         gridBag.gridy = 2;
         gridBag.gridwidth = 1;
@@ -237,7 +237,7 @@ public class AddTaskNext extends TaskFillingFormWithIntervalGUI {
 
         lbNames = new JLabel( "To"  );
         lbNames.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
-        lbNames.setForeground(new Color(0, 128, 242));
+        lbNames.setForeground(TaskColor.getBlue());
         gridBag.gridx = 2;
         gridBag.gridy = 7;
         gridBag.gridwidth = 1;
@@ -395,7 +395,7 @@ public class AddTaskNext extends TaskFillingFormWithIntervalGUI {
 
         lbNames = new JLabel( "Interval"  );
         lbNames.setFont(new Font("Serif", Font.CENTER_BASELINE, 18));
-        lbNames.setForeground(new Color(0, 128, 242));
+        lbNames.setForeground(TaskColor.getBlue());
 
         gridBag.gridx = 2;
         gridBag.gridy = 12;

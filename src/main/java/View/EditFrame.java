@@ -1,6 +1,7 @@
 package View;
 
 import Controller.TaskManagerController;
+import Model.Interval;
 import Model.Task;
 
 import javax.swing.*;
@@ -13,12 +14,6 @@ class EditFrame extends TaskFillingFormWithIntervalGUI {
 
     private JTextField txfTitle;
     private Task oldTask;
-    private int interval ;
-    private int intervalYears;
-    private int intervalMonthes ;
-    private int intervalDays;
-    private int intervalHours ;
-    private int intervalMinutes;
     SimpleDateFormat yearFormat;
     SimpleDateFormat monthFormat;
     SimpleDateFormat dayFormat;
@@ -31,6 +26,12 @@ class EditFrame extends TaskFillingFormWithIntervalGUI {
         setController(taskManagerController);
         oldTask = task;
         setBounds(dimension.width / 2 - 150, dimension.height / 2 - 100, 300, 200);
+        yearFormat   = new SimpleDateFormat("YYYY");
+        monthFormat  = new SimpleDateFormat("MM");
+        dayFormat    = new SimpleDateFormat("dd");
+        hourFormat   = new SimpleDateFormat("HH");
+        minuteFormat = new SimpleDateFormat("mm");
+        secondFormat = new SimpleDateFormat("ss");
         addElements();
         if (oldTask.isRepeated()) addElementsForRepeatedTask();
         this.setVisible(true);
@@ -45,12 +46,7 @@ class EditFrame extends TaskFillingFormWithIntervalGUI {
     @Override
     protected void addElements() {
         JButton btAdd;
-        yearFormat = new SimpleDateFormat("YYYY");
-        monthFormat = new SimpleDateFormat("MMMM");
-        dayFormat = new SimpleDateFormat("dd");
-        hourFormat = new SimpleDateFormat("HH");
-        minuteFormat = new SimpleDateFormat("mm");
-        secondFormat = new SimpleDateFormat("ss");
+
         JLabel lbLabel0 = new JLabel("Time");
         gridBag.gridx = 1;
         gridBag.gridy = 1;
@@ -65,7 +61,7 @@ class EditFrame extends TaskFillingFormWithIntervalGUI {
 
         txfTitle = new JTextField( );
         txfTitle.setText(oldTask.getTitle());
-        txfTitle.setForeground(new Color( 0,128,255 ));
+        txfTitle.setForeground(TaskColor.getBlue());
         gridBag.gridx = 2;
         gridBag.gridy = 1;
         gridBag.gridwidth = 2;
@@ -263,35 +259,10 @@ class EditFrame extends TaskFillingFormWithIntervalGUI {
         this.add(panel);
     }
 
-    private void calculateIntevals(){
-
-        final int SECONDS_IN_A_YEAR = 31536000;
-        final int SECONDS_IN_A_MONTH = 2592000;
-        final int SECONDS_IN_A_DAY = 86400;
-        final int SECONDS_IN_AN_HOUR = 3600;
-        final int SECONDS_IN_A_MINUTE = 60;
-
-        int interval = oldTask.getRepeatInterval();
-
-        intervalYears = (interval - interval % SECONDS_IN_A_YEAR)/SECONDS_IN_A_YEAR;
-        interval = interval - intervalYears * SECONDS_IN_A_YEAR;
-
-        intervalMonthes = (interval - interval % SECONDS_IN_A_MONTH)/SECONDS_IN_A_MONTH;
-        interval = interval - intervalMonthes * SECONDS_IN_A_MONTH;
-
-        intervalDays = (interval - interval % SECONDS_IN_A_DAY)/SECONDS_IN_A_DAY;
-        interval = interval - intervalDays * SECONDS_IN_A_DAY;
-
-        intervalHours = (interval - interval % SECONDS_IN_AN_HOUR)/SECONDS_IN_AN_HOUR;
-        interval = interval - intervalHours * SECONDS_IN_AN_HOUR;
-
-        intervalMinutes = (interval - interval % SECONDS_IN_A_MINUTE)/SECONDS_IN_A_MINUTE;
-        interval = interval - intervalMinutes * SECONDS_IN_A_MINUTE;
-    }
 
     private void addElementsForRepeatedTask(){
         this.setBounds(dimension.width / 2 - 150, dimension.height / 2 - 200, 300, 400);
-        calculateIntevals();
+        Interval interval = new Interval(oldTask.getRepeatInterval());
         JLabel lbLabel0 = new JLabel( "From"  );
         gridBag.gridx = 1;
         gridBag.gridy = 2;
@@ -515,7 +486,7 @@ class EditFrame extends TaskFillingFormWithIntervalGUI {
         panel.add(lbYear);
 
         cmbDaysInreval = new JComboBox( dataDaysInterval );
-        cmbDaysInreval.setSelectedItem(getFormatedItemName(intervalDays));
+        cmbDaysInreval.setSelectedItem(getFormatedItemName(interval.getDays()));
         gridBag.gridx = 1;
         gridBag.gridy = 14;
         gridBag.gridwidth = 1;
@@ -528,7 +499,7 @@ class EditFrame extends TaskFillingFormWithIntervalGUI {
         panel.add( cmbDaysInreval );
 
         cmbMonthesInreval = new JComboBox(dataMonthesInterval);
-        cmbMonthesInreval.setSelectedItem(getFormatedItemName(intervalMonthes));
+        cmbMonthesInreval.setSelectedItem(getFormatedItemName(interval.getMonths()));
         gridBag.gridx = 2;
         gridBag.gridy = 14;
         gridBag.gridwidth = 1;
@@ -540,10 +511,8 @@ class EditFrame extends TaskFillingFormWithIntervalGUI {
         gridBagLayout.setConstraints(cmbMonthesInreval, gridBag);
         panel.add(cmbMonthesInreval);
 
-        String []dataYearsInterval = {"00", "01", "02", "03", "04", "05" };
-
         cmbYearsInreval = new JComboBox(dataYearsInterval);
-        cmbYearsInreval.setSelectedItem(getFormatedItemName(intervalYears));
+        cmbYearsInreval.setSelectedItem(getFormatedItemName(interval.getYears()));
         gridBag.gridx = 3;
         gridBag.gridy = 14;
         gridBag.gridwidth = 1;
@@ -593,7 +562,7 @@ class EditFrame extends TaskFillingFormWithIntervalGUI {
         panel.add(lbSeconds);
 
         cmbSecondsInreval = new JComboBox( dataSeconds );
-        cmbSecondsInreval.setSelectedItem(getFormatedItemName(interval));
+        cmbSecondsInreval.setSelectedItem(getFormatedItemName(interval.getSeconds()));
         gridBag.gridx = 3;
         gridBag.gridy = 16;
         gridBag.gridwidth = 1;
@@ -606,7 +575,7 @@ class EditFrame extends TaskFillingFormWithIntervalGUI {
         panel.add( cmbSecondsInreval );
 
         cmbMinutesInreval = new JComboBox( dataMinutes );
-        cmbMinutesInreval.setSelectedItem(getFormatedItemName(intervalMinutes));
+        cmbMinutesInreval.setSelectedItem(getFormatedItemName(interval.getMinutes()));
         gridBag.gridx = 2;
         gridBag.gridy = 16;
         gridBag.gridwidth = 1;
@@ -619,7 +588,7 @@ class EditFrame extends TaskFillingFormWithIntervalGUI {
         panel.add( cmbMinutesInreval );
 
         cmbHoursInreval = new JComboBox( dataHours );
-        cmbHoursInreval.setSelectedItem(getFormatedItemName(intervalHours));
+        cmbHoursInreval.setSelectedItem(getFormatedItemName(interval.getHours()));
         gridBag.gridx = 1;
         gridBag.gridy = 16;
         gridBag.gridwidth = 1;
@@ -631,6 +600,4 @@ class EditFrame extends TaskFillingFormWithIntervalGUI {
         gridBagLayout.setConstraints( cmbHoursInreval, gridBag);
         panel.add( cmbHoursInreval );
     }
-
-
 }
